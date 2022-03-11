@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Game Framework</string>
+    <string name="exit">結束</string>
+    <string name="menu">選單</string>
+    <string name="deviceInfo">裝置資訊</string>
+    <string name="debugInfo">除錯資訊</string>
+</resources>
