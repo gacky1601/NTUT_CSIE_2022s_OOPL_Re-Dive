@@ -42,7 +42,7 @@ public abstract class GameState implements GameObject, KeyEventHandler, SensorEv
      * 更換狀態。
      *
      * @param state      新狀態的代碼
-     * @param parameters 給新狀態的參數
+     * @param parameter 給新狀態的參數
      */
     public void changeState(int state, Map<String, Object> parameter) {
         _engine.setGameState(state, parameter);

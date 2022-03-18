@@ -15,7 +15,7 @@ public class InitPage extends GameState{
      *
      * @param engine 執行狀態處理者的引擎
      */
-    protected InitPage(GameEngine engine) {
+    public InitPage(GameEngine engine) {
         super(engine);
     }
 
@@ -32,7 +32,7 @@ public class InitPage extends GameState{
 
     @Override
     public void show() {
-
+     _background.show();
     }
 
     @Override

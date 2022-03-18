@@ -1,5 +1,11 @@
 package tw.edu.ntut.csie.game;
 
+import static android.hardware.Sensor.TYPE_ACCELEROMETER;
+import static android.hardware.Sensor.TYPE_ORIENTATION;
+import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
+import static android.view.Window.FEATURE_NO_TITLE;
+import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+
 import android.app.Activity;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -11,12 +17,7 @@ import tw.edu.ntut.csie.game.engine.GameEngine;
 import tw.edu.ntut.csie.game.state.StateOver;
 import tw.edu.ntut.csie.game.state.StateReady;
 import tw.edu.ntut.csie.game.state.StateRun;
-
-import static android.hardware.Sensor.TYPE_ACCELEROMETER;
-import static android.hardware.Sensor.TYPE_ORIENTATION;
-import static android.hardware.SensorManager.SENSOR_DELAY_GAME;
-import static android.view.Window.FEATURE_NO_TITLE;
-import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+import tw.edu.ntut.csie.game.state.InitPage;
 
 /**
  * <code>Game</code>是Android版Game Framework的主進入點，負責初始畫功能選單上
@@ -38,7 +39,7 @@ public class Game extends Activity {
     /**
      * 預設的畫面更新速度，一秒約15張畫面(理想值)。
      */
-    public static final int FRAME_RATE = 15;
+    public static final int FRAME_RATE = 90;
 
     /**
      * 預設的最大除錯資訊顯示數量
@@ -48,27 +49,27 @@ public class Game extends Activity {
     /**
      * 遊戲畫面的寬度。
      */
-    public static final int GAME_FRAME_WIDTH = 640;
+    public static final int GAME_FRAME_WIDTH = 1440;
 
     /**
      * 遊戲畫面的高度。
      */
-    public static final int GAME_FRAME_HEIGHT = 376;
+    public static final int GAME_FRAME_HEIGHT = 720;
 
     /**
      * 開啟或關閉在選單上顯示資訊選項。
      */
-    public static boolean ENABLE_INFO_SWITCH_MENU = true;
+    public static boolean ENABLE_INFO_SWITCH_MENU = false;
 
     /**
      * 開啟或關閉顯示除錯資訊。
      */
-    public static boolean showDebugInfo = true;
+    public static boolean showDebugInfo = false;
 
     /**
      * 開啟或關閉顯示畫面更新速度與感應器的資訊。
      */
-    public static boolean showDeviceInfo = true;
+    public static boolean showDeviceInfo = false;
 
     /**
      * 選單項目的ID。
@@ -110,7 +111,7 @@ public class Game extends Activity {
             //_engine.setDisplayRatio(1.0f);
             // TODO 註冊狀態處理者
             _engine.registerGameState(INITIAL_STATE, new StateReady(_engine));
-            _engine.registerGameState(RUNNING_STATE, new StateRun(_engine));
+            _engine.registerGameState(RUNNING_STATE, new InitPage(_engine));
             _engine.registerGameState(OVER_STATE, new StateOver(_engine));
             _engine.setGameState(INITIAL_STATE);
             _view.setGameEngine(_engine);
