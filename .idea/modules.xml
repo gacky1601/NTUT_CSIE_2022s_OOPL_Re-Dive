@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/androidGameV2.4.iml" filepath="$PROJECT_DIR$/androidGameV2.4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/androidGameV2.4.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/androidGameV2.4.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Re-Dive.iml" filepath="$PROJECT_DIR$/.idea/modules/Re-Dive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Re-Dive.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Re-Dive.app.iml" />
     </modules>
   </component>
 </project>
