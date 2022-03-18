@@ -18,7 +18,7 @@ public class StateOver extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        addGameObject(new MovingBitmap(R.drawable.state_over));
+
         _menuButton = new BitmapButton(R.drawable.menu, R.drawable.menu_pressed, 465, 320);
         _menuButton.addButtonEventHandler(new ButtonEventHandler() {
             @Override
