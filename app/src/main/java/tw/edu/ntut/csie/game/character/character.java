@@ -1,15 +1,13 @@
 package tw.edu.ntut.csie.game.character;
 
 public abstract class character {
-    private int _hp;
+    private int _hitpoints;
     private int _physicalAttack;
     private int _magicAttack;
     private int _physicalCritical;
     private int _magicCritical;
     private int _physicalDefense;
     private int _magicDefense;
-    private int _physicalPenetration;
-    private int _magicPenetration;
     private int _dodge;
     private int _accuracy;
     private int _hpRecoveryRate;
@@ -18,7 +16,12 @@ public abstract class character {
     private int _waveTpRecovery;
     private int _hpReduceRate;
     private int _tpReduceRate;
+
     private int _attackRange;
     private int _moveSpeed;
     private float _attackSpeed;
+
+    private int _level;
+    private int _star;
+    private int _rank;
 }
