@@ -32,55 +32,21 @@ public class StateRun extends GameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        test=new Practice();
-        test.initialize();
 
-        px=250;py=150;
-        apple=new MovingBitmap(R.drawable.apple);
-        apple.setLocation(250,50);
-        _background = new MovingBitmap(R.drawable.background);
-        _android = new MovingBitmap(R.drawable.android_green);
-        _android.setLocation(100, 200);
-        _cloud = new MovingBitmap(R.drawable.cloud);
-        _cx = 10;_cy = 120;
-        _cloud.setLocation(_cx, _cy);
-        toyz = new MovingBitmap(R.drawable.toyz);
-        toyz.setLocation(300, 200);
 
     }
 
     @Override
     public void move() {
-        _cloud.setLocation(_cx, _cy);
-
-        if(px<350){ px+=5; }
-        else{px-=5;}
-        toyz.setLocation(px,py);
     }
 
     @Override
     public void show() {
-        _background.show();
-        apple.show();
-        _cloud.show();
-        toyz.show();
-        _android.show();
-        test.show();
+
     }
 
     @Override
     public void release() {
-        test.release();
-    apple.release();
-        _android.release();
-        _cloud.release();
-        toyz.release();
-        test=null;
-        _background = null;
-apple=null;
-        _android = null;
-        _cloud = null;
-        toyz = null;
     }
 
     @Override
@@ -95,10 +61,6 @@ apple=null;
 
     @Override
     public void orientationChanged(float pitch, float azimuth, float roll) {
-        if (pitch > 15 && pitch < 60 && _cx > 50)
-            _cx -= 2;
-        if (pitch < -15 && pitch > -60 && _cx + _cloud.getWidth() < 500)
-            _cx += 2;
     }
 
     @Override
