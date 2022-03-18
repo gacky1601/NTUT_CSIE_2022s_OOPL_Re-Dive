@@ -162,16 +162,6 @@ public class Integer implements GameObject {
      */
     private void initialize() {
         _digitImages = new MovingBitmap[11];
-        _digitImages[0] = new MovingBitmap(R.drawable.digit_0);
-        _digitImages[1] = new MovingBitmap(R.drawable.digit_1);
-        _digitImages[2] = new MovingBitmap(R.drawable.digit_2);
-        _digitImages[3] = new MovingBitmap(R.drawable.digit_3);
-        _digitImages[4] = new MovingBitmap(R.drawable.digit_4);
-        _digitImages[5] = new MovingBitmap(R.drawable.digit_5);
-        _digitImages[6] = new MovingBitmap(R.drawable.digit_6);
-        _digitImages[7] = new MovingBitmap(R.drawable.digit_7);
-        _digitImages[8] = new MovingBitmap(R.drawable.digit_8);
-        _digitImages[9] = new MovingBitmap(R.drawable.digit_9);
-        _digitImages[10] = new MovingBitmap(R.drawable.digit_10);
+
     }
 }

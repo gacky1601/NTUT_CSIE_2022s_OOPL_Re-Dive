@@ -63,7 +63,7 @@ public class StateRun extends GameState {
 
     @Override
     public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
-        
+
         return true;
     }
 

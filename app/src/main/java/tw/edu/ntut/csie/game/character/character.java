@@ -1,4 +1,6 @@
-public abstract class Character {
+package tw.edu.ntut.csie.game.character;
+
+public abstract class character {
     private int _hp;
     private int _physicalAttack;
     private int _magicAttack;
