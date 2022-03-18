@@ -19,13 +19,6 @@ public class StateRun extends GameState {
 
     public static final int DEFAULT_SCORE_DIGITS = 4;
     private MovingBitmap _background;
-    private MovingBitmap _android;
-    private MovingBitmap _cloud;
-    private MovingBitmap toyz;
-    private MovingBitmap apple;
-    private Practice test;
-    private int px,py;
-    private int _cx, _cy;
     public StateRun(GameEngine engine) {
         super(engine);
     }
@@ -70,7 +63,7 @@ public class StateRun extends GameState {
 
     @Override
     public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
-        _android.setLocation(actionPointer.getX(),actionPointer.getY());
+        
         return true;
     }
 
