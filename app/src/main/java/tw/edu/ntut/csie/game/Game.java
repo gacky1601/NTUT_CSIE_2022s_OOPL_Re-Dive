@@ -14,10 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import tw.edu.ntut.csie.game.engine.GameEngine;
-import tw.edu.ntut.csie.game.state.StateOver;
-import tw.edu.ntut.csie.game.state.StateReady;
-import tw.edu.ntut.csie.game.state.StateRun;
 import tw.edu.ntut.csie.game.state.InitPage;
+import tw.edu.ntut.csie.game.state.StateOver;
+import tw.edu.ntut.csie.game.state.PlayerMenu;
 
 /**
  * <code>Game</code>是Android版Game Framework的主進入點，負責初始畫功能選單上
@@ -110,8 +109,8 @@ public class Game extends Activity {
             // 如果不想對遊戲畫面進行縮放，可以使用setDisplayRatio(1.0f)告知引擎顯示比例
             //_engine.setDisplayRatio(1.0f);
             // TODO 註冊狀態處理者
-            _engine.registerGameState(INITIAL_STATE, new StateReady(_engine));
-            _engine.registerGameState(RUNNING_STATE, new InitPage(_engine));
+            _engine.registerGameState(INITIAL_STATE, new InitPage(_engine));
+            _engine.registerGameState(RUNNING_STATE, new tw.edu.ntut.csie.game.state.PlayerMenu(_engine));
             _engine.registerGameState(OVER_STATE, new StateOver(_engine));
             _engine.setGameState(INITIAL_STATE);
             _view.setGameEngine(_engine);

@@ -3,87 +3,49 @@ package tw.edu.ntut.csie.game.state;
 import java.util.List;
 import java.util.Map;
 
+import tw.edu.ntut.csie.game.Game;
 import tw.edu.ntut.csie.game.Pointer;
 import tw.edu.ntut.csie.game.R;
 import tw.edu.ntut.csie.game.core.MovingBitmap;
 import tw.edu.ntut.csie.game.engine.GameEngine;
+import tw.edu.ntut.csie.game.extend.BitmapButton;
+import tw.edu.ntut.csie.game.extend.ButtonEventHandler;
 
-public class InitPage extends GameState{
-    private MovingBitmap _background;
-    /**
-     * 建構一個<code>GameState</code>實體。
-     *
-     * @param engine 執行狀態處理者的引擎
-     */
+public class InitPage extends AbstractGameState{
+
     public InitPage(GameEngine engine) {
         super(engine);
     }
 
+    private MovingBitmap _background;
+    private BitmapButton _startButton;
+
+
     @Override
     public void initialize(Map<String, Object> data) {
-        _background = new MovingBitmap(R.drawable.background);
+        addGameObject(_background = new MovingBitmap(R.drawable.background));
+        initializeStartButton();
 
     }
 
     @Override
-    public void move() {
-
-    }
+    public void move() {}
 
     @Override
-    public void show() {
-     _background.show();
-    }
+    public void pause() {}
 
     @Override
-    public void keyPressed(int keyCode) {
+    public void resume() {}
 
-    }
-
-    @Override
-    public void keyReleased(int keyCode) {
-
-    }
-
-    @Override
-    public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
-        return false;
-    }
-
-    @Override
-    public boolean pointerMoved(Pointer actionPointer, List<Pointer> pointers) {
-        return false;
-    }
-
-    @Override
-    public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
-        return false;
-    }
-
-    @Override
-    public void release() {
-
-    }
-
-    @Override
-    public void orientationChanged(float pitch, float azimuth, float roll) {
-
-    }
-
-    @Override
-    public void accelerationChanged(float dX, float dY, float dZ) {
-
-    }
-
-
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
+    private void initializeStartButton() {
+        addGameObject(_startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 660, 600));
+        _startButton.addButtonEventHandler(new ButtonEventHandler() {
+            @Override
+            public void perform(BitmapButton button) {
+                changeState(Game.RUNNING_STATE);
+            }
+        });
+        addPointerEventHandler(_startButton);
     }
 }
+
