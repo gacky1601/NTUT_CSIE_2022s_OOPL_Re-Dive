@@ -1,38 +1,22 @@
 package tw.edu.ntut.csie.game.character;
 
-import java.util.Vector;
+import tw.edu.ntut.csie.game.basic.BasicStats;
 
-public abstract class character {
-    private int _hitpoints;
-    private int _physicalAttack;
-    private int _magicAttack;
-    private int _physicalCritical;
-    private int _magicCritical;
-    private int _physicalDefense;
-    private int _magicDefense;
-    private int _dodge;
-    private int _accuracy;
-    private int _hpRecoveryRate;
-    private int _tpRecoveryRate;
-    private int _waveHpRecovery;
-    private int _waveTpRecovery;
-    private int _hpReduceRate;
-    private int _tpReduceRate;
+public class Character extends BasicStats {
+    protected int _attackRange;
+    protected int _moveSpeed;
+    protected double _attackSpeed;
 
-    private int _attackRange;
-    private int _moveSpeed;
-    private float _attackSpeed;
+    protected int _level;
+    protected int _star;
+    protected int _rank;
+    protected int[] _equipment;
 
-    private int _level;
-    private int _star;
-    private int _rank;
-    private Vector<Integer> _equipment;
+    protected Skill[] _skill;
+    protected int[] _initialPattern;
+    protected int[] _loopPattern;
 
-    private int _ubLevel;
-    private int _skill1Level;
-    private int _skill2Level;
-    private int _exLevel;
-
-    private Vector<Integer> _initialPattern;
-    private Vector<Integer> _loopPattern;
+    public void cast(int index) {
+        _skill[index].cast();
+    }
 }
