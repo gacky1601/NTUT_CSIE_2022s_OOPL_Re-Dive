@@ -2,7 +2,7 @@ package tw.edu.ntut.csie.game.character;
 
 import tw.edu.ntut.csie.game.basic.BasicStats;
 
-public class Character extends BasicStats {
+class Character extends BasicStats {
     protected int _attackRange;
     protected int _moveSpeed;
     protected double _attackSpeed;
