@@ -38,7 +38,7 @@ public class Game extends Activity {
     /**
      * 預設的畫面更新速度，一秒約15張畫面(理想值)。
      */
-    public static final int FRAME_RATE = 90;
+    public static final int FRAME_RATE = 60;
 
     /**
      * 預設的最大除錯資訊顯示數量
@@ -63,7 +63,7 @@ public class Game extends Activity {
     /**
      * 開啟或關閉顯示除錯資訊。
      */
-    public static boolean showDebugInfo = false;
+    public static boolean showDebugInfo = true;
 
     /**
      * 開啟或關閉顯示畫面更新速度與感應器的資訊。
@@ -110,7 +110,7 @@ public class Game extends Activity {
             //_engine.setDisplayRatio(1.0f);
             // TODO 註冊狀態處理者
             _engine.registerGameState(INITIAL_STATE, new InitPage(_engine));
-            _engine.registerGameState(RUNNING_STATE, new tw.edu.ntut.csie.game.state.PlayerMenu(_engine));
+            _engine.registerGameState(RUNNING_STATE, new PlayerMenu(_engine));
             _engine.registerGameState(OVER_STATE, new StateOver(_engine));
             _engine.setGameState(INITIAL_STATE);
             _view.setGameEngine(_engine);
