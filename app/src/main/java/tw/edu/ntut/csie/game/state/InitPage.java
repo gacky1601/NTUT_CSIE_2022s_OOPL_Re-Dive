@@ -24,28 +24,23 @@ public class InitPage extends AbstractGameState{
     @Override
     public void initialize(Map<String, Object> data) {
         addGameObject(_background = new MovingBitmap(R.drawable.background));
-        initializeStartButton();
 
-    }
-
-    @Override
-    public void move() {}
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    private void initializeStartButton() {
-        addGameObject(_startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 660, 600));
+        addGameObject(_startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 0));
         _startButton.addButtonEventHandler(new ButtonEventHandler() {
             @Override
             public void perform(BitmapButton button) {
-                changeState(Game.RUNNING_STATE);
+                changeState(Game.PLAYER_MENU);
             }
         });
         addPointerEventHandler(_startButton);
+
     }
+
+    @Override
+    public void pause() { }
+
+    @Override
+    public void resume() { }
+
 }
 
