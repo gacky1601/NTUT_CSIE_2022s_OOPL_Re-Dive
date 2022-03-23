@@ -42,7 +42,7 @@ public class Game extends Activity {
     /**
      * 開啟或關閉在選單上顯示資訊選項、除錯資訊、畫面更新速度與感應器的資訊。
      */
-    public static boolean ENABLE_INFO_SWITCH_MENU = false,showDebugInfo = true ,showDeviceInfo = false ;
+    public static boolean ENABLE_INFO_SWITCH_MENU = false,showDebugInfo = false ,showDeviceInfo = false ;
     /**
      * 選單項目的ID。
      */

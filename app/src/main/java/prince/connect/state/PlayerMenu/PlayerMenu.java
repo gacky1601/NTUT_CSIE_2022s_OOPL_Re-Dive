@@ -25,7 +25,6 @@ public class PlayerMenu extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-
         add();
 
     }
@@ -48,12 +47,12 @@ public class PlayerMenu extends AbstractGameState {
     }
     public  void add(){
         addGameObject(_background = new MovingBitmap(R.drawable.background));
-        int _buttondx = 300,_buttondy=600;
-        initializeButton(_PlayermenuButton,R.drawable.home,R.drawable.home_press, _buttondx,_buttondy);
-        initializeButton(_AdventureButton,R.drawable.home,R.drawable.home_press, _buttondx +200,_buttondy);
-        initializeButton(_CharaterButton,R.drawable.home,R.drawable.home_press, _buttondx +400,_buttondy);
-        initializeButton(_DrawButton,R.drawable.home,R.drawable.home_press, _buttondx +600,_buttondy);
-        initializeButton(_SettingButton,R.drawable.home,R.drawable.home_press, _buttondx +800,_buttondy);
+        int _buttondx = 200,_buttondy=550;
+        initializeButton(_PlayermenuButton,R.drawable.home,R.drawable.home_pressed, _buttondx,_buttondy);
+        initializeButton(_AdventureButton,R.drawable.adventure,R.drawable.adventure_pressed, _buttondx +221,_buttondy);
+        initializeButton(_CharaterButton,R.drawable.charater,R.drawable.charater_pressed, _buttondx +221+210,_buttondy);
+        initializeButton(_DrawButton,R.drawable.draw,R.drawable.draw_pressed, _buttondx +221+210+200,_buttondy);
+        initializeButton(_SettingButton,R.drawable.setting,R.drawable.setting_pressed, _buttondx +221+210+200+213,_buttondy);
     }
 
 }
