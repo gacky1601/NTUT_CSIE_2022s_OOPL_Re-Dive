@@ -45,6 +45,7 @@ public class PlayerMenu extends AbstractGameState {
         });
         addPointerEventHandler(Button);
     }
+
     public  void add(){
         addGameObject(_background = new MovingBitmap(R.drawable.background));
         int _buttondx = 200,_buttondy=550;
