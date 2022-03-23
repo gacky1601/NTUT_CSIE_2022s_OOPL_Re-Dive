@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tw.edu.ntut.csie.game">
+    package="princeconnect.game">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:label="@string/app_name">
 
         <activity
-            android:name=".Game"
+            android:name="prince.connect.Game"
             android:label="@string/app_name"
             android:icon="@drawable/app_icon_round"
             android:screenOrientation="landscape"

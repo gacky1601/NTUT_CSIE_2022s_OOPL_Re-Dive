@@ -5,7 +5,7 @@ android {
     buildToolsVersion '30.0.3'
 
     defaultConfig {
-        applicationId "tw.edu.ntut.csie.game"
+        applicationId "princeconnect.game"
         minSdkVersion 15
         targetSdkVersion 31
         versionCode 1
