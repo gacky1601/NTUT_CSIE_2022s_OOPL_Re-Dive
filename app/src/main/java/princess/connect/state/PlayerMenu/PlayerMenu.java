@@ -6,6 +6,7 @@ import princess.connect.Game;
 import princeconnect.game.R;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
+import princess.connect.extend.Animation;
 import princess.connect.extend.BitmapButton;
 import princess.connect.extend.ButtonEventHandler;
 import princess.connect.state.AbstractGameState;
@@ -15,6 +16,8 @@ public class PlayerMenu extends AbstractGameState {
     public PlayerMenu(GameEngine engine) { super(engine); }
 
     private MovingBitmap _background;
+    private MovingBitmap _a;
+    private Animation anim;
 
     public BitmapButton _PlayermenuButton;
     public BitmapButton _AdventureButton;
@@ -23,10 +26,23 @@ public class PlayerMenu extends AbstractGameState {
     public BitmapButton _SettingButton;
 
 
+
     @Override
     public void initialize(Map<String, Object> data) {
-        add();
 
+        add();
+        addGameObject(anim= new Animation());
+        anim.addFrame(R.drawable.charater);
+        anim.addFrame(R.drawable.charater_pressed);
+        anim.setLocation(500,500);
+        anim.setVisible(false);
+        anim.setRepeating(true);
+        anim.setDelay(120);
+        addGameObject(new MovingBitmap(R.drawable.ic_main,280,630));
+        addGameObject(new MovingBitmap(R.drawable.ic_adventure,280+178,630));
+        addGameObject(new MovingBitmap(R.drawable.ic_charater,280+178+170,615));
+        addGameObject(new MovingBitmap(R.drawable.ic_draw,280+178+170+170,630));
+        addGameObject(new MovingBitmap(R.drawable.ic_setting,280+178+170+170+170,630));
     }
 
     @Override
@@ -44,16 +60,18 @@ public class PlayerMenu extends AbstractGameState {
             }
         });
         addPointerEventHandler(Button);
+
     }
 
     public  void add(){
         addGameObject(_background = new MovingBitmap(R.drawable.background));
-        int _buttondx = 200,_buttondy=550;
-        initializeButton(_PlayermenuButton,R.drawable.home,R.drawable.home_pressed, _buttondx,_buttondy,Game.PLAYER_MENU);
-        initializeButton(_AdventureButton,R.drawable.adventure,R.drawable.adventure_pressed, _buttondx +221,_buttondy,Game.ADV_PAGE);
-        initializeButton(_CharaterButton,R.drawable.charater,R.drawable.charater_pressed, _buttondx +221+210,_buttondy,Game.CHA_STATE);
-        initializeButton(_DrawButton,R.drawable.draw,R.drawable.draw_pressed, _buttondx +221+210+200,_buttondy,0);
-        initializeButton(_SettingButton,R.drawable.setting,R.drawable.setting_pressed, _buttondx +221+210+200+213,_buttondy,0);
+        int _buttondx = 230,_buttondy=660;
+        initializeButton(_PlayermenuButton,R.drawable.bg_main,R.drawable.bg_main_press, _buttondx,_buttondy,Game.PLAYER_MENU);
+        initializeButton(_AdventureButton,R.drawable.bg_other,R.drawable.bg_adventure_press, _buttondx +178,_buttondy,Game.ADV_PAGE);
+        initializeButton(_CharaterButton,R.drawable.bg_other,R.drawable.bg_charater_pressed, _buttondx +178+170,_buttondy,Game.CHA_PAGE);
+        initializeButton(_DrawButton,R.drawable.bg_other,R.drawable.bg_draw_press, _buttondx +178+170+170,_buttondy,Game.DRAW_PAGE);
+        initializeButton(_SettingButton,R.drawable.bg_setting,R.drawable.bg_setting_press, _buttondx +178+170+170+170,_buttondy,Game.SETTING_PAGE);
+
     }
 
 }
