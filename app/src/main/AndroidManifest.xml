@@ -9,7 +9,7 @@
         android:label="@string/app_name">
 
         <activity
-            android:name="prince.connect.Game"
+            android:name="princess.connect.Game"
             android:label="@string/app_name"
             android:icon="@drawable/app_icon_round"
             android:screenOrientation="landscape"
