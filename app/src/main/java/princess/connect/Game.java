@@ -83,7 +83,7 @@ public class Game extends Activity {
         if (!_view.isInEditMode()) {
             _engine = new GameEngine(this, _view.getHolder());
             // 如果不想對遊戲畫面進行縮放，可以使用setDisplayRatio(1.0f)告知引擎顯示比例
-            _engine.setDisplayRatio(1.0f);
+//            _engine.setDisplayRatio(1.4f);
             // TODO 註冊狀態處理者
             _engine.registerGameState(INITIAL_STATE, new InitPage(_engine));
             _engine.registerGameState(PLAYER_MENU, new PlayerMenu(_engine));
