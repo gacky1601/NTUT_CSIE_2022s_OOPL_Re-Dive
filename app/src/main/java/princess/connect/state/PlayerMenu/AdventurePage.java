@@ -9,6 +9,5 @@ public class AdventurePage extends PlayerMenu{
 
     public void initialize(Map<String, Object> data) {
         add();
-
     }
 }
