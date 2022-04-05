@@ -7,7 +7,6 @@ import static android.view.Window.FEATURE_NO_TITLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 
 import princess.connect.engine.GameEngine;
 import princess.connect.state.InitPage;
+import princess.connect.state.Adventure;
 import princess.connect.state.PlayerMenu.AdventurePage;
 import princess.connect.state.PlayerMenu.CharaterPage;
 import princess.connect.state.PlayerMenu.DrawPage;
@@ -69,7 +69,7 @@ public class Game extends Activity {
     /**
      * 遊戲第一個狀態的代碼，所有遊戲的第一個狀態其代碼都需等於{@link #INITIAL_STATE}。
      */
-    public static final int INITIAL_STATE = 1 ,PLAYER_MENU = 2 ,ADV_PAGE = 3 , CHA_PAGE=4,SETTING_PAGE=5,DRAW_PAGE=6;
+    public static final int INITIAL_STATE = 1 ,PLAYER_MENU = 2 ,ADV_PAGE = 3 , CHA_PAGE = 4, SETTING_PAGE = 5, DRAW_PAGE = 6, ADV_STATE = 7;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,7 @@ public class Game extends Activity {
             _engine.registerGameState(INITIAL_STATE, new InitPage(_engine));
             _engine.registerGameState(PLAYER_MENU, new PlayerMenu(_engine));
             _engine.registerGameState(ADV_PAGE, new AdventurePage(_engine));
+            _engine.registerGameState(ADV_STATE, new Adventure(_engine));
             _engine.registerGameState(CHA_PAGE, new CharaterPage(_engine));
             _engine.registerGameState(DRAW_PAGE, new DrawPage(_engine));
             _engine.registerGameState(SETTING_PAGE, new SettingPage(_engine));

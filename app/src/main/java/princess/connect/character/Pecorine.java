@@ -3,6 +3,7 @@ package princess.connect.character;
 import java.util.List;
 
 import princess.connect.baseClass.Character;
+import princess.connect.extend.Animation;
 
 public class Pecorine extends Character {
     public Pecorine() {
