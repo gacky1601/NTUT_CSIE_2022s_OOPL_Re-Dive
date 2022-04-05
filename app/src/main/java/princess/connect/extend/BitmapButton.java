@@ -111,6 +111,10 @@ public class BitmapButton implements GameObject, PointerEventHandler {
         setLocation(x, y);
     }
 
+    public BitmapButton(int normalImage, int pressedImage) {
+        this(normalImage);
+        loadPressedBitmap(pressedImage);
+    }
     /**
      * 用指定的圖片檔案路徑，建立一個<code>BitmapButton</code>實體，
      * 並指定按鈕的位置。
@@ -125,6 +129,12 @@ public class BitmapButton implements GameObject, PointerEventHandler {
         loadPressedBitmap(pressedImage);
         setLocation(x, y);
     }
+    public BitmapButton(String normalImage, String pressedImage) {
+        this(normalImage);
+        loadPressedBitmap(pressedImage);
+
+    }
+
 
     /**
      * 用指定的資源ID，載入按鈕未被按下時顯示的圖片。

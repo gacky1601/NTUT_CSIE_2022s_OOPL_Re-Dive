@@ -7,6 +7,7 @@ import static android.view.Window.FEATURE_NO_TITLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -30,6 +31,7 @@ import princess.connect.state.PlayerMenu.SettingPage;
  * @version 2.0
  * @since 1.0
  */
+
 public class Game extends Activity {
 
 
@@ -41,7 +43,7 @@ public class Game extends Activity {
     /**
      * 遊戲畫面的寬度、高度、畫面更新速度。
      */
-    public static final int GAME_FRAME_WIDTH = 1440,GAME_FRAME_HEIGHT = 720 ,FRAME_RATE = 60;
+    public static final int GAME_FRAME_WIDTH = 1440,GAME_FRAME_HEIGHT = 720 ,FRAME_RATE = 15;
     /**
      * 開啟或關閉在選單上顯示資訊選項、除錯資訊、畫面更新速度與感應器的資訊。
      */
