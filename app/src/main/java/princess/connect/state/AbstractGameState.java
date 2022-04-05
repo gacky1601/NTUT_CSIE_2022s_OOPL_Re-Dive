@@ -104,7 +104,7 @@ public abstract class AbstractGameState extends GameState {
      *
      * @param resource 指定的資源物件
      */
-    protected void addReleasableResource(ReleasableResource resource) {
+    public void addReleasableResource(ReleasableResource resource) {
         if (!_resources.contains(resource)) {
             _resources.add(resource);
         }
@@ -132,7 +132,7 @@ public abstract class AbstractGameState extends GameState {
      *
      * @param object 可以在畫面上顯示和移動的物件
      */
-    protected void addGameObject(GameObject object) {
+    public void addGameObject(GameObject object) {
         if (!_objects.contains(object)) {
             _objects.add(object);
         }
