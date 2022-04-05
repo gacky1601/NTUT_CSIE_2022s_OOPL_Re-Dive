@@ -34,10 +34,10 @@ public class PlayerMenu extends AbstractGameState {
 
         add();
         addGameObject(anim= new Animation());
-        anim.addFrame(R.drawable.pa);
-        anim.addFrame(R.drawable.pb);
-        anim.addFrame(R.drawable.pc);
-        anim.addFrame(R.drawable.pd);
+        //anim.addFrame(R.drawable.pa);
+        //anim.addFrame(R.drawable.pb);
+        //anim.addFrame(R.drawable.pc);
+        //anim.addFrame(R.drawable.pd);
         anim.setVisible(false);
         anim.setRepeating(true);
         anim.setDelay(10);

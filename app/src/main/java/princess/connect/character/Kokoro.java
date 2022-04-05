@@ -6,10 +6,37 @@ import princess.connect.baseClass.Character;
 
 public class Kokoro extends Character {
     public Kokoro() {
+        _id = 1059;
+
+        _hitpoints = 521;
+        _physicalAttack = 619;
+        _magicAttack = 0;
+        _physicalDefense = 6;
+        _magicDefense = 3;
+        _physicalCritical = 10;
+        _magicCritical = 0;
+        _evasion = 1;
+        _accuracy = 0;
+        _hpRecoveryRate = 0;
+        _tpRecoveryRate = 0;
+        _waveHpRecovery = 0;
+        _waveTpRecovery = 0;
+        _hpReduceRate = 0;
+        _tpReduceRate = 0;
+
+        _attackRange = 500;
+        _moveSpeed = 450;
+        _attackSpeed = 2.34;
+
+        _level = 1;
+        _star = 1;
+        _rank = 1;
 
         _skills = List.of(new SkillUb(), new Skill1(), new Skill2(), new SkillEx());
         _initialPattern = List.of(2, 1);
         _loopPattern = List.of(0, 0, 2, 0, 1);
+
+        _damageType = DamageType.PHYSICAL;
     }
 
     private class SkillUb extends Skill {
