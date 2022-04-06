@@ -26,19 +26,17 @@ public class Adventure extends AbstractGameState{
 
     @Override
     public void initialize(Map<String, Object> data) {
-        MovingBitmap background = new MovingBitmap(R.drawable.bg_100021,0,-100);
+        MovingBitmap background = new MovingBitmap(R.drawable.bg_100021,0,-200);
         background.resize(1920  ,1080);
         addGameObject(background);
         List<Character> characterLeft = List.of(new Pecorine());
         List<Character> characterRight = List.of(new Kokoro());
         BattleGround ground = new BattleGround(characterLeft, characterRight);
         ground.initialize();
-        //ground.main();
-        Animation animation = new Animation();
-        for(int i = 0; i <= 17; i++)
-            animation.addFrame(String.format("character/pecorine/idle/%d.png", i));
+        ground.main();
+        Animation animation = getAnimationFromAssets("character/pecorine/idle");
         animation.setDelay(1);
-        animation.setLocation(-50,-50);
+        animation.setLocation(-0,-0);
         addGameObject(animation);
     }
 

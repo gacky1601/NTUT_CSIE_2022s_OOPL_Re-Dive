@@ -44,10 +44,6 @@ public class BattleGround {
             for (Character chara : _characterLeft)
                 chara.act(_characterLeft, _characterRight);
 
-            try {
-                Thread.sleep(1000 / BasicStats.FRAME);
-            } catch (InterruptedException e) {
-            }
             _time--;
         }
     }
