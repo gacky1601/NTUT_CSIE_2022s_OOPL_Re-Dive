@@ -7,6 +7,7 @@ import static android.view.Window.FEATURE_NO_TITLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -33,8 +34,6 @@ import princess.connect.state.PlayerMenu.SettingPage;
  */
 
 public class Game extends Activity {
-
-
     /**
      * 預設的最大除錯資訊顯示數量
      */
