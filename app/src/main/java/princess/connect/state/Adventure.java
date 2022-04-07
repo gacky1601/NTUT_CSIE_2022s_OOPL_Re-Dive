@@ -44,7 +44,7 @@ public class Adventure extends AbstractGameState {
         BattleGround ground = new BattleGround(characterLeft, characterRight);
         ground.initialize();
         ground.main();
-        Animation animation = getAnimationFromAssets("character/pecorine/run");
+        Animation animation = getAnimationFromAssets("action/pecorine/run");
         animation.setDelay(1);
         animation.setLocation(-200, 200);
         addGameObject(animation);
@@ -52,7 +52,6 @@ public class Adventure extends AbstractGameState {
         timeTask = new TimerTask() {
             @Override
             public void run() {
-                Log.d("TAG", "run: test");
                 animation.setLocation(animation.getX() + 2,animation.getY());
             }
         };
