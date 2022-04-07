@@ -3,9 +3,12 @@ package princess.connect.character;
 import java.util.List;
 
 import princess.connect.baseClass.Character;
+import princess.connect.extend.Animation;
 
 public class Pecorine extends Character {
     public Pecorine() {
+        _id = 1058;
+        
         _hitpoints = 2991;
         _physicalAttack = 503;
         _magicAttack = 0;
@@ -13,7 +16,7 @@ public class Pecorine extends Character {
         _magicDefense = 3;
         _physicalCritical = 10;
         _magicCritical = 0;
-        _dodge = 0;
+        _evasion = 0;
         _accuracy = 0;
         _hpRecoveryRate = 0;
         _tpRecoveryRate = 0;
@@ -33,6 +36,8 @@ public class Pecorine extends Character {
         _skills = List.of(new SkillUb(), new Skill1(), new Skill2(), new SkillEx());
         _initialPattern = List.of(2, 1);
         _loopPattern = List.of(0, 0, 2, 0, 1);
+
+        _damageType = DamageType.PHYSICAL;
     }
 
     private class SkillUb extends Skill {

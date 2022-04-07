@@ -1,5 +1,6 @@
 package princess.connect.state;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,10 @@ import princess.connect.KeyEventHandler;
 import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
 import princess.connect.ReleasableResource;
+import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
+import princess.connect.extend.Animation;
+import static princess.connect.GameView.runtime;
 
 /**
  * <code>AbstractGameState</code>實作{@link GameState}大部分的介面，提供簡單的
@@ -271,5 +275,18 @@ public abstract class AbstractGameState extends GameState {
         for (KeyEventHandler handler : _keyHandlers) {
             handler.keyReleased(keyCode);
         }
+    }
+
+    protected Animation getAnimationFromAssets(String path) {
+        Animation animation = new Animation();
+        try {
+            for (String asset : runtime.getAssets().list(path)) {
+                MovingBitmap movingBitmap = new MovingBitmap(path + "/" + asset);
+                movingBitmap.resize(movingBitmap.getWidth() / 5, movingBitmap.getHeight() / 5);
+                animation.addFrame(movingBitmap);
+            }
+        } catch (IOException e) {
+        }
+        return animation;
     }
 }
