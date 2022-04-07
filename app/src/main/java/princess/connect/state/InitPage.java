@@ -21,8 +21,9 @@ public class InitPage extends AbstractGameState{
     @Override
     public void initialize(Map<String, Object> data) {
         _background = new MovingBitmap(R.drawable.background);
-        _startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 30);
-        _icon=new MovingBitmap(R.drawable.icon_init,480,500);
+        _startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 0);
+        _icon=new MovingBitmap(R.drawable.icon_init,430,500);
+        _icon.resize((int)(_icon.getWidth()*1.3),(int)(_icon.getHeight()*1.3));
         addGameObject(_background);
         addGameObject(_icon);
         addGameObject(_startButton);
