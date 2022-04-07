@@ -58,5 +58,10 @@ public class PlayerMenu extends AbstractGameState {
         _background.loadBitmap(bg);
     }
 
+    public void changebg(int bg,int x,int y,int xx,int yy){
+        _background.loadBitmap(bg);
+        _background.setLocation(x,y);
+        _background.resize(xx,yy);
+    }
 
 }

@@ -18,7 +18,7 @@ public class CharaterPage extends PlayerMenu {
         MovingBitmap _Charbackground = new MovingBitmap(R.drawable.cha);
         _Charbackground.setLocation(100,50);
         _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3));
-        changebg(R.drawable.bg2);
+        changebg(R.drawable.bg_100941,0,-200,1920,1080);
         charatermap cm = new charatermap();
         addGameObject(_Charbackground);
         addGameObject(cm);
