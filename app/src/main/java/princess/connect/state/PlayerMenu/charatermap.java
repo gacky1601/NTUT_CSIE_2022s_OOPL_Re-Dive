@@ -1,87 +1,113 @@
 package princess.connect.state.PlayerMenu;
 
 
+import static princess.connect.GameView.runtime;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import princeconnect.game.R;
 import princess.connect.GameObject;
+import princess.connect.core.MovingBitmap;
 import princess.connect.extend.BitmapButton;
 
 public class charatermap implements GameObject {
+    private ArrayList<ArrayList<BitmapButton>> allcharter=new ArrayList();
+    private int _onShowPage=0;
+    private ArrayList loadallcharaters(){
+        ArrayList<BitmapButton> _charater=new ArrayList();
+        try {
+            for (String charater:runtime.getAssets().list("character/icon")){
+                Log.d("charater:",charater);
+                _charater.add((new BitmapButton("character/icon/"+charater)));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d("Charatersize",String.valueOf(_charater.size()));
+        return _charater;
+    }
 
-
-    public int getTeamLogos(String teamId)
-    {
-        switch (teamId)
-        {
-            case "100931":
-                return R.drawable.icon_unit_100931;
-            case "101431":
-                return R.drawable.icon_unit_101431;
+    private ArrayList<ArrayList<BitmapButton>> loadallcharaters1(){
+        ArrayList<ArrayList<BitmapButton>> temp=new ArrayList();
+        ArrayList<BitmapButton>  _nc = new ArrayList<>();
+        try {
+            for (String charater:runtime.getAssets().list("character/icon")){
+                Log.d("charater:",charater);
+                _nc.add((new BitmapButton("character/icon/"+charater)));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        return 0;
+        int Char_amount= _nc.size(),ncamount=0;
+        ArrayList<BitmapButton> row0=new ArrayList<>();
+        ArrayList<BitmapButton> row1=new ArrayList<>();
+        ArrayList<BitmapButton> row2=new ArrayList<>();
+        for (int i=0 ;i<3;i++){
+            for (int j=0 ;j<3;j++){
+                for(int k = 0; k<5; k++){
+                    if(j==0)
+                        row0.add(_nc.get(ncamount));
+                    if(j==1)
+                        row1.add(_nc.get(ncamount));
+                    if(j==2)
+                        row2.add(_nc.get(ncamount));
+                    Char_amount--;
+                    ncamount++;
+                }
+            }
+            temp.add(row0);
+            temp.add(row1);
+            temp.add(row1);
+            row0.clear();
+            row1.clear();
+            row2.clear();
+        }
+        return temp;
     }
-    private BitmapButton icon;
-    private final int x=230,y=50,mw=190,mh=190;
-    public ArrayList<BitmapButton> allcha = new ArrayList();
+
     public charatermap(){
-
-
-        icon=new BitmapButton(R.drawable.icon_unit_100931);
-
-        int a;
-
-        a=charlist.length;
-        Log.d("na",String.valueOf(a));
-        String prefix="R.drawable.icon_unit_";
-        allcha.add(new BitmapButton(R.drawable.icon_unit_101431));
-        allcha.add(new BitmapButton(R.drawable.icon_unit_101431));
-        allcha.add(new BitmapButton(R.drawable.icon_unit_101431));
-        allcha.add(new BitmapButton(R.drawable.icon_unit_101431));
-
-
+//        allcharter=loadallcharaters1();
     }
 
     @Override
-    public void move() {
-
-    }
+    public void move() {}
 
     @Override
     public void show() {
-        int count=0;
-        for(BitmapButton arr :allcha){
-            Log.d("allcha","arr");
-            arr.setLocation(100+150*count,100);
-            arr.setVisible(true);
+//        ArrayList<ArrayList<BitmapButton>> _allcharter=new ArrayList();
+//        _allcharter=loadallcharaters1();
+        int countw=0,counth=0,w=190,h=80;
+//        for(int i=0;i<4;i++){
+//            for (int j=0;j<5;j++){
+//                allcharter.get(0).get(0).setLocation(w+i*210,h+j*180);
+//                allcharter.get(0).get(0).show();
+//            }
+//        }
+        ArrayList <BitmapButton>a=loadallcharaters();
+        for(BitmapButton arr :a){
+            if (countw>=5){
+                countw=0;
+                counth++;
+            }
+            if(counth>=3){
+                break;
+            }
+            arr.setLocation(w+210*countw,h+counth*180);
             arr.show();
-            count++;
+            countw++;
         }
+//        _allcharter.get(0).get(0).setLocation(100,100);
+//        _allcharter.get(0).get(0).show();
+    }
 
-    }
-    public int charlist[]={100931, 101031, 101131, 101231, 101431, 101831, 102831, 102931, 103031, 103231, 103631, 103731, 104331, 104431, 104731};
-    public int charnum(){
-        return charlist.length;
-    }
 
     @Override
-    public void release() {
-        icon.release();
-        icon=null;
-    }
-    public static String getResourceString(String name, Context context) {
-        int nameResourceID = context.getResources().getIdentifier(name,
-                "string", context.getApplicationInfo().packageName);
-        if (nameResourceID == 0) {
-            throw new IllegalArgumentException(
-                    "No resource string found with name " + name);
-        } else {
-            return context.getString(nameResourceID);
-        }
-    }
+    public void release() {}
 
 
 };

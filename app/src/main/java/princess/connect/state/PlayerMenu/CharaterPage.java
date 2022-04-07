@@ -9,16 +9,17 @@ import java.util.Map;
 import princeconnect.game.R;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
+import princess.connect.extend.BitmapButton;
 
 public class CharaterPage extends PlayerMenu {
-    private int[] cha={100931, 101031, 101131, 101231, 101431, 101831, 102831, 102931, 103031, 103231, 103631, 103731, 104331, 104431, 104731};
     public CharaterPage(GameEngine engine) { super(engine);}
     public void initialize(Map<String, Object> data) {
         add();
-        MovingBitmap _Charbackground = new MovingBitmap(R.drawable.chabg);
+        MovingBitmap _Charbackground = new MovingBitmap(R.drawable.cha);
+        _Charbackground.setLocation(100,50);
+        _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3));
         changebg(R.drawable.bg2);
         charatermap cm = new charatermap();
-        cm.charlist=cha;
         addGameObject(_Charbackground);
         addGameObject(cm);
     }

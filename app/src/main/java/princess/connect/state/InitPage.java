@@ -14,22 +14,20 @@ public class InitPage extends AbstractGameState{
     public InitPage(GameEngine engine) {
         super(engine);
     }
-
-    private MovingBitmap _background;
+    private MovingBitmap _background,_icon;
     private BitmapButton _startButton;
 
 
     @Override
     public void initialize(Map<String, Object> data) {
-        addGameObject(_background = new MovingBitmap(R.drawable.background));
+        _background = new MovingBitmap(R.drawable.background);
+        _startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 30);
+        _icon=new MovingBitmap(R.drawable.icon_init,480,500);
+        addGameObject(_background);
+        addGameObject(_icon);
+        addGameObject(_startButton);
 
-        addGameObject(_startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 0));
-        _startButton.addButtonEventHandler(new ButtonEventHandler() {
-            @Override
-            public void perform(BitmapButton button) {
-                changeState(Game.PLAYER_MENU);
-            }
-        });
+        _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU));
         addPointerEventHandler(_startButton);
 
     }

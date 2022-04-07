@@ -19,6 +19,7 @@ import princess.connect.core.MovingBitmap;
  */
 public class BitmapButton implements GameObject, PointerEventHandler {
 
+    private String _id;
     /**
      * 按鈕的位置。
      */
@@ -38,6 +39,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
     private MovingBitmap _normalImage;
     private MovingBitmap _pressedImage;
     private MovingBitmap _hoveredImage;
+
 
     /**
      * 已註冊的按鈕事件處理者。
@@ -63,6 +65,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      * @param normalImage 按鈕未被按下時顯示的圖片
      */
     public BitmapButton(String normalImage) {
+        _id=normalImage;
         _hovered = false;
         _pressed = false;
         _visible = true;
