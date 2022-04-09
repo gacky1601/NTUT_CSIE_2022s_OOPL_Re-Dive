@@ -205,7 +205,7 @@ public class Animation implements GameObject {
      * @param index 指定的畫格
      */
     public void setCurrentFrameIndex(int index) {
-        if (index < _frames.size() - 1 && _frameIndex >= 0) {
+        if (index < _frames.size() && _frameIndex >= 0) {
             _frameIndex = index;
         }
     }
@@ -249,5 +249,17 @@ public class Animation implements GameObject {
      */
     public void setVisible(boolean visible) {
         _visible = visible;
+    }
+
+    public boolean isNull() {
+        if (_frames == null)
+            return true;
+        return false;
+    }
+
+    public void inversion() {
+        for (MovingBitmap frame : _frames) {
+            frame.inversion();
+        }
     }
 }

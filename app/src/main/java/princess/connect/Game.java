@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import princess.connect.engine.GameEngine;
 import princess.connect.state.InitPage;
-import princess.connect.state.Adventure;
+import princess.connect.state.BattleState;
 import princess.connect.state.PlayerMenu.AdventurePage;
 import princess.connect.state.PlayerMenu.CharaterPage;
 import princess.connect.state.PlayerMenu.DrawPage;
@@ -43,7 +43,7 @@ public class Game extends Activity {
     /**
      * 遊戲畫面的寬度、高度、畫面更新速度。
      */
-    public static final int GAME_FRAME_WIDTH = 1440, GAME_FRAME_HEIGHT = 720, FRAME_RATE = 15;
+    public static final int GAME_FRAME_WIDTH = 1440, GAME_FRAME_HEIGHT = 720, FRAME_RATE = 20;
     /**
      * 開啟或關閉在選單上顯示資訊選項、除錯資訊、畫面更新速度與感應器的資訊。
      */
@@ -90,7 +90,7 @@ public class Game extends Activity {
             _engine.registerGameState(INITIAL_STATE, new InitPage(_engine));
             _engine.registerGameState(PLAYER_MENU, new PlayerMenu(_engine));
             _engine.registerGameState(ADV_PAGE, new AdventurePage(_engine));
-            _engine.registerGameState(ADV_STATE, new Adventure(_engine));
+            _engine.registerGameState(ADV_STATE, new BattleState(_engine));
             _engine.registerGameState(CHA_PAGE, new CharaterPage(_engine));
             _engine.registerGameState(DRAW_PAGE, new DrawPage(_engine));
             _engine.registerGameState(SETTING_PAGE, new SettingPage(_engine));

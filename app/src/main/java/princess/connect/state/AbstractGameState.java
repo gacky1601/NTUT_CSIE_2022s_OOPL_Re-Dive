@@ -276,17 +276,4 @@ public abstract class AbstractGameState extends GameState {
             handler.keyReleased(keyCode);
         }
     }
-
-    protected Animation getAnimationFromAssets(String path) {
-        Animation animation = new Animation();
-        try {
-            for (String asset : runtime.getAssets().list(path)) {
-                MovingBitmap movingBitmap = new MovingBitmap(path + "/" + asset);
-                movingBitmap.resize(movingBitmap.getWidth() / 5, movingBitmap.getHeight() / 5);
-                animation.addFrame(movingBitmap);
-            }
-        } catch (IOException e) {
-        }
-        return animation;
-    }
 }

@@ -233,4 +233,8 @@ public class MovingBitmap implements GameObject {
     public void setVisible(boolean visible) {
         _visible = visible;
     }
+
+    public void inversion() {
+        _matrixScale.postScale(-1,1, _bitmap.getWidth()/2,0);
+    }
 }

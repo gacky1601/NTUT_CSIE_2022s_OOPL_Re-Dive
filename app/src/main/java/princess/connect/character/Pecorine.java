@@ -1,13 +1,13 @@
 package princess.connect.character;
 
-import java.util.List;
+import java.util.Arrays;
 
 import princess.connect.baseClass.Character;
-import princess.connect.extend.Animation;
 
 public class Pecorine extends Character {
     public Pecorine() {
         _id = 1058;
+        _name = "Pecorine";
         
         _hitpoints = 2991;
         _physicalAttack = 503;
@@ -33,9 +33,9 @@ public class Pecorine extends Character {
         _star = 1;
         _rank = 1;
 
-        _skills = List.of(new SkillUb(), new Skill1(), new Skill2(), new SkillEx());
-        _initialPattern = List.of(2, 1);
-        _loopPattern = List.of(0, 0, 2, 0, 1);
+        _skills = Arrays.asList(new SkillUb(), new Skill1(), new Skill2(), new SkillEx());
+        _initialPattern = Arrays.asList(2, 1);
+        _loopPattern = Arrays.asList(0, 0, 2, 0, 1);
 
         _damageType = DamageType.PHYSICAL;
     }

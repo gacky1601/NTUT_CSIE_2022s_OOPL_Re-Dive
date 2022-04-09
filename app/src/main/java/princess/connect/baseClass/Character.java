@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Character extends BasicStats {
     protected int _id;
+    protected String _name;
 
     protected int _attackRange;
     protected int _moveSpeed;
@@ -14,16 +15,16 @@ public class Character extends BasicStats {
     protected int _rank;
     protected List<Integer> _equipments;
 
-    protected List<Skill> _skills;
-    protected List<Integer> _initialPattern;
-    protected List<Integer> _loopPattern;
-
     protected abstract class Skill {
         protected double _castTime;
         protected int _level = 0;
 
         protected abstract void cast();
     }
+
+    protected List<Skill> _skills;
+    protected List<Integer> _initialPattern;
+    protected List<Integer> _loopPattern;
 
     protected int _x;
     protected int _y;
@@ -40,7 +41,17 @@ public class Character extends BasicStats {
 
     protected DamageType _damageType;
 
+    public enum Action {
+        IDLE, RUN
+    };
+
+    protected Action _action;
+
     private int _restFrame = 0;
+
+    public String name() {
+        return _name;
+    }
 
     protected void act(List<Character> allies, List<Character> enemies) {
         if (!isAttackRange(enemies))
@@ -48,7 +59,7 @@ public class Character extends BasicStats {
         else {
             if (_restFrame == 0) {
                 normalAttack(frontmost(enemies));
-                _restFrame = (int) _attackSpeed * BasicStats.FRAME;
+                _restFrame = (int) _attackSpeed * BattleGround.FRAME;
             } else
                 _restFrame--;
         }
@@ -68,10 +79,10 @@ public class Character extends BasicStats {
     private void move() {
         switch (_direction) {
             case RIGHT:
-                _x -= _moveSpeed / BasicStats.FRAME;
+                _x -= _moveSpeed / BattleGround.FRAME;
                 break;
             case LEFT:
-                _x += _moveSpeed / BasicStats.FRAME;
+                _x += _moveSpeed / BattleGround.FRAME;
                 break;
         }
     }
