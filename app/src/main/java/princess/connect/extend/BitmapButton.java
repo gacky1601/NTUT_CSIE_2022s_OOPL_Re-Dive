@@ -363,6 +363,33 @@ public class BitmapButton implements GameObject, PointerEventHandler {
             image.release();
         }
     }
+    public void resize(double ratio){
+        int resized_h=(int)(_normalImage.getHeight()*ratio),resized_w=(int)(_normalImage.getWidth()*ratio);
+        if (_normalImage!=null)
+            _normalImage.resize(resized_w,resized_h);
+        if (_hoveredImage!=null)
+            _hoveredImage.resize(resized_h,resized_w);
+        if (_pressedImage!=null)
+            _pressedImage.resize(resized_h,resized_w);
+    }
+    public void resize_w(double ratio){
+        int resized_h=(int)(_normalImage.getHeight()),resized_w=(int)(_normalImage.getWidth()*ratio);
+        if (_normalImage!=null)
+            _normalImage.resize(resized_w,resized_h);
+        if (_hoveredImage!=null)
+            _hoveredImage.resize(resized_h,resized_w);
+        if (_pressedImage!=null)
+            _pressedImage.resize(resized_h,resized_w);
+    }
+    public void resize_h(double ratio){
+        int resized_h=(int)(_normalImage.getHeight()*ratio),resized_w=(int)(_normalImage.getWidth());
+        if (_normalImage!=null)
+            _normalImage.resize(resized_w,resized_h);
+        if (_hoveredImage!=null)
+            _hoveredImage.resize(resized_h,resized_w);
+        if (_pressedImage!=null)
+            _pressedImage.resize(resized_h,resized_w);
+    }
 
     /**
      * 通知所有已註冊的按鈕事件處理者。

@@ -20,18 +20,29 @@ import princess.connect.extend.BitmapButton;
 public class CharaterPage extends PlayerMenu {
 
     public CharaterPage(GameEngine engine) { super(engine);}
-    private ArrayList<ArrayList<BitmapButton>> allcharter=new ArrayList();
+    private ArrayList<BitmapButton> allcharter=new ArrayList();
     private int _onShowPage=0;
 
     public void initialize(Map<String, Object> data) {
+        _onShowPage=0;
         add();
         MovingBitmap _Charbackground = new MovingBitmap(R.drawable.cha);
         _Charbackground.setLocation(100,50);
-        _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3));
+        _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3)+25);
+
         changebg(R.drawable.bg_100941,0,-200,1920,1080);
         addGameObject(_Charbackground);
         showallcharacter();
-
+        BitmapButton nextpage =new BitmapButton(R.drawable.empty_btn,R.drawable.empty_btn_pressed,1250,400);
+        nextpage.resize_w(0.3);
+        nextpage.addButtonEventHandler(button -> change_page("+"));
+        addPointerEventHandler(nextpage);
+        addGameObject(nextpage);
+        BitmapButton lastpage =new BitmapButton(R.drawable.empty_btn,R.drawable.empty_btn_pressed,1250,300);
+        lastpage.resize_w(0.3);
+        lastpage.addButtonEventHandler(button -> change_page("-"));
+        addPointerEventHandler(lastpage);
+        addGameObject(lastpage);
     }
 
 
@@ -51,20 +62,31 @@ public class CharaterPage extends PlayerMenu {
     }
 
     private void showallcharacter(){
-        int countw=0,counth=0,w=190,h=80;
-        ArrayList <BitmapButton>a=loadallcharaters();
-        for(BitmapButton arr :a){
-            if (countw>=5){
-                countw=0;
-                counth++;
+        int w=160,h=80;
+        ArrayList <BitmapButton> a =loadallcharaters();
+        allcharter=a;
+        Log.d("All Character Size:",String.valueOf(allcharter.size()));
+        for(int i =0;i<3 ;i++){
+            for (int j=0;j<3;j++) {
+                Log.d("current character:",String.valueOf(_onShowPage*9+i*3+j));
+
+                if(_onShowPage*9+i*3+j>allcharter.size()-1)
+                    break;
+                a.get(_onShowPage*9+i*3+j).setLocation(w + 380 * j, h + 180 * i);
+                a.get(_onShowPage*9+i*3+j).resize(0.60);
+                addGameObject(a.get(_onShowPage*9+i*3+j));
             }
-            if(counth>=3){
-                break;
-            }
-            arr.setLocation(w+210*countw,h+counth*180);
-            addGameObject(arr);
-            countw++;
         }
+    }
+    private void change_page(String op){
+        if(op=="+")
+            if(_onShowPage<(allcharter.size()/9))
+                _onShowPage++;
+        if(op=="-"){
+            if(_onShowPage!=0)
+                _onShowPage--;
+        }
+        showallcharacter();
     }
 
 }
