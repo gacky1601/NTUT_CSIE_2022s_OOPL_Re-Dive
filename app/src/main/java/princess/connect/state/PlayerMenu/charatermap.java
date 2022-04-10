@@ -20,9 +20,9 @@ public class charatermap implements GameObject {
     private ArrayList loadallcharaters(){
         ArrayList<BitmapButton> _charater=new ArrayList();
         try {
-            for (String charater:runtime.getAssets().list("character/icon")){
+            for (String charater:runtime.getAssets().list("charater/icon")){
                 Log.d("charater:",charater);
-                _charater.add((new BitmapButton("character/icon/"+charater)));
+                _charater.add((new BitmapButton("charater/icon/"+charater)));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -51,6 +51,7 @@ public class charatermap implements GameObject {
                 break;
             }
             arr.setLocation(w+210*countw,h+counth*180);
+
             arr.show();
             countw++;
         }
