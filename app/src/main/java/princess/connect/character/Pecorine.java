@@ -28,6 +28,7 @@ public class Pecorine extends Character {
         _attackRange = 155;
         _moveSpeed = 450;
         _attackSpeed = 2.25;
+        _attackCastTime = 1.133;
 
         _level = 1;
         _star = 1;

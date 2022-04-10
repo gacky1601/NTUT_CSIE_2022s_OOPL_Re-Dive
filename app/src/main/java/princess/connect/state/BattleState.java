@@ -13,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import princeconnect.game.R;
+import princess.connect.Game;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.baseClass.BattleGround;
@@ -32,17 +33,31 @@ public class BattleState extends AbstractGameState {
     }
 
     private class CharacterAnimation extends Animation {
+        public static final int ANIMATION_FRAME = 20;
+
         public CharacterAnimation(String path) {
             try {
                 for (String asset : runtime.getAssets().list(path))
                     addFrame(new MovingBitmap(path + "/" + asset));
             } catch (IOException e) {
             }
+            setDelay(BattleGround.FRAME / CharacterAnimation.ANIMATION_FRAME);
+            setVisible(false);
+        }
+
+        @Override
+        public void move() {
         }
 
         @Override
         public void setLocation(int x, int y) {
+            x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH / 2);
+            y = (int) (Game.GAME_FRAME_HEIGHT / 8 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT / 2);
             super.setLocation(x - (int) (getWidth() / 2), y - (int) (getHeight() / 2));
+        }
+
+        public void nextFrame() {
+            super.move();
         }
     }
 
@@ -52,19 +67,22 @@ public class BattleState extends AbstractGameState {
         CharacterAnimation tmp = null;
         for (Character chara : left) {
             List<CharacterAnimation> charAnimaList = new ArrayList<>();
-            for (Character.Action action : Character.Action.values())
-                charAnimaList.add(new CharacterAnimation(
-                        "action/" + chara.name() + "/" + action.name().toLowerCase()));
+            for (Character.Action action : Character.Action.values()) {
+                tmp = new CharacterAnimation(
+                        "action/" + chara.name() + "/" + action.name().toLowerCase());
+                charAnimaList.add(tmp);
+                addGameObject(tmp);
+            }
             _charAnimaLeft.add(charAnimaList);
         }
         for (Character chara : right) {
             List<CharacterAnimation> charAnimaList = new ArrayList<>();
-            for (Character.Action action : Character.Action.values())
-            {
+            for (Character.Action action : Character.Action.values()) {
                 tmp = new CharacterAnimation(
                         "action/" + chara.name() + "/" + action.name().toLowerCase());
                 tmp.inversion();
                 charAnimaList.add(tmp);
+                addGameObject(tmp);
             }
             _charAnimaRight.add(charAnimaList);
         }
@@ -75,45 +93,71 @@ public class BattleState extends AbstractGameState {
         MovingBitmap background = new MovingBitmap(R.drawable.bg_100021, -200, -200);
         background.resize(1920, 1080);
         addGameObject(background);
-        List<Character> characterLeft = Arrays.asList(new Pecorine());
-        List<Character> characterRight = Arrays.asList(new Kokoro());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro());
+        List<Character> characterRight = Arrays.asList(new Pecorine());
         _ground = new BattleGround(characterLeft, characterRight);
         _ground.initialize();
-        _ground.main();
         loadAllCharacterAnimation(characterLeft, characterRight);
         main();
     }
 
     private void main() {
-        final int[] x = {0, 1400};
-        _charAnimaLeft.get(0).get(Character.Action.RUN.ordinal()).setLocation(x[0], 400);
-        addGameObject(_charAnimaLeft.get(0).get(Character.Action.RUN.ordinal()));
-        _charAnimaRight.get(0).get(Character.Action.RUN.ordinal()).setLocation(x[1], 400);
-        addGameObject(_charAnimaRight.get(0).get(Character.Action.RUN.ordinal()));
-
         _timer = new Timer();
         _timeTask = new TimerTask() {
             @Override
             public void run() {
-                if(x[0] < 500)
-                {
-                    _charAnimaLeft.get(0).get(Character.Action.RUN.ordinal()).setLocation(x[0], 400);
-                    x[0]++;
-                    _charAnimaRight.get(0).get(Character.Action.RUN.ordinal()).setLocation(x[1], 400);
-                    x[1]--;
-                }
-                else
-                {
-                    removeGameObject(_charAnimaLeft.get(0).get(Character.Action.RUN.ordinal()));
-                    _charAnimaLeft.get(0).get(Character.Action.IDLE.ordinal()).setLocation(x[0], 400);
-                    addGameObject(_charAnimaLeft.get(0).get(Character.Action.IDLE.ordinal()));
-                    removeGameObject(_charAnimaRight.get(0).get(Character.Action.RUN.ordinal()));
-                    _charAnimaRight.get(0).get(Character.Action.IDLE.ordinal()).setLocation(x[1], 400);
-                    addGameObject(_charAnimaRight.get(0).get(Character.Action.IDLE.ordinal()));
-                }
+                _ground.main();
+                changeAction();
+                nextFrame();
             }
         };
-        _timer.scheduleAtFixedRate(_timeTask, 0, 3);
+        _timer.scheduleAtFixedRate(_timeTask, 0, 1000 / BattleGround.FRAME);
+    }
+
+    private void changeAction() {
+        List<Character> left = _ground.character(Character.Direction.LEFT);
+        List<Character> right = _ground.character(Character.Direction.RIGHT);
+        for (int i = 0; i < left.size(); i++) {
+            Character chara = left.get(i);
+            List<CharacterAnimation> charAnimaList = _charAnimaLeft.get(i);
+            if (chara.isChangeAction()) {
+                if (chara.preAction() != null)
+                    charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
+                charAnimaList.get(chara.action().ordinal())
+                        .setCurrentFrameIndex(charAnimaList.get(chara.action().ordinal()).getFrameCount() - 1);
+                charAnimaList.get(chara.action().ordinal()).setLocation(chara.x(), chara.y());
+                charAnimaList.get(chara.action().ordinal()).setVisible(true);
+            }
+        }
+        for (int i = 0; i < right.size(); i++) {
+            Character chara = right.get(i);
+            List<CharacterAnimation> charAnimaList = _charAnimaRight.get(i);
+            if (chara.isChangeAction()) {
+                if (chara.preAction() != null)
+                    charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
+                charAnimaList.get(chara.action().ordinal())
+                        .setCurrentFrameIndex(charAnimaList.get(chara.action().ordinal()).getFrameCount() - 1);
+                charAnimaList.get(chara.action().ordinal()).setLocation(chara.x(), chara.y());
+                charAnimaList.get(chara.action().ordinal()).setVisible(true);
+            }
+        }
+    }
+
+    private void nextFrame() {
+        List<Character> left = _ground.character(Character.Direction.LEFT);
+        List<Character> right = _ground.character(Character.Direction.RIGHT);
+        for (int i = 0; i < left.size(); i++) {
+            Character chara = left.get(i);
+            CharacterAnimation charAnimaion = _charAnimaLeft.get(i).get(chara.action().ordinal());
+            charAnimaion.nextFrame();
+            charAnimaion.setLocation(chara.x(), chara.y());
+        }
+        for (int i = 0; i < right.size(); i++) {
+            Character chara = right.get(i);
+            CharacterAnimation charAnimaion = _charAnimaRight.get(i).get(chara.action().ordinal());
+            charAnimaion.nextFrame();
+            charAnimaion.setLocation(chara.x(), chara.y());
+        }
     }
 
     @Override
@@ -145,5 +189,17 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void resume() {
+    }
+
+    @Override
+    public void move() {
+        super.move();
+
+        List<Character> left = _ground.character(Character.Direction.LEFT);
+        List<Character> right = _ground.character(Character.Direction.RIGHT);
+        for (int i = 0; i < left.size(); i++) {
+            Log.d("TAG", "move: " + left.get(i).action() + " "
+                    + _charAnimaLeft.get(i).get(left.get(i).action().ordinal()).getCurrentFrameIndex());
+        }
     }
 }

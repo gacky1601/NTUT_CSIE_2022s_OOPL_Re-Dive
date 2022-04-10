@@ -6,7 +6,10 @@ import java.util.List;
 import princess.connect.baseClass.Character.Direction;
 
 public class BattleGround {
-    static final int FRAME = 100;
+    public static final int FRAME = 100;
+    public static final int WIDTH = 3000;
+    public static final int HEIGHT = 300;
+    public static final int SPACING = 100;
 
     private int _time;
     private List<Character> _characterLeft;
@@ -26,35 +29,51 @@ public class BattleGround {
 
     public void initialize() {
         _time = 90 * FRAME;
-        int[] y = { 150, 300, 0, 225, 75 };
-        for (int i = 0, x = 400; i < _characterLeft.size(); i++, x -= 100) {
-            _characterLeft.get(i)._x = x;
-            _characterLeft.get(i)._y = y[i];
+        int[] y = { 2, 4, 0, 3, 1};
+        for (int i = 0; i < _characterLeft.size(); i++) {
+            _characterLeft.get(i)._x = SPACING * (4 - i);
+            _characterLeft.get(i)._y = y[i] * HEIGHT / 4;
             _characterLeft.get(i)._direction = Direction.LEFT;
         }
-        for (int i = 0, x = 2600; i < _characterRight.size(); i++, x += 100) {
-            _characterRight.get(i)._x = x;
-            _characterRight.get(i)._y = y[i];
+        for (int i = 0; i < _characterRight.size(); i++) {
+            _characterRight.get(i)._x = WIDTH - SPACING * (4 - i);
+            _characterRight.get(i)._y =  y[i] * HEIGHT / 4;
             _characterRight.get(i)._direction = Direction.RIGHT;
         }
     }
 
     public void main() {
-        while (_time != 0) {
-            if (_time % (FRAME / 10) == 0) {
-                System.out.println("\n" + _time);
-                for (Character chara : _characterLeft)
-                    System.out.println(chara._id + " : " + chara._x + " " + chara._y + " HP:" + chara._hitpoints);
-                for (Character chara : _characterRight)
-                    System.out.println(chara._id + " : " + chara._x + " " + chara._y + " HP:" + chara._hitpoints);
-            }
-
-            for (Character chara : _characterRight)
-                chara.act(_characterRight, _characterLeft);
+        if (_time % (FRAME / 1) == 0) {
+            System.out.println("\nTime: " + _time);
             for (Character chara : _characterLeft)
-                chara.act(_characterLeft, _characterRight);
-
-            _time--;
+                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
+                        + " " + chara.preAction() + " " + chara.action() + " ");
+            for (Character chara : _characterRight)
+                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
+                        + " " + chara.preAction() + " " + chara.action() + " ");
         }
+        if (_characterLeft.get(0)._hitpoints < 0 && _characterRight.get(0)._hitpoints < 0)
+            _time = 0;
+
+        for (Character chara : _characterRight)
+            chara.act(_characterRight, _characterLeft);
+        for (Character chara : _characterLeft)
+            chara.act(_characterLeft, _characterRight);
+
+        _time--;
+    }
+
+    public int time() {
+        return _time;
+    }
+
+    public List<Character> character(Direction direction) {
+        switch (direction) {
+            case LEFT:
+                return _characterLeft;
+            case RIGHT:
+                return _characterRight;
+        }
+        return null;
     }
 }

@@ -9,6 +9,7 @@ public class Character extends BasicStats {
     protected int _attackRange;
     protected int _moveSpeed;
     protected double _attackSpeed;
+    protected double _attackCastTime;
 
     protected int _level;
     protected int _star;
@@ -26,10 +27,10 @@ public class Character extends BasicStats {
     protected List<Integer> _initialPattern;
     protected List<Integer> _loopPattern;
 
-    protected int _x;
-    protected int _y;
+    protected double _x;
+    protected double _y;
 
-    protected enum Direction {
+    public enum Direction {
         RIGHT, LEFT
     };
 
@@ -42,26 +43,68 @@ public class Character extends BasicStats {
     protected DamageType _damageType;
 
     public enum Action {
-        IDLE, RUN
+        IDLE, RUN, ATTACK
     };
 
-    protected Action _action;
+    private Action _action = Action.RUN;
+    private Action _preAction = null;
 
-    private int _restFrame = 0;
+    private int _actionFrame = 0;
+    private int _idleFrame = 0;
+
+    private Boolean _isChangeAction = true;
 
     public String name() {
         return _name;
     }
 
+    public int x() {
+        return (int) _x;
+    }
+
+    public int y() {
+        return (int) _y;
+    }
+
+    public Action action() {
+        return _action;
+    }
+
+    public Action preAction() {
+        return _preAction;
+    }
+
+    public Boolean isChangeAction() {
+        if (_isChangeAction) {
+            _isChangeAction = false;
+            return true;
+        }
+        return false;
+    }
+
     protected void act(List<Character> allies, List<Character> enemies) {
-        if (!isAttackRange(enemies))
+        if (!isAttackRange(enemies)) {
             move();
-        else {
-            if (_restFrame == 0) {
-                normalAttack(frontmost(enemies));
-                _restFrame = (int) _attackSpeed * BattleGround.FRAME;
+            changeAction(Action.RUN);
+        } else {
+            if (_idleFrame == 0) {
+                attack(frontmost(enemies));
+                changeAction(Action.ATTACK);
+                _actionFrame = (int) (_attackCastTime * BattleGround.FRAME);
+                _idleFrame = (int) (_attackSpeed * BattleGround.FRAME);
+            } else if (_actionFrame == 0) {
+                changeAction(Action.IDLE);
+                _idleFrame--;
             } else
-                _restFrame--;
+                _actionFrame--;
+        }
+    }
+
+    private void changeAction(Action action) {
+        if (_action != action) {
+            _preAction = _action;
+            _action = action;
+            _isChangeAction = true;
         }
     }
 
@@ -79,10 +122,10 @@ public class Character extends BasicStats {
     private void move() {
         switch (_direction) {
             case RIGHT:
-                _x -= _moveSpeed / BattleGround.FRAME;
+                _x -= Double.valueOf(_moveSpeed) / BattleGround.FRAME;
                 break;
             case LEFT:
-                _x += _moveSpeed / BattleGround.FRAME;
+                _x += Double.valueOf(_moveSpeed) / BattleGround.FRAME;
                 break;
         }
     }
@@ -100,7 +143,7 @@ public class Character extends BasicStats {
         return chars.get(index);
     }
 
-    private void normalAttack(Character chara) {
+    private void attack(Character chara) {
         switch (_damageType) {
             case PHYSICAL:
                 chara.takeDamage(_physicalAttack, _damageType);

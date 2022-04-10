@@ -28,6 +28,7 @@ public class Kokoro extends Character {
         _attackRange = 500;
         _moveSpeed = 450;
         _attackSpeed = 2.34;
+        _attackCastTime = 1.167;
 
         _level = 1;
         _star = 1;
