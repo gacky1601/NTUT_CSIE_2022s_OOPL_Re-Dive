@@ -66,6 +66,10 @@ public class Character extends BasicStats {
         return (int) _y;
     }
 
+    public Direction direction() {
+        return _direction;
+    }
+
     public Action action() {
         return _action;
     }

@@ -7,6 +7,8 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -26,9 +28,8 @@ public class BattleState extends AbstractGameState {
 
     private BattleGround _ground;
     private Timer _timer;
-    private TimerTask _timeTask;
-    private List<List<CharacterAnimation>> _charAnimaLeft;
-    private List<List<CharacterAnimation>> _charAnimaRight;
+    private TimerTask _timeTask = null;
+    private List<List<CharacterAnimation>> _charAnimations;
 
     public BattleState(GameEngine engine) {
         super(engine);
@@ -63,30 +64,10 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private void loadAllCharacterAnimation(List<Character> left, List<Character> right) {
-        _charAnimaLeft = new ArrayList<>();
-        _charAnimaRight = new ArrayList<>();
-        CharacterAnimation tmp = null;
-        for (Character chara : left) {
-            List<CharacterAnimation> charAnimaList = new ArrayList<>();
-            for (Character.Action action : Character.Action.values()) {
-                tmp = new CharacterAnimation(
-                        "action/" + chara.name() + "/" + action.name().toLowerCase());
-                charAnimaList.add(tmp);
-                addGameObject(tmp);
-            }
-            _charAnimaLeft.add(charAnimaList);
-        }
-        for (Character chara : right) {
-            List<CharacterAnimation> charAnimaList = new ArrayList<>();
-            for (Character.Action action : Character.Action.values()) {
-                tmp = new CharacterAnimation(
-                        "action/" + chara.name() + "/" + action.name().toLowerCase());
-                tmp.inversion();
-                charAnimaList.add(tmp);
-                addGameObject(tmp);
-            }
-            _charAnimaRight.add(charAnimaList);
+    class CharacterComparator implements Comparator<Character> {
+        @Override
+        public int compare(Character char1, Character char2) {
+            return char1.y() - char2.y();
         }
     }
 
@@ -95,8 +76,8 @@ public class BattleState extends AbstractGameState {
         MovingBitmap background = new MovingBitmap(R.drawable.bg_100021, -200, -200);
         background.resize(1920, 1080);
         addGameObject(background);
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kokoro());
-        List<Character> characterRight = Arrays.asList(new Pecorine());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kokoro(),new Kokoro(),new Kokoro());
+        List<Character> characterRight = Arrays.asList(new Pecorine(),new Kokoro(),new Kokoro(),new Kokoro(),new Kokoro());
         _ground = new BattleGround(characterLeft, characterRight);
         _ground.initialize();
         loadAllCharacterAnimation(characterLeft, characterRight);
@@ -116,24 +97,35 @@ public class BattleState extends AbstractGameState {
         _timer.scheduleAtFixedRate(_timeTask, 0, 1000 /SPEED / BattleGround.FRAME);
     }
 
-    private void changeAction() {
-        List<Character> left = _ground.character(Character.Direction.LEFT);
-        List<Character> right = _ground.character(Character.Direction.RIGHT);
-        for (int i = 0; i < left.size(); i++) {
-            Character chara = left.get(i);
-            List<CharacterAnimation> charAnimaList = _charAnimaLeft.get(i);
-            if (chara.isChangeAction()) {
-                if (chara.preAction() != null)
-                    charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
-                charAnimaList.get(chara.action().ordinal())
-                        .setCurrentFrameIndex(charAnimaList.get(chara.action().ordinal()).getFrameCount() - 1);
-                charAnimaList.get(chara.action().ordinal()).setLocation(chara.x(), chara.y());
-                charAnimaList.get(chara.action().ordinal()).setVisible(true);
+    private List<Character> getSortedCharacter() {
+        List<Character> chars = _ground.characters();
+        Collections.sort(chars, new CharacterComparator());
+        return chars;
+    }
+
+    private void loadAllCharacterAnimation(List<Character> left, List<Character> right) {
+        _charAnimations = new ArrayList<>();
+        List<Character> chars = getSortedCharacter();
+        CharacterAnimation tmp = null;
+        for (Character chara : chars) {
+            List<CharacterAnimation> charAnimaList = new ArrayList<>();
+            for (Character.Action action : Character.Action.values()) {
+                tmp = new CharacterAnimation(
+                        "action/" + chara.name() + "/" + action.name().toLowerCase());
+                if (chara.direction() == Character.Direction.RIGHT)
+                    tmp.inversion();
+                charAnimaList.add(tmp);
+                addGameObject(tmp);
             }
+            _charAnimations.add(charAnimaList);
         }
-        for (int i = 0; i < right.size(); i++) {
-            Character chara = right.get(i);
-            List<CharacterAnimation> charAnimaList = _charAnimaRight.get(i);
+    }
+
+    private void changeAction() {
+        List<Character> chars = getSortedCharacter();
+        for (int i = 0; i < chars.size(); i++) {
+            Character chara = chars.get(i);
+            List<CharacterAnimation> charAnimaList = _charAnimations.get(i);
             if (chara.isChangeAction()) {
                 if (chara.preAction() != null)
                     charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
@@ -146,17 +138,10 @@ public class BattleState extends AbstractGameState {
     }
 
     private void nextFrame() {
-        List<Character> left = _ground.character(Character.Direction.LEFT);
-        List<Character> right = _ground.character(Character.Direction.RIGHT);
-        for (int i = 0; i < left.size(); i++) {
-            Character chara = left.get(i);
-            CharacterAnimation charAnimaion = _charAnimaLeft.get(i).get(chara.action().ordinal());
-            charAnimaion.nextFrame();
-            charAnimaion.setLocation(chara.x(), chara.y());
-        }
-        for (int i = 0; i < right.size(); i++) {
-            Character chara = right.get(i);
-            CharacterAnimation charAnimaion = _charAnimaRight.get(i).get(chara.action().ordinal());
+        List<Character> chars = getSortedCharacter();
+        for (int i = 0; i < chars.size(); i++) {
+            Character chara = chars.get(i);
+            CharacterAnimation charAnimaion = _charAnimations.get(i).get(chara.action().ordinal());
             charAnimaion.nextFrame();
             charAnimaion.setLocation(chara.x(), chara.y());
         }
@@ -167,22 +152,16 @@ public class BattleState extends AbstractGameState {
         super.release();
         _ground.release();
         _timer = null;
-        _timeTask.cancel();
+        if (_timeTask != null)
+            _timeTask.cancel();
         _timeTask = null;
-        for (List<CharacterAnimation> charAnimaList : _charAnimaLeft) {
+        for (List<CharacterAnimation> charAnimaList : _charAnimations) {
             for (CharacterAnimation charAnima : charAnimaList)
                 if (!charAnima.isNull())
                     charAnima.release();
             charAnimaList.clear();
         }
-        _charAnimaLeft = null;
-        for (List<CharacterAnimation> charAnimaList : _charAnimaRight) {
-            for (CharacterAnimation charAnima : charAnimaList)
-                if (!charAnima.isNull())
-                    charAnima.release();
-            charAnimaList.clear();
-        }
-        _charAnimaRight = null;
+        _charAnimations = null;
     }
 
     @Override

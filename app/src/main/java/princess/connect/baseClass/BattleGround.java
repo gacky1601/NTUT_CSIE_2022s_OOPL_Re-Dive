@@ -29,7 +29,7 @@ public class BattleGround {
 
     public void initialize() {
         _time = 90 * FRAME;
-        int[] y = { 2, 4, 0, 3, 1};
+        int[] y = { 2, 4, 0, 3, 1 };
         for (int i = 0; i < _characterLeft.size(); i++) {
             _characterLeft.get(i)._x = SPACING * (4 - i);
             _characterLeft.get(i)._y = y[i] * HEIGHT / 4;
@@ -37,7 +37,7 @@ public class BattleGround {
         }
         for (int i = 0; i < _characterRight.size(); i++) {
             _characterRight.get(i)._x = WIDTH - SPACING * (4 - i);
-            _characterRight.get(i)._y =  y[i] * HEIGHT / 4;
+            _characterRight.get(i)._y = y[i] * HEIGHT / 4;
             _characterRight.get(i)._direction = Direction.RIGHT;
         }
     }
@@ -67,13 +67,10 @@ public class BattleGround {
         return _time;
     }
 
-    public List<Character> character(Direction direction) {
-        switch (direction) {
-            case LEFT:
-                return _characterLeft;
-            case RIGHT:
-                return _characterRight;
-        }
-        return null;
+    public List<Character> characters() {
+        List<Character> chars = new ArrayList<>();
+        chars.addAll(_characterRight);
+        chars.addAll(_characterLeft);
+        return chars;
     }
 }
