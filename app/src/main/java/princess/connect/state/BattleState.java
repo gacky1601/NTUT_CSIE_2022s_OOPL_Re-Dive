@@ -54,9 +54,9 @@ public class BattleState extends AbstractGameState {
 
         @Override
         public void setLocation(int x, int y) {
-            x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH / 2);
-            y = (int) (Game.GAME_FRAME_HEIGHT / 8 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT / 2.25);
-            super.setLocation(x - (int) (getWidth() / 2), y - (int) (getHeight() * 3 / 4));
+            x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
+            y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
+            super.setLocation(x - (int) (getWidth() * 0.5), y - (int) (getHeight() * 0.75));
         }
 
         public void nextFrame() {

@@ -42,6 +42,8 @@ public class PlayerMenu extends AbstractGameState {
 
     public void add(){
         addGameObject(_background = new MovingBitmap(R.drawable.background));
+        _background.resize((int) (_background.getWidth() * 0.85), (int) (_background.getHeight() * 0.85));
+        _background.setLocation(-300,-300);
         int _buttondx = 230,_buttondy=660;
         initializeButton(_PlayermenuButton,R.drawable.bg_main,R.drawable.bg_main_press, _buttondx,_buttondy+1,Game.PLAYER_MENU);
         initializeButton(_AdventureButton,R.drawable.bg_other,R.drawable.bg_charater_pressed, _buttondx +178,_buttondy,Game.CHA_PAGE);
