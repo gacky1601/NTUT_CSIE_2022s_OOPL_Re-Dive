@@ -22,6 +22,8 @@ import princess.connect.character.*;
 import princess.connect.extend.Animation;
 
 public class BattleState extends AbstractGameState {
+    private final int SPEED = 2;
+
     private BattleGround _ground;
     private Timer _timer;
     private TimerTask _timeTask;
@@ -33,7 +35,7 @@ public class BattleState extends AbstractGameState {
     }
 
     private class CharacterAnimation extends Animation {
-        public static final int ANIMATION_FRAME = 20;
+        public static final int ANIMATION_FRAME = 10;
 
         public CharacterAnimation(String path) {
             try {
@@ -52,8 +54,8 @@ public class BattleState extends AbstractGameState {
         @Override
         public void setLocation(int x, int y) {
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH / 2);
-            y = (int) (Game.GAME_FRAME_HEIGHT / 8 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT / 2);
-            super.setLocation(x - (int) (getWidth() / 2), y - (int) (getHeight() / 2));
+            y = (int) (Game.GAME_FRAME_HEIGHT / 8 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT / 2.25);
+            super.setLocation(x - (int) (getWidth() / 2), y - (int) (getHeight() * 3 / 4));
         }
 
         public void nextFrame() {
@@ -93,7 +95,7 @@ public class BattleState extends AbstractGameState {
         MovingBitmap background = new MovingBitmap(R.drawable.bg_100021, -200, -200);
         background.resize(1920, 1080);
         addGameObject(background);
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kokoro());
         List<Character> characterRight = Arrays.asList(new Pecorine());
         _ground = new BattleGround(characterLeft, characterRight);
         _ground.initialize();
@@ -111,7 +113,7 @@ public class BattleState extends AbstractGameState {
                 nextFrame();
             }
         };
-        _timer.scheduleAtFixedRate(_timeTask, 0, 1000 / BattleGround.FRAME);
+        _timer.scheduleAtFixedRate(_timeTask, 0, 1000 /SPEED / BattleGround.FRAME);
     }
 
     private void changeAction() {
@@ -189,17 +191,5 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void resume() {
-    }
-
-    @Override
-    public void move() {
-        super.move();
-
-        List<Character> left = _ground.character(Character.Direction.LEFT);
-        List<Character> right = _ground.character(Character.Direction.RIGHT);
-        for (int i = 0; i < left.size(); i++) {
-            Log.d("TAG", "move: " + left.get(i).action() + " "
-                    + _charAnimaLeft.get(i).get(left.get(i).action().ordinal()).getCurrentFrameIndex());
-        }
     }
 }
