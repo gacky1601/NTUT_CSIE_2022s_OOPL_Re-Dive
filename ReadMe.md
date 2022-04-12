@@ -31,7 +31,7 @@
 
 ## Initialize Project
 ### March 3, 2022
-#### Clean Up unneccessary files 、Implenment InitPage and GameMenu(PlayerMenu derive class) @Yupooooo
+#### Clean Up unneccessary files , Implenment InitPage and GameMenu(PlayerMenu derive class) @Yupooooo
 #### Inplenment Most important Class : character.java @SmallRay
 initialize base attribute:_hp ,_physicalAttack ,_magicAttack , etc. 
 ## Before 2022/3/18
