@@ -183,6 +183,9 @@ public class MovingBitmap implements GameObject {
         _height = height;
         _matrixScale.setScale((float) width/_bitmap.getWidth(), (float) height/_bitmap.getHeight());
     }
+    public void resize(double ratio){
+        resize((int)(getWidth()*ratio),(int)(getHeight()*ratio));
+    }
     public void rotate(int degree) {
         _matrixRotate.setRotate(degree,_bitmap.getWidth()/2,_bitmap.getHeight()/2);
     }
