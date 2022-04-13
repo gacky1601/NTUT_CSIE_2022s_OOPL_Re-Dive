@@ -54,6 +54,8 @@ public class BattleState extends AbstractGameState {
 
         @Override
         public void setLocation(int x, int y) {
+            if (getCurrentFrameIndex() == -1)
+                return;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
             super.setLocation(x - (int) (getWidth() * 0.5), y - (int) (getHeight() * 0.75));
@@ -94,7 +96,7 @@ public class BattleState extends AbstractGameState {
                 nextFrame();
             }
         };
-        _timer.scheduleAtFixedRate(_timeTask, 0, 1000 /SPEED / BattleGround.FRAME);
+        _timer.scheduleAtFixedRate(_timeTask, 0, 1000 / SPEED / BattleGround.FRAME);
     }
 
     private List<Character> getSortedCharacter() {
@@ -114,6 +116,8 @@ public class BattleState extends AbstractGameState {
                         "action/" + chara.name() + "/" + action.name().toLowerCase());
                 if (chara.direction() == Character.Direction.RIGHT)
                     tmp.inversion();
+                if (action == Character.Action.DIE)
+                    tmp.setRepeating(false);
                 charAnimaList.add(tmp);
                 addGameObject(tmp);
             }
@@ -131,6 +135,8 @@ public class BattleState extends AbstractGameState {
                     charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
                 charAnimaList.get(chara.action().ordinal())
                         .setCurrentFrameIndex(charAnimaList.get(chara.action().ordinal()).getFrameCount() - 1);
+                if (chara.action() == Character.Action.DIE)
+                    charAnimaList.get(chara.action().ordinal()).reset();
                 charAnimaList.get(chara.action().ordinal()).setLocation(chara.x(), chara.y());
                 charAnimaList.get(chara.action().ordinal()).setVisible(true);
             }

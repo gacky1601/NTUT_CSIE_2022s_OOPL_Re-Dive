@@ -55,10 +55,10 @@ public class BattleGround {
         }
 
         for (Character chara : _characterLeft)
-            if (chara.action() != Action.DIE && !isEnd())
+            if (chara.action() != Action.DIE)
                 chara.act(_characterLeft, _characterRight);
         for (Character chara : _characterRight)
-            if (chara.action() != Action.DIE && !isEnd())
+            if (chara.action() != Action.DIE)
                 chara.act(_characterRight, _characterLeft);
 
         _time--;

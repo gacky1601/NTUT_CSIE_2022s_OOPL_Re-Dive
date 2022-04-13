@@ -87,21 +87,24 @@ public class Character extends BasicStats {
     }
 
     protected void act(List<Character> allies, List<Character> enemies) {
-        if (!isInAttackRange(frontmost(enemies)) && _idleFrame == 0) {
-            move();
-            changeAction(Action.RUN);
-        } else {
-            if (_idleFrame == 0) {
+        if (_idleFrame == 0) {
+            if (frontmost(enemies) == null)
+                changeAction(Action.IDLE);
+            else if (!isInAttackRange(frontmost(enemies))) {
+                move();
+                changeAction(Action.RUN);
+            } else {
                 attack(frontmost(enemies));
                 changeAction(Action.ATTACK);
                 _actionFrame = (int) (_attackCastTime * BattleGround.FRAME);
                 _idleFrame = (int) (_attackSpeed * BattleGround.FRAME);
-            } else if (_actionFrame == 0) {
-                changeAction(Action.IDLE);
-                _idleFrame--;
-            } else
-                _actionFrame--;
-        }
+            }
+        } else if (_actionFrame == 0) {
+            changeAction(Action.IDLE);
+            _idleFrame--;
+        } else
+            _actionFrame--;
+
     }
 
     private void changeAction(Action action) {
