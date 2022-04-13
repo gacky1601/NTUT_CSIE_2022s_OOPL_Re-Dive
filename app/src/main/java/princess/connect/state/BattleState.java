@@ -76,8 +76,8 @@ public class BattleState extends AbstractGameState {
         MovingBitmap background = new MovingBitmap(R.drawable.bg_100021, -200, -200);
         background.resize(1920, 1080);
         addGameObject(background);
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kokoro(),new Kokoro(),new Kokoro());
-        List<Character> characterRight = Arrays.asList(new Pecorine(),new Kokoro(),new Kokoro(),new Kokoro(),new Kokoro());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
+        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
         _ground.initialize();
         loadAllCharacterAnimation(characterLeft, characterRight);

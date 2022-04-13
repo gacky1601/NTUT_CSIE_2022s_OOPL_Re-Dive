@@ -3,6 +3,7 @@ package princess.connect.baseClass;
 import java.util.ArrayList;
 import java.util.List;
 
+import princess.connect.baseClass.Character.Action;
 import princess.connect.baseClass.Character.Direction;
 
 public class BattleGround {
@@ -47,20 +48,22 @@ public class BattleGround {
             System.out.println("\nTime: " + _time);
             for (Character chara : _characterLeft)
                 System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
-                        + " " + chara.preAction() + " " + chara.action() + " ");
+                        + " ");
             for (Character chara : _characterRight)
                 System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
-                        + " " + chara.preAction() + " " + chara.action() + " ");
+                        + " ");
         }
-        if (_characterLeft.get(0)._hitpoints < 0 && _characterRight.get(0)._hitpoints < 0)
-            _time = 0;
 
-        for (Character chara : _characterRight)
-            chara.act(_characterRight, _characterLeft);
         for (Character chara : _characterLeft)
-            chara.act(_characterLeft, _characterRight);
+            if (chara.action() != Action.DIE && !isEnd())
+                chara.act(_characterLeft, _characterRight);
+        for (Character chara : _characterRight)
+            if (chara.action() != Action.DIE && !isEnd())
+                chara.act(_characterRight, _characterLeft);
 
         _time--;
+        if (isEnd())
+            _time = 0;
     }
 
     public int time() {
@@ -72,5 +75,16 @@ public class BattleGround {
         chars.addAll(_characterRight);
         chars.addAll(_characterLeft);
         return chars;
+    }
+
+    public boolean isEnd() {
+        boolean isAliveRight = false, isAliveLeft = false;
+        for (Character chara : _characterLeft)
+            if (chara.action() != Action.DIE)
+                isAliveLeft = true;
+        for (Character chara : _characterRight)
+            if (chara.action() != Action.DIE)
+                isAliveRight = true;
+        return !(isAliveLeft && isAliveRight);
     }
 }

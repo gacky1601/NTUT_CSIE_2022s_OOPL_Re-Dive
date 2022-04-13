@@ -43,7 +43,7 @@ public class Character extends BasicStats {
     protected DamageType _damageType;
 
     public enum Action {
-        IDLE, RUN, ATTACK
+        IDLE, RUN, ATTACK, DIE
     };
 
     private Action _action = Action.RUN;
@@ -87,7 +87,7 @@ public class Character extends BasicStats {
     }
 
     protected void act(List<Character> allies, List<Character> enemies) {
-        if (!isAttackRange(enemies)) {
+        if (!isInAttackRange(frontmost(enemies)) && _idleFrame == 0) {
             move();
             changeAction(Action.RUN);
         } else {
@@ -116,10 +116,9 @@ public class Character extends BasicStats {
         return Math.sqrt(Math.pow(_x - chara._x, 2) + Math.pow(_y - chara._y, 2));
     }
 
-    private boolean isAttackRange(List<Character> chars) {
-        for (Character chara : chars)
-            if (distance(chara) < _attackRange)
-                return true;
+    private boolean isInAttackRange(Character chara) {
+        if (distance(chara) < _attackRange)
+            return true;
         return false;
     }
 
@@ -135,16 +134,18 @@ public class Character extends BasicStats {
     }
 
     private Character frontmost(List<Character> chars) {
-        int index = 0;
-        double distance = distance(chars.get(index)), tmp;
-        for (int i = 1; i < chars.size(); i++) {
-            tmp = distance(chars.get(index));
-            if (tmp < distance) {
-                distance = tmp;
-                index = i;
+        Character chara = null;
+        double distance = Double.MAX_VALUE, tmp;
+        for (int i = 0; i < chars.size(); i++) {
+            if (chars.get(i)._action != Action.DIE) {
+                tmp = distance(chars.get(i));
+                if (tmp < distance) {
+                    distance = tmp;
+                    chara = chars.get(i);
+                }
             }
         }
-        return chars.get(index);
+        return chara;
     }
 
     private void attack(Character chara) {
@@ -167,5 +168,7 @@ public class Character extends BasicStats {
                 _hitpoints -= (int) (damage / (1 + _magicDefense / 100.0));
                 break;
         }
+        if (_hitpoints <= 0)
+            changeAction(Action.DIE);
     }
 }
