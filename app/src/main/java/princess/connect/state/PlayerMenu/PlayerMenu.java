@@ -34,15 +34,17 @@ public class PlayerMenu extends AbstractGameState {
     public void resume() {}
 
     private void initializeButton(BitmapButton Button,int image_a,int image_b,int x,int y,int state) {
-        addGameObject(Button = new BitmapButton(image_a, image_b, x, y));
+        Button= new BitmapButton(image_a, image_b, x, y);
+        addGameObject(Button);
         Button.addButtonEventHandler(button -> changeState(state));
         addPointerEventHandler(Button);
 
     }
 
     public void add(){
-        addGameObject(_background = new MovingBitmap(R.drawable.background));
-        _background.resize((int) (_background.getWidth() * 0.85), (int) (_background.getHeight() * 0.85));
+        _background = new MovingBitmap(R.drawable.background);
+        addGameObject(_background);
+        _background.resize(0.85);
         _background.setLocation(-300,-300);
         int _buttondx = 230,_buttondy=660;
         initializeButton(_PlayermenuButton,R.drawable.bg_main,R.drawable.bg_main_press, _buttondx,_buttondy+1,Game.PLAYER_MENU);
@@ -60,10 +62,10 @@ public class PlayerMenu extends AbstractGameState {
         _background.loadBitmap(bg);
     }
 
-    public void changebg(int bg,int x,int y,int xx,int yy){
+    public void changebg(int bg,int x,int y,int width,int height){
         _background.loadBitmap(bg);
         _background.setLocation(x,y);
-        _background.resize(xx,yy);
+        _background.resize(width,height);
     }
 
 }
