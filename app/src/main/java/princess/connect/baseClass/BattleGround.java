@@ -47,11 +47,11 @@ public class BattleGround {
         if (_time % (FRAME / 1) == 0) {
             System.out.println("\nTime: " + _time);
             for (Character chara : _characterLeft)
-                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
-                        + " ");
+                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hp
+                        + " " + chara.action());
             for (Character chara : _characterRight)
-                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hitpoints
-                        + " ");
+                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hp
+                        + " " + chara.action());
         }
 
         for (Character chara : _characterLeft)
@@ -72,8 +72,8 @@ public class BattleGround {
 
     public List<Character> characters() {
         List<Character> chars = new ArrayList<>();
-        chars.addAll(_characterRight);
         chars.addAll(_characterLeft);
+        chars.addAll(_characterRight);
         return chars;
     }
 

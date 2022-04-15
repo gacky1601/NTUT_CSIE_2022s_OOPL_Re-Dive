@@ -75,6 +75,11 @@ public class MovingBitmap implements GameObject {
         loadBitmap(filename);
     }
 
+    public MovingBitmap(String filename, BitmapFactory.Options options) {
+        _visible = true;
+        loadBitmap(filename, options);
+    }
+
     /**
      * 建立<code>MovingBitmap</code>物件並立即載入指定的圖片。
      *
@@ -127,6 +132,18 @@ public class MovingBitmap implements GameObject {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inScaled = false;
             options.inTargetDensity = 1;
+            _bitmap = BitmapFactory.decodeStream(runtime.getAssets().open(fileName), null, options);
+            //new new new new new new new new new new new new new new new new new new new new new new new new
+            //_bitmapBackUp = BitmapFactory.decodeStream(runtime.getAssets().open(fileName), null, options);
+            _width = _bitmap.getWidth();
+            _height = _bitmap.getHeight();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadBitmap(String fileName, BitmapFactory.Options options) {
+        try {
             _bitmap = BitmapFactory.decodeStream(runtime.getAssets().open(fileName), null, options);
             //new new new new new new new new new new new new new new new new new new new new new new new new
             //_bitmapBackUp = BitmapFactory.decodeStream(runtime.getAssets().open(fileName), null, options);
@@ -238,6 +255,6 @@ public class MovingBitmap implements GameObject {
     }
 
     public void inversion() {
-        _matrixScale.postScale(-1,1, _bitmap.getWidth()/2,0);
+        _matrixScale.postScale(-1,1, getWidth()/2,0);
     }
 }

@@ -1,6 +1,7 @@
 package princess.connect.character;
 
 import java.util.Arrays;
+import java.util.List;
 
 import princess.connect.baseClass.Character;
 
@@ -9,7 +10,7 @@ public class Pecorine extends Character {
         _id = 1058;
         _name = "Pecorine";
         
-        _hitpoints = 2991;
+        _hp = 2991;
         _physicalAttack = 503;
         _magicAttack = 0;
         _physicalDefense = 7;
@@ -28,55 +29,56 @@ public class Pecorine extends Character {
         _attackRange = 155;
         _moveSpeed = 450;
         _attackSpeed = 2.25;
-        _attackCastTime = 1.133;
+        _attackTime = 1.133;
 
         _level = 1;
         _star = 1;
         _rank = 1;
 
-        _skills = Arrays.asList(new SkillUb(), new Skill1(), new Skill2(), new SkillEx());
-        _initialPattern = Arrays.asList(2, 1);
-        _loopPattern = Arrays.asList(0, 0, 2, 0, 1);
+        _skills = Arrays.asList(new Skill0(), new Skill1(), new Skill2(), new SkillEx());
+        _initialPattern = Arrays.asList(SkillType.SKILL2, SkillType.SKILL1);
+        _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.ATTACK, SkillType.SKILL2, SkillType.ATTACK, SkillType.SKILL1);
 
         _damageType = DamageType.PHYSICAL;
     }
 
-    private class SkillUb extends Skill {
-        private SkillUb() {
-            _castTime = 0;
+    private class Skill0 extends Skill {
+        private Skill0() {
+            _skillTime = 5.333;
         }
 
-        protected void cast() {
+        protected void cast(List<Character> allies, List<Character> enemies) {
             System.out.println("UBTest_pekorine");
         }
     }
 
     private class Skill1 extends Skill {
         private Skill1() {
+            _skillTime = 3.033;
             _castTime = 0.21;
         }
 
-        protected void cast() {
+        protected void cast(List<Character> allies, List<Character> enemies) {
             System.out.println("Skill1Test_pekorine");
         }
     }
 
     private class Skill2 extends Skill {
         private Skill2() {
+            _skillTime = 2.033;
             _castTime = 1.21;
         }
 
-        protected void cast() {
+        protected void cast(List<Character> allies, List<Character> enemies) {
             System.out.println("Skill2Test_pekorine");
         }
     }
 
     private class SkillEx extends Skill {
         private SkillEx() {
-            _castTime = 0;
         }
 
-        protected void cast() {
+        protected void cast(List<Character> allies, List<Character> enemies) {
             System.out.println("ExTest_pekorine");
         }
     }

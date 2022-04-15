@@ -2,6 +2,7 @@ package princess.connect.state;
 
 import static princess.connect.GameView.runtime;
 
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.IOException;
@@ -37,11 +38,19 @@ public class BattleState extends AbstractGameState {
 
     private class CharacterAnimation extends Animation {
         public static final int ANIMATION_FRAME = 10;
+        public static final int SAMPLE_SIZE = 2;
 
         public CharacterAnimation(String path) {
             try {
-                for (String asset : runtime.getAssets().list(path))
-                    addFrame(new MovingBitmap(path + "/" + asset));
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inScaled = false;
+                options.inTargetDensity = 1;
+                options.inSampleSize = SAMPLE_SIZE;
+                for (String asset : runtime.getAssets().list(path)) {
+                    MovingBitmap movingBitmap = new MovingBitmap(path + "/" + asset, options);
+                    movingBitmap.resize(movingBitmap.getWidth() * SAMPLE_SIZE, movingBitmap.getHeight() * SAMPLE_SIZE);
+                    addFrame(movingBitmap);
+                }
             } catch (IOException e) {
             }
             setDelay(BattleGround.FRAME / CharacterAnimation.ANIMATION_FRAME);
@@ -54,7 +63,7 @@ public class BattleState extends AbstractGameState {
 
         @Override
         public void setLocation(int x, int y) {
-            if (getCurrentFrameIndex() == -1)
+            if (getCurrentFrameIndex() == -1 || this == null)
                 return;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
@@ -69,7 +78,7 @@ public class BattleState extends AbstractGameState {
     class CharacterComparator implements Comparator<Character> {
         @Override
         public int compare(Character char1, Character char2) {
-            return char1.y() - char2.y();
+            return char1.y() - char2.y() - 1;
         }
     }
 
@@ -81,8 +90,10 @@ public class BattleState extends AbstractGameState {
         List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
+
         _ground.initialize();
-        loadAllCharacterAnimation(characterLeft, characterRight);
+        loadAllCharacterAnimation();
+
         main();
     }
 
@@ -105,7 +116,7 @@ public class BattleState extends AbstractGameState {
         return chars;
     }
 
-    private void loadAllCharacterAnimation(List<Character> left, List<Character> right) {
+    private void loadAllCharacterAnimation() {
         _charAnimations = new ArrayList<>();
         List<Character> chars = getSortedCharacter();
         CharacterAnimation tmp = null;
