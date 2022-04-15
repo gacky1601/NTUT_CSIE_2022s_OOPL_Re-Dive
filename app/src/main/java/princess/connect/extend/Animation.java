@@ -251,12 +251,6 @@ public class Animation implements GameObject {
         _visible = visible;
     }
 
-    public boolean isNull() {
-        if (_frames == null)
-            return true;
-        return false;
-    }
-
     public void inversion() {
         for (MovingBitmap frame : _frames) {
             frame.inversion();

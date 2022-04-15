@@ -166,18 +166,13 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void release() {
-        super.release();
-        _ground.release();
-        _timer = null;
         if (_timeTask != null)
             _timeTask.cancel();
         _timeTask = null;
-        for (List<CharacterAnimation> charAnimaList : _charAnimations) {
-            for (CharacterAnimation charAnima : charAnimaList)
-                if (!charAnima.isNull())
-                    charAnima.release();
-            charAnimaList.clear();
-        }
+        _timer = null;
+        super.release();
+        _ground.release();
+        _charAnimations.clear();
         _charAnimations = null;
     }
 
