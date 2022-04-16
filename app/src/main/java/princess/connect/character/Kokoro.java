@@ -1,7 +1,6 @@
 package princess.connect.character;
 
 import java.util.Arrays;
-import java.util.List;
 
 import princess.connect.baseClass.Character;
 
@@ -29,15 +28,15 @@ public class Kokoro extends Character {
         _attackRange = 500;
         _moveSpeed = 450;
         _attackSpeed = 2.34;
-        _attackTime = 1.167;
 
         _level = 1;
         _star = 1;
         _rank = 1;
 
-        _skills = Arrays.asList(new Skill0(), new Skill1(), new Skill2(), new SkillEx());
+        _skills = Arrays.asList(new Attack(1.167), new Skill0(), new Skill1(), new Skill2(), new SkillEx());
         _initialPattern = Arrays.asList(SkillType.SKILL2, SkillType.SKILL1);
-        _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.ATTACK, SkillType.SKILL2, SkillType.ATTACK, SkillType.SKILL1);
+        _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.ATTACK, SkillType.SKILL2, SkillType.ATTACK,
+                SkillType.SKILL1);
 
         _damageType = DamageType.PHYSICAL;
     }
@@ -47,8 +46,7 @@ public class Kokoro extends Character {
             _skillTime = 3.633;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("UBTest_kokoro");
+        protected void cast() {
         }
     }
 
@@ -58,8 +56,7 @@ public class Kokoro extends Character {
             _castTime = 0.66;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("Skill1_kokoro");
+        protected void cast() {
         }
     }
 
@@ -69,8 +66,7 @@ public class Kokoro extends Character {
             _castTime = 1.4;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("Skill2Test_kokoro");
+        protected void cast() {
         }
     }
 
@@ -78,8 +74,7 @@ public class Kokoro extends Character {
         private SkillEx() {
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("ExTest_kokoro");
+        protected void cast() {
         }
     }
 }

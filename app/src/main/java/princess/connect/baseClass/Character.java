@@ -9,7 +9,6 @@ public class Character extends BasicStats {
     protected int _attackRange;
     protected int _moveSpeed;
     protected double _attackSpeed;
-    protected double _attackTime;
 
     protected int _level;
     protected int _star;
@@ -17,16 +16,36 @@ public class Character extends BasicStats {
     protected List<Integer> _equipments;
 
     protected abstract class Skill {
-
         protected int _level = 0;
         protected double _skillTime = 0;
         protected double _castTime = 0;
 
-        protected abstract void cast(List<Character> allies, List<Character> enemies);
+        protected abstract void cast();
+    }
+
+    protected class Attack extends Skill {
+        public Attack(Double skillTime) {
+            _skillTime = skillTime;
+            _castTime = skillTime / 2;
+        }
+
+        protected void cast() {
+            if (_actionFrame == (int) (_castTime * BattleGround.FRAME)) {
+                Character chara = frontmost(_enemies);
+                switch (_damageType) {
+                    case PHYSICAL:
+                        chara.takeDamage(_physicalAttack, _damageType);
+                        break;
+                    case MAGIC:
+                        chara.takeDamage(_magicAttack, _damageType);
+                        break;
+                }
+            }
+        }
     }
 
     protected enum SkillType {
-        Skill0, SKILL1, SKILL2, SkillEX, ATTACK
+        ATTACK, Skill0, SKILL1, SKILL2, SkillEX
     }
 
     protected List<Skill> _skills;
@@ -53,7 +72,7 @@ public class Character extends BasicStats {
     };
 
     private Action _action = Action.RUN;
-    public Action _preAction = null;
+    private Action _preAction = null;
 
     private int _actionFrame = 0;
     private int _idleFrame = 0;
@@ -61,6 +80,9 @@ public class Character extends BasicStats {
     private Boolean _isChangeAction = true;
 
     private int _skillIndex = -1;
+
+    protected List<Character> _allies;
+    protected List<Character> _enemies;
 
     public String name() {
         return _name;
@@ -98,18 +120,21 @@ public class Character extends BasicStats {
         if (_idleFrame == 0) {
             if (frontmost(enemies) == null)
                 changeAction(Action.IDLE);
-            else if (!isInAttackRange(frontmost(enemies))) {
+            else if (!isInAttackRange(frontmost(enemies)))
                 move();
-                changeAction(Action.RUN);
-            } else {
-                skill(allies, enemies);
+            else {
+                _allies = allies;
+                _enemies = enemies;
+                _skillIndex++;
+                castSkill();
             }
         } else if (_actionFrame == 0) {
-            changeAction(Action.IDLE);
             _idleFrame--;
-        } else
+            changeAction(Action.IDLE);
+        } else {
             _actionFrame--;
-
+            castSkill();
+        }
     }
 
     private void changeAction(Action action) {
@@ -139,6 +164,7 @@ public class Character extends BasicStats {
                 _x += Double.valueOf(_moveSpeed) / BattleGround.FRAME;
                 break;
         }
+        changeAction(Action.RUN);
     }
 
     private Character frontmost(List<Character> chars) {
@@ -156,17 +182,6 @@ public class Character extends BasicStats {
         return chara;
     }
 
-    private void attack(Character chara) {
-        switch (_damageType) {
-            case PHYSICAL:
-                chara.takeDamage(_physicalAttack, _damageType);
-                break;
-            case MAGIC:
-                chara.takeDamage(_magicAttack, _damageType);
-                break;
-        }
-    }
-
     private void takeDamage(int damage, DamageType damageType) {
         switch (damageType) {
             case PHYSICAL:
@@ -180,26 +195,21 @@ public class Character extends BasicStats {
             changeAction(Action.DIE);
     }
 
-    private void cast(SkillType skillType, List<Character> allies, List<Character> enemies) {
-        switch (skillType) {
-            case ATTACK:
-                attack(frontmost(enemies));
-                _actionFrame = (int) (_attackTime * BattleGround.FRAME);
-                break;
-            default:
-                _skills.get(skillType.ordinal()).cast(allies, enemies);
-                _actionFrame = (int) (_skills.get(skillType.ordinal())._skillTime * BattleGround.FRAME);
-                break;
-        }
-        changeAction(Action.valueOf(skillType.name()));
-        _idleFrame = (int) (_attackSpeed * BattleGround.FRAME);
+    private SkillType skillType() {
+        if (_skillIndex < _initialPattern.size())
+            return _initialPattern.get(_skillIndex);
+        else
+            return _loopPattern.get((_skillIndex - _initialPattern.size()) % _loopPattern.size());
     }
 
-    private void skill(List<Character> allies, List<Character> enemies) {
-        _skillIndex++;
-        if (_skillIndex < _initialPattern.size())
-            cast(_initialPattern.get(_skillIndex), allies, enemies);
-        else
-            cast(_loopPattern.get((_skillIndex - _initialPattern.size()) % _loopPattern.size()), allies, enemies);
+    private void castSkill() {
+        SkillType skillType = skillType();
+        Skill skill = _skills.get(skillType.ordinal());
+        skill.cast();
+        changeAction(Action.valueOf(skillType.name()));
+        if (_idleFrame == 0) {
+            _actionFrame = (int) (skill._skillTime * BattleGround.FRAME);
+            _idleFrame = (int) (_attackSpeed * BattleGround.FRAME);
+        }
     }
 }

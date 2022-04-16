@@ -1,15 +1,14 @@
 package princess.connect.character;
 
 import java.util.Arrays;
-import java.util.List;
 
 import princess.connect.baseClass.Character;
 
-public class Kyaru extends Character{
+public class Kyaru extends Character {
     public Kyaru() {
         _id = 1060;
         _name = "Kyaru";
-        
+
         _hp = 427;
         _physicalAttack = 0;
         _magicAttack = 584;
@@ -29,15 +28,15 @@ public class Kyaru extends Character{
         _attackRange = 750;
         _moveSpeed = 450;
         _attackSpeed = 2.07;
-        _attackTime = 1.400;
 
         _level = 1;
         _star = 1;
         _rank = 1;
 
-        _skills = Arrays.asList(new Skill0(), new Skill1(), new Skill2(), new SkillEx());
+        _skills = Arrays.asList(new Attack(1.400), new Skill0(), new Skill1(), new Skill2(), new SkillEx());
         _initialPattern = Arrays.asList(SkillType.SKILL2, SkillType.SKILL1);
-        _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.ATTACK, SkillType.SKILL2, SkillType.ATTACK, SkillType.SKILL1);
+        _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.ATTACK, SkillType.SKILL2, SkillType.ATTACK,
+                SkillType.SKILL1);
 
         _damageType = DamageType.MAGIC;
     }
@@ -47,8 +46,7 @@ public class Kyaru extends Character{
             _skillTime = 2.833;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("UBTest_kyaru");
+        protected void cast() {
         }
     }
 
@@ -58,8 +56,7 @@ public class Kyaru extends Character{
             _castTime = 1.27;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("Skill1Test_kyaru");
+        protected void cast() {
         }
     }
 
@@ -69,8 +66,7 @@ public class Kyaru extends Character{
             _castTime = 0.83;
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("Skill2Test_kyaru");
+        protected void cast() {
         }
     }
 
@@ -78,8 +74,7 @@ public class Kyaru extends Character{
         private SkillEx() {
         }
 
-        protected void cast(List<Character> allies, List<Character> enemies) {
-            System.out.println("ExTest_kyaru");
+        protected void cast() {
         }
     }
 }

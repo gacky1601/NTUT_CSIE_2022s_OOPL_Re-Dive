@@ -9,7 +9,7 @@ import princess.connect.baseClass.Character.Direction;
 public class BattleGround {
     public static final int FRAME = 100;
     public static final int WIDTH = 3000;
-    public static final int HEIGHT = 300;
+    public static final int HEIGHT = 100;
     public static final int SPACING = 100;
 
     private int _time;

@@ -41,11 +41,11 @@ public class BattleState extends AbstractGameState {
         public static final int SAMPLE_SIZE = 2;
 
         public CharacterAnimation(String path) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inScaled = false;
+            options.inTargetDensity = 1;
+            options.inSampleSize = SAMPLE_SIZE;
             try {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inScaled = false;
-                options.inTargetDensity = 1;
-                options.inSampleSize = SAMPLE_SIZE;
                 for (String asset : runtime.getAssets().list(path)) {
                     MovingBitmap movingBitmap = new MovingBitmap(path + "/" + asset, options);
                     movingBitmap.resize(movingBitmap.getWidth() * SAMPLE_SIZE, movingBitmap.getHeight() * SAMPLE_SIZE);
@@ -118,47 +118,53 @@ public class BattleState extends AbstractGameState {
 
     private void loadAllCharacterAnimation() {
         _charAnimations = new ArrayList<>();
-        List<Character> chars = getSortedCharacter();
-        CharacterAnimation tmp = null;
-        for (Character chara : chars) {
-            List<CharacterAnimation> charAnimaList = new ArrayList<>();
+        CharacterAnimation charAnimation;
+        List<CharacterAnimation> charAnimaList;
+        for (Character chara : getSortedCharacter()) {
+            charAnimaList = new ArrayList<>();
             for (Character.Action action : Character.Action.values()) {
-                tmp = new CharacterAnimation(
+                charAnimation = new CharacterAnimation(
                         "action/" + chara.name() + "/" + action.name().toLowerCase());
                 if (chara.direction() == Character.Direction.RIGHT)
-                    tmp.inversion();
+                    charAnimation.inversion();
                 if (action == Character.Action.DIE)
-                    tmp.setRepeating(false);
-                charAnimaList.add(tmp);
-                addGameObject(tmp);
+                    charAnimation.setRepeating(false);
+                charAnimaList.add(charAnimation);
+                addGameObject(charAnimation);
             }
             _charAnimations.add(charAnimaList);
         }
     }
 
     private void changeAction() {
+        Character chara;
+        CharacterAnimation charAnimation;
+        CharacterAnimation preCharAnimation;
         List<Character> chars = getSortedCharacter();
         for (int i = 0; i < chars.size(); i++) {
-            Character chara = chars.get(i);
-            List<CharacterAnimation> charAnimaList = _charAnimations.get(i);
+            chara = chars.get(i);
+            charAnimation = _charAnimations.get(i).get(chara.action().ordinal());
             if (chara.isChangeAction()) {
-                if (chara.preAction() != null)
-                    charAnimaList.get(chara.preAction().ordinal()).setVisible(false);
-                charAnimaList.get(chara.action().ordinal())
-                        .setCurrentFrameIndex(charAnimaList.get(chara.action().ordinal()).getFrameCount() - 1);
+                if (chara.preAction() != null) {
+                    preCharAnimation = _charAnimations.get(i).get(chara.preAction().ordinal());
+                    preCharAnimation.setVisible(false);
+                }
+                charAnimation.setCurrentFrameIndex(charAnimation.getFrameCount() - 1);
                 if (chara.action() == Character.Action.DIE)
-                    charAnimaList.get(chara.action().ordinal()).reset();
-                charAnimaList.get(chara.action().ordinal()).setLocation(chara.x(), chara.y());
-                charAnimaList.get(chara.action().ordinal()).setVisible(true);
+                    charAnimation.reset();
+                charAnimation.setLocation(chara.x(), chara.y());
+                charAnimation.setVisible(true);
             }
         }
     }
 
     private void nextFrame() {
+        Character chara;
+        CharacterAnimation charAnimaion;
         List<Character> chars = getSortedCharacter();
         for (int i = 0; i < chars.size(); i++) {
-            Character chara = chars.get(i);
-            CharacterAnimation charAnimaion = _charAnimations.get(i).get(chara.action().ordinal());
+            chara = chars.get(i);
+            charAnimaion = _charAnimations.get(i).get(chara.action().ordinal());
             charAnimaion.nextFrame();
             charAnimaion.setLocation(chara.x(), chara.y());
         }
