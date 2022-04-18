@@ -22,6 +22,10 @@ public class BattleGround {
     }
 
     public void release() {
+        for (Character chara : _characterLeft)
+            chara.release();
+        for (Character chara : _characterRight)
+            chara.release();
         _characterLeft.clear();
         _characterRight.clear();
         _characterLeft = null;
@@ -44,16 +48,6 @@ public class BattleGround {
     }
 
     public void main() {
-        if (_time % (FRAME / 1) == 0) {
-            System.out.println("\nTime: " + _time);
-            for (Character chara : _characterLeft)
-                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hp
-                        + " " + chara.action());
-            for (Character chara : _characterRight)
-                System.out.println(chara.name() + " : " + chara.x() + " " + chara.y() + " HP:" + chara._hp
-                        + " " + chara.action());
-        }
-
         for (Character chara : _characterLeft)
             if (chara.action() != Action.DIE)
                 chara.act(_characterLeft, _characterRight);

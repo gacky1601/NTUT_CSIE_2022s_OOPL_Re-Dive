@@ -143,12 +143,6 @@ public abstract class AbstractGameState extends GameState {
         addReleasableResource(object);
     }
 
-    public void addGameObject(int index, GameObject object) {
-        if (!_objects.contains(object)) {
-            _objects.add(index, object);
-        }
-    }
-
     /**
      * 將指定的{@link GameObject}從清單中移除。
      *
@@ -156,11 +150,6 @@ public abstract class AbstractGameState extends GameState {
      */
     protected void removeGameObject(GameObject object) {
         _objects.remove(object);
-    }
-
-    protected void removeGameObject(int index) {
-        _objects.get(index).release();
-        _objects.remove(index);
     }
 
     /**
