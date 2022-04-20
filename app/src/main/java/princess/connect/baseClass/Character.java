@@ -29,20 +29,34 @@ public class Character extends BasicStats {
     protected List<Character> _allies;
     protected List<Character> _enemies;
 
-    private Action _action = Action.RUN;
-    private Action _preAction = null;
-    private Boolean _isChangeAction = true;
+    private Action _action;
+    private Action _preAction;
+    private Boolean _isChangeAction;
 
-    private int _actionFrame = 0;
-    private int _idleFrame = 0;
+    private int _actionFrame;
+    private int _idleFrame;
 
-    private int _skillIndex = -1;
+    private int _skillIndex;
 
-    private List<DamageDisplay> _damageDisplays = new ArrayList<>();
+    private List<NumberDisplay> _numberDisplays;
+
+    public Character() {
+        _allies = new ArrayList<>();
+        _enemies = new ArrayList<>();
+        _isChangeAction = true;
+        _actionFrame = 0;
+        _idleFrame = 0;
+        _skillIndex = -1;
+        _numberDisplays = new ArrayList<>();
+    }
 
     public void release() {
-        _damageDisplays.clear();
-        _damageDisplays = null;
+        _allies.clear();
+        _enemies.clear();
+        _numberDisplays.clear();
+        _allies = null;
+        _enemies = null;
+        _numberDisplays = null;
     }
 
     public String name() {
@@ -69,6 +83,10 @@ public class Character extends BasicStats {
         return _preAction;
     }
 
+    public boolean isAlive() {
+        return _action != Action.DIE;
+    }
+
     public Boolean isChangeAction() {
         if (_isChangeAction) {
             _isChangeAction = false;
@@ -77,22 +95,21 @@ public class Character extends BasicStats {
         return false;
     }
 
-    public List<DamageDisplay> damageDisplays() {
-        List<DamageDisplay> damagedisplays = new ArrayList<>(_damageDisplays);
-        _damageDisplays.clear();
+    public List<NumberDisplay> numberDisplays() {
+        List<NumberDisplay> damagedisplays = new ArrayList<>(_numberDisplays);
+        _numberDisplays.clear();
         return damagedisplays;
     }
 
     protected void act(List<Character> allies, List<Character> enemies) {
         if (_idleFrame == 0) {
-            if (frontmost(enemies) == null)
+            if (frontmost(enemies, true) == null)
                 changeAction(Action.IDLE);
-            else if (!isInAttackRange(frontmost(enemies)))
+            else if (!isInAttackRange(frontmost(enemies, true)))
                 move();
             else {
-                _allies = allies;
-                _enemies = enemies;
                 _skillIndex++;
+                setTarget(allies, enemies);
                 castSkill();
             }
         } else if (_actionFrame == 0) {
@@ -135,10 +152,14 @@ public class Character extends BasicStats {
     }
 
     private Character frontmost(List<Character> chars) {
+        return frontmost(chars, false);
+    }
+
+    private Character frontmost(List<Character> chars, boolean isCondition) {
         Character chara = null;
         double distance = Double.MAX_VALUE, tmp;
         for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i)._action != Action.DIE) {
+            if (chars.get(i).isAlive() || !isCondition) {
                 tmp = distance(chars.get(i));
                 if (tmp < distance) {
                     distance = tmp;
@@ -149,30 +170,43 @@ public class Character extends BasicStats {
         return chara;
     }
 
-    private void takeDamage(Character chara, int damage) {
-        DamageDisplay damageDisplay = new DamageDisplay();
-        _damageDisplays.add(damageDisplay);
-        damageDisplay.damageType = chara._damageType;
-        if (_evasion - chara._accuracy > 0)
-            damageDisplay.isMiss = Math.random() < (1 / (1 + 100 / (_evasion - chara._accuracy)));
-        if (damageDisplay.isMiss)
+    private void setTarget(List<Character> allies, List<Character> enemies) {
+        _allies.clear();
+        _enemies.clear();
+        for (Character chara : allies)
+            if (chara.isAlive())
+                _allies.add(chara);
+        for (Character chara : enemies)
+            if (chara.isAlive())
+                _enemies.add(chara);
+    }
+
+    private void inflictDamage(Character chara, int damage) {
+        if (chara == null || !chara.isAlive())
             return;
-        switch (damageDisplay.damageType) {
+        NumberDisplay numberDisplay = new NumberDisplay();
+        chara._numberDisplays.add(numberDisplay);
+        numberDisplay.numberType = NumberType.valueOf(_damageType.name());
+        if (chara._evasion - _accuracy > 0 && numberDisplay.numberType == NumberType.PHYSICAL)
+            numberDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
+        if (numberDisplay.isMiss)
+            return;
+        switch (numberDisplay.numberType) {
             case PHYSICAL:
-                damageDisplay.isCritical = Math.random() < (chara._physicalCritical * 0.005 * _level / chara._level);
-                damageDisplay.damage = (int) (damage / (1 + _physicalDefense / 100.0));
+                numberDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
+                numberDisplay.number = (int) (damage / (1 + chara._physicalDefense / 100.0));
                 break;
             case MAGIC:
-                damageDisplay.isCritical = Math.random() < (chara._magicCritical * 0.005 * _level / chara._level);
-                damageDisplay.damage = (int) (damage / (1 + _magicDefense / 100.0));
+                numberDisplay.isCritical = Math.random() < (_magicCritical * 0.005 * _level / chara._level);
+                numberDisplay.number = (int) (damage / (1 + chara._magicDefense / 100.0));
                 break;
         }
-        if (damageDisplay.isCritical)
-            damageDisplay.damage *= 2;
-        _hp -= damageDisplay.damage;
-        if (_hp <= 0) {
-            _hp = 0;
-            changeAction(Action.DIE);
+        if (numberDisplay.isCritical)
+            numberDisplay.number *= 2;
+        chara._hp -= numberDisplay.number;
+        if (chara._hp <= 0) {
+            chara._hp = 0;
+            chara.changeAction(Action.DIE);
         }
     }
 
@@ -200,9 +234,9 @@ public class Character extends BasicStats {
 
     public enum Action {
         IDLE, RUN, ATTACK, SKILL0, SKILL1, SKILL2, DIE
-    };
+    }
 
-    protected enum DamageType {
+    public enum NumberType {
         PHYSICAL, MAGIC
     }
 
@@ -210,11 +244,15 @@ public class Character extends BasicStats {
         ATTACK, Skill0, SKILL1, SKILL2, SkillEX
     }
 
-    public class DamageDisplay {
-        public DamageType damageType;
+    protected enum DamageType {
+        PHYSICAL, MAGIC
+    }
+
+    public class NumberDisplay {
+        public NumberType numberType;
         public boolean isMiss = false;
         public boolean isCritical = false;
-        public int damage = 0;
+        public int number = 0;
     }
 
     protected abstract class Skill {
@@ -236,10 +274,10 @@ public class Character extends BasicStats {
                 Character chara = frontmost(_enemies);
                 switch (_damageType) {
                     case PHYSICAL:
-                        chara.takeDamage(Character.this, _physicalAttack);
+                        inflictDamage(chara, _physicalAttack);
                         break;
                     case MAGIC:
-                        chara.takeDamage(Character.this, _magicAttack);
+                        inflictDamage(chara, _magicAttack);
                         break;
                 }
             }

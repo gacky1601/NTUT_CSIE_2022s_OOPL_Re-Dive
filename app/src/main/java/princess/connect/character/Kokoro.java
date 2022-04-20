@@ -6,6 +6,8 @@ import princess.connect.baseClass.Character;
 
 public class Kokoro extends Character {
     public Kokoro() {
+        super();
+
         _id = 1059;
         _name = "Kokoro";
 

@@ -29,8 +29,8 @@ public class Animation implements GameObject {
      * 控制動畫播放的內部狀態。
      */
     private int _delay = 0;
-    private int _counter = 0;
-    private int _frameIndex = 0;
+    protected int _counter = 0;
+    protected int _frameIndex = 0;
 
     /**
      * 控制動畫顯示與重複與否的旗標。
@@ -57,7 +57,7 @@ public class Animation implements GameObject {
      */
     public Animation(int delay) {
         setDelay(delay);
-        _frames = new ArrayList<MovingBitmap>();
+        _frames = new ArrayList<>();
     }
 
     /**

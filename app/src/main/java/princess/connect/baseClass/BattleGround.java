@@ -3,7 +3,6 @@ package princess.connect.baseClass;
 import java.util.ArrayList;
 import java.util.List;
 
-import princess.connect.baseClass.Character.Action;
 import princess.connect.baseClass.Character.Direction;
 
 public class BattleGround {
@@ -49,10 +48,10 @@ public class BattleGround {
 
     public void main() {
         for (Character chara : _characterLeft)
-            if (chara.action() != Action.DIE)
+            if (chara.isAlive())
                 chara.act(_characterLeft, _characterRight);
         for (Character chara : _characterRight)
-            if (chara.action() != Action.DIE)
+            if (chara.isAlive())
                 chara.act(_characterRight, _characterLeft);
 
         _time--;
@@ -74,10 +73,10 @@ public class BattleGround {
     public boolean isEnd() {
         boolean isAliveRight = false, isAliveLeft = false;
         for (Character chara : _characterLeft)
-            if (chara.action() != Action.DIE)
+            if (chara.isAlive())
                 isAliveLeft = true;
         for (Character chara : _characterRight)
-            if (chara.action() != Action.DIE)
+            if (chara.isAlive())
                 isAliveRight = true;
         return !(isAliveLeft && isAliveRight);
     }

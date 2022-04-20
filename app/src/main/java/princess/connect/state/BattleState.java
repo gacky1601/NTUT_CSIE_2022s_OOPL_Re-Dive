@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,11 +31,11 @@ public class BattleState extends AbstractGameState {
         super(engine);
     }
 
-    private final int SPEED = 2;
+    private final int SPEED = 1;
 
     private BattleGround _ground;
     private Timer _timer;
-    private TimerTask _timeTask = null;
+    private TimerTask _timeTask;
     private List<List<CharacterAnimation>> _charAnimations;
 
     @Override
@@ -55,7 +56,7 @@ public class BattleState extends AbstractGameState {
     @Override
     public void move() {
         super.move();
-        damageDisplay();
+        numberDisplay();
     }
 
     @Override
@@ -97,8 +98,7 @@ public class BattleState extends AbstractGameState {
         for (Character chara : getSortedCharacter()) {
             charAnimaList = new ArrayList<>();
             for (Character.Action action : Character.Action.values()) {
-                charAnimation = new CharacterAnimation(
-                        "action/" + chara.name() + "/" + action.name().toLowerCase());
+                charAnimation = new CharacterAnimation(chara.name(), action.name().toLowerCase());
                 if (chara.direction() == Character.Direction.RIGHT)
                     charAnimation.inversion();
                 if (action == Character.Action.DIE)
@@ -124,7 +124,7 @@ public class BattleState extends AbstractGameState {
                     preCharAnimation.setVisible(false);
                 }
                 charAnimation.setCurrentFrameIndex(charAnimation.getFrameCount() - 1);
-                if (chara.action() == Character.Action.DIE)
+                if (!chara.isAlive())
                     charAnimation.reset();
                 charAnimation.setLocation(chara.x(), chara.y());
                 charAnimation.setVisible(true);
@@ -144,23 +144,24 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private void damageDisplay() {
+    private void numberDisplay() {
         Character chara;
-        List<Character.DamageDisplay> damageDisplays;
+        List<Character.NumberDisplay> numberDisplays;
         List<Character> chars = getSortedCharacter();
         for (int i = 0; i < chars.size(); i++) {
             chara = chars.get(i);
-            damageDisplays = chara.damageDisplays();
-            for(Character.DamageDisplay damageDisplay : damageDisplays)
-                addGameObject(new DamageAnimation(damageDisplay, chara.x(), chara.y()));
+            numberDisplays = chara.numberDisplays();
+            for (Character.NumberDisplay numberDisplay : numberDisplays)
+                addGameObject(new NumDisplayAnimation(numberDisplay, chara.x(), chara.y()));
         }
     }
 
     private class CharacterAnimation extends Animation {
-        public static final int ANIMATION_FRAME = 10;
-        public static final int SAMPLE_SIZE = 2;
+        private final int ANIMATION_FRAME = 10;
+        private final int SAMPLE_SIZE = 2;
 
-        public CharacterAnimation(String path) {
+        public CharacterAnimation(String charName, String action) {
+            String path = "action/" + charName + "/" + action;
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inScaled = false;
             options.inTargetDensity = 1;
@@ -173,7 +174,7 @@ public class BattleState extends AbstractGameState {
                 }
             } catch (IOException e) {
             }
-            setDelay(BattleGround.FRAME / CharacterAnimation.ANIMATION_FRAME);
+            setDelay(BattleGround.FRAME / ANIMATION_FRAME);
             setVisible(false);
         }
 
@@ -195,55 +196,79 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private class DamageAnimation implements GameObject {
-        public static final int DAMAGE_AM = 10;
+    private class NumDisplayAnimation implements GameObject {
+        private NumberAnimation _text;
+        private List<NumberAnimation> _numbers;
 
-        private List<Animation> _numbers;
+        private class NumberAnimation extends Animation {
+            private final int DELAY = 10;
 
-        public DamageAnimation(Character.DamageDisplay damageDisplay, int x, int y) {
-            _numbers = new ArrayList<>();
-            Animation animation;
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inScaled = false;
-            options.inTargetDensity = 1;
-            options.inSampleSize = 2;
-            for(char chara: String.valueOf(damageDisplay.damage).toCharArray()){
-                animation = new Animation();
-                animation.addFrame(new MovingBitmap("number/white/" + chara + ".png", options));
-                animation.addFrame(new MovingBitmap("number/yellow/" + chara + ".png", options));
-                animation.setDelay(SPEED);
-                animation.setRepeating(false);
-                _numbers.add(animation);
+            public NumberAnimation(String numberType, String number) {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inScaled = false;
+                options.inTargetDensity = 1;
+                options.inSampleSize = 2;
+                addFrame(new MovingBitmap("number/white/" + number + ".png", options));
+                addFrame(new MovingBitmap("number/" + numberType + "/" + number + ".png", options));
+                setDelay(DELAY / SPEED);
             }
+
+            @Override
+            public void move() {
+                if (_frameIndex == 0)
+                    _frameIndex++;
+                else if (--_counter <= 0)
+                    _frameIndex = -1;
+            }
+        }
+
+        public NumDisplayAnimation(Character.NumberDisplay numberDisplay, int x, int y) {
+            _numbers = new ArrayList<>();
+            if (numberDisplay.isCritical)
+                _text = new NumberAnimation(numberDisplay.numberType.name().toLowerCase(), "critical");
+            for (char number : String.valueOf(numberDisplay.number).toCharArray())
+                _numbers.add(
+                        new NumberAnimation(numberDisplay.numberType.name().toLowerCase(), String.valueOf(number)));
             setLocation(x, y);
         }
 
         public void setLocation(int x, int y) {
             int width = 0;
+            for (NumberAnimation numberAnimation : _numbers)
+                width -= numberAnimation.getWidth() / 2;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
-            for(Animation animation : _numbers) {
-                animation.setLocation(x + width, y - 100);
-                width += animation.getWidth();
+            if (_text != null)
+                _text.setLocation(x + width, y - 120);
+            for (NumberAnimation numberAnimation : _numbers) {
+                numberAnimation.setLocation(x + width, y - 100);
+                width += numberAnimation.getWidth();
             }
         }
 
         @Override
         public void move() {
-            for(Animation animation : _numbers)
-                animation.move();
+            if (_text != null)
+                _text.move();
+            for (NumberAnimation numberAnimation : _numbers)
+                numberAnimation.move();
         }
 
         @Override
         public void show() {
-            for(Animation animation : _numbers)
-                animation.show();
+            if (_text != null)
+                _text.show();
+            for (NumberAnimation numberAnimation : _numbers)
+                numberAnimation.show();
         }
 
         @Override
         public void release() {
-            for(Animation animation : _numbers)
-                animation.release();
+            if (_text != null)
+                _text.release();
+            _text = null;
+            for (NumberAnimation numberAnimation : _numbers)
+                numberAnimation.release();
             _numbers.clear();
             _numbers = null;
         }
