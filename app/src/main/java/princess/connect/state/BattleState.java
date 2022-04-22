@@ -3,7 +3,6 @@ package princess.connect.state;
 import static princess.connect.GameView.runtime;
 
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,7 +29,7 @@ public class BattleState extends AbstractGameState {
         super(engine);
     }
 
-    private final int SPEED = 1;
+    private final int SPEED = 2;
 
     private BattleGround _ground;
     private Timer _timer;
@@ -56,7 +54,7 @@ public class BattleState extends AbstractGameState {
     @Override
     public void move() {
         super.move();
-        numberDisplay();
+        valueDisplay();
     }
 
     @Override
@@ -144,21 +142,22 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private void numberDisplay() {
+    private void valueDisplay() {
         Character chara;
-        List<Character.NumberDisplay> numberDisplays;
+        List<Character.ValueDisplay> valueDisplays;
         List<Character> chars = getSortedCharacter();
         for (int i = 0; i < chars.size(); i++) {
             chara = chars.get(i);
-            numberDisplays = chara.numberDisplays();
-            for (Character.NumberDisplay numberDisplay : numberDisplays)
-                addGameObject(new NumDisplayAnimation(numberDisplay, chara.x(), chara.y()));
+            valueDisplays = chara.valueDisplays();
+            for (Character.ValueDisplay valueDisplay : valueDisplays) {
+                addGameObject(new ValueDisplayAnimation(valueDisplay, chara.x(), chara.y()));
+            }
         }
     }
 
-    private class CharacterAnimation extends Animation {
-        private final int ANIMATION_FRAME = 10;
-        private final int SAMPLE_SIZE = 2;
+    private static class CharacterAnimation extends Animation {
+        int ANIMATION_FRAME = 10;
+        int SAMPLE_SIZE = 2;
 
         public CharacterAnimation(String charName, String action) {
             String path = "action/" + charName + "/" + action;
@@ -172,7 +171,7 @@ public class BattleState extends AbstractGameState {
                     movingBitmap.resize(movingBitmap.getWidth() * SAMPLE_SIZE, movingBitmap.getHeight() * SAMPLE_SIZE);
                     addFrame(movingBitmap);
                 }
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
             setDelay(BattleGround.FRAME / ANIMATION_FRAME);
             setVisible(false);
@@ -184,7 +183,7 @@ public class BattleState extends AbstractGameState {
 
         @Override
         public void setLocation(int x, int y) {
-            if (getCurrentFrameIndex() == -1 || this == null)
+            if (getCurrentFrameIndex() == -1)
                 return;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
@@ -196,85 +195,112 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private class NumDisplayAnimation implements GameObject {
-        private NumberAnimation _text;
-        private List<NumberAnimation> _numbers;
+    private class ValueDisplayAnimation implements GameObject {
+        final int DELAY = 20;
 
-        private class NumberAnimation extends Animation {
-            private final int DELAY = 10;
+        private int _index;
+        private int _count;
+        private final Character.ValueDisplay _valueDisplay;
+        private ValueAnimation _text;
+        private List<ValueAnimation> _values;
 
-            public NumberAnimation(String numberType, String number) {
+        private class ValueAnimation extends Animation {
+            final int MOVE_SPEED = 5;
+            final int MOVE_TIME = 4;
+
+            private int _count;
+
+            public ValueAnimation(String value) {
+                _count = 0;
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inScaled = false;
                 options.inTargetDensity = 1;
                 options.inSampleSize = 2;
-                addFrame(new MovingBitmap("number/white/" + number + ".png", options));
-                addFrame(new MovingBitmap("number/" + numberType + "/" + number + ".png", options));
-                setDelay(DELAY / SPEED);
+                if (_valueDisplay.isCritical)
+                    addFrame(new MovingBitmap("value/white/" + value + ".png", options));
+                addFrame(new MovingBitmap(
+                        "value/" + _valueDisplay.valueType.name().toLowerCase() + "/" + value + ".png", options));
+                try {
+                    Double.parseDouble(value);
+                    setVisible(false);
+                } catch (NumberFormatException ignored) {
+                }
             }
 
             @Override
             public void move() {
-                if (_frameIndex == 0)
+                if (!_visible)
+                    return;
+                if (_frameIndex == 0 && getFrameCount() != 1)
                     _frameIndex++;
-                else if (--_counter <= 0)
-                    _frameIndex = -1;
+                else if (_count < MOVE_TIME / SPEED)
+                    setLocation(getX(),
+                            getY() - (int) (MOVE_SPEED * SPEED * Math.cos(Math.PI / 2 * _count++ / MOVE_TIME * SPEED)));
+                // setLocation(getX(), getY() - (int) (MOVE_SPEED * SPEED * Math.sin(Math.PI / 2
+                // * _counter / DELAY * SPEED)));
             }
         }
 
-        public NumDisplayAnimation(Character.NumberDisplay numberDisplay, int x, int y) {
-            _numbers = new ArrayList<>();
-            if (numberDisplay.isCritical)
-                _text = new NumberAnimation(numberDisplay.numberType.name().toLowerCase(), "critical");
-            for (char number : String.valueOf(numberDisplay.number).toCharArray())
-                _numbers.add(
-                        new NumberAnimation(numberDisplay.numberType.name().toLowerCase(), String.valueOf(number)));
+        public ValueDisplayAnimation(Character.ValueDisplay valueDisplay, int x, int y) {
+            _index = 0;
+            _count = 0;
+            _valueDisplay = valueDisplay;
+            _values = new ArrayList<>();
+            if (_valueDisplay.isCritical)
+                _text = new ValueAnimation("critical");
+            for (char value : String.valueOf(_valueDisplay.value).toCharArray())
+                _values.add(new ValueAnimation(String.valueOf(value)));
             setLocation(x, y);
         }
 
         public void setLocation(int x, int y) {
             int width = 0;
-            for (NumberAnimation numberAnimation : _numbers)
-                width -= numberAnimation.getWidth() / 2;
+            for (ValueAnimation valueAnimation : _values)
+                width -= valueAnimation.getWidth() / 2;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
             if (_text != null)
                 _text.setLocation(x + width, y - 120);
-            for (NumberAnimation numberAnimation : _numbers) {
-                numberAnimation.setLocation(x + width, y - 100);
-                width += numberAnimation.getWidth();
+            for (ValueAnimation valueAnimation : _values) {
+                valueAnimation.setLocation(x + width, y - 100);
+                width += valueAnimation.getWidth();
             }
         }
 
         @Override
         public void move() {
+            for (int i = 0; i < SPEED; i++)
+                if (_index < _values.size())
+                    _values.get(_index++).setVisible(true);
+            if (_index == _values.size() && ++_count == DELAY / SPEED) {
+                if (_text != null)
+                    _text.setVisible(false);
+                for(ValueAnimation valueAnimation : _values)
+                    valueAnimation.setVisible(false);
+            }
             if (_text != null)
                 _text.move();
-            for (NumberAnimation numberAnimation : _numbers)
-                numberAnimation.move();
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.move();
         }
 
         @Override
         public void show() {
             if (_text != null)
                 _text.show();
-            for (NumberAnimation numberAnimation : _numbers)
-                numberAnimation.show();
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.show();
         }
 
         @Override
         public void release() {
-            if (_text != null)
-                _text.release();
             _text = null;
-            for (NumberAnimation numberAnimation : _numbers)
-                numberAnimation.release();
-            _numbers.clear();
-            _numbers = null;
+            _values.clear();
+            _values = null;
         }
     }
 
-    private class CharacterComparator implements Comparator<Character> {
+    private static class CharacterComparator implements Comparator<Character> {
         @Override
         public int compare(Character char1, Character char2) {
             return char1.y() - char2.y() - 1;

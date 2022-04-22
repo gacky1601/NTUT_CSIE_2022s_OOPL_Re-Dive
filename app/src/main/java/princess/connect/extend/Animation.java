@@ -35,7 +35,7 @@ public class Animation implements GameObject {
     /**
      * 控制動畫顯示與重複與否的旗標。
      */
-    private boolean _visible = true;
+    protected boolean _visible = true;
     private boolean _repeating = true;
 
     /**

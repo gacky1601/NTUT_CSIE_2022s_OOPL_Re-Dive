@@ -38,7 +38,7 @@ public class Character extends BasicStats {
 
     private int _skillIndex;
 
-    private List<NumberDisplay> _numberDisplays;
+    private List<ValueDisplay> _valueDisplays;
 
     public Character() {
         _allies = new ArrayList<>();
@@ -47,16 +47,16 @@ public class Character extends BasicStats {
         _actionFrame = 0;
         _idleFrame = 0;
         _skillIndex = -1;
-        _numberDisplays = new ArrayList<>();
+        _valueDisplays = new ArrayList<>();
     }
 
     public void release() {
         _allies.clear();
         _enemies.clear();
-        _numberDisplays.clear();
+        _valueDisplays.clear();
         _allies = null;
         _enemies = null;
-        _numberDisplays = null;
+        _valueDisplays = null;
     }
 
     public String name() {
@@ -95,9 +95,9 @@ public class Character extends BasicStats {
         return false;
     }
 
-    public List<NumberDisplay> numberDisplays() {
-        List<NumberDisplay> damagedisplays = new ArrayList<>(_numberDisplays);
-        _numberDisplays.clear();
+    public List<ValueDisplay> valueDisplays() {
+        List<ValueDisplay> damagedisplays = new ArrayList<>(_valueDisplays);
+        _valueDisplays.clear();
         return damagedisplays;
     }
 
@@ -184,26 +184,26 @@ public class Character extends BasicStats {
     private void inflictDamage(Character chara, int damage) {
         if (chara == null || !chara.isAlive())
             return;
-        NumberDisplay numberDisplay = new NumberDisplay();
-        chara._numberDisplays.add(numberDisplay);
-        numberDisplay.numberType = NumberType.valueOf(_damageType.name());
-        if (chara._evasion - _accuracy > 0 && numberDisplay.numberType == NumberType.PHYSICAL)
-            numberDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
-        if (numberDisplay.isMiss)
+        ValueDisplay valueDisplay = new ValueDisplay();
+        chara._valueDisplays.add(valueDisplay);
+        valueDisplay.valueType = ValueType.valueOf(_damageType.name());
+        if (chara._evasion - _accuracy > 0 && valueDisplay.valueType == ValueType.PHYSICAL)
+            valueDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
+        if (valueDisplay.isMiss)
             return;
-        switch (numberDisplay.numberType) {
+        switch (valueDisplay.valueType) {
             case PHYSICAL:
-                numberDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
-                numberDisplay.number = (int) (damage / (1 + chara._physicalDefense / 100.0));
+                valueDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
+                valueDisplay.value = (int) (damage / (1 + chara._physicalDefense / 100.0));
                 break;
             case MAGIC:
-                numberDisplay.isCritical = Math.random() < (_magicCritical * 0.005 * _level / chara._level);
-                numberDisplay.number = (int) (damage / (1 + chara._magicDefense / 100.0));
+                valueDisplay.isCritical = Math.random() < (_magicCritical * 0.005 * _level / chara._level);
+                valueDisplay.value = (int) (damage / (1 + chara._magicDefense / 100.0));
                 break;
         }
-        if (numberDisplay.isCritical)
-            numberDisplay.number *= 2;
-        chara._hp -= numberDisplay.number;
+        if (valueDisplay.isCritical)
+            valueDisplay.value *= 2;
+        chara._hp -= valueDisplay.value;
         if (chara._hp <= 0) {
             chara._hp = 0;
             chara.changeAction(Action.DIE);
@@ -236,7 +236,7 @@ public class Character extends BasicStats {
         IDLE, RUN, ATTACK, SKILL0, SKILL1, SKILL2, DIE
     }
 
-    public enum NumberType {
+    public enum ValueType {
         PHYSICAL, MAGIC
     }
 
@@ -248,11 +248,11 @@ public class Character extends BasicStats {
         PHYSICAL, MAGIC
     }
 
-    public class NumberDisplay {
-        public NumberType numberType;
+    public class ValueDisplay {
+        public ValueType valueType;
         public boolean isMiss = false;
         public boolean isCritical = false;
-        public int number = 0;
+        public int value = 0;
     }
 
     protected abstract class Skill {

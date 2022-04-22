@@ -16,7 +16,7 @@ public class Pecorine extends Character {
         _magicAttack = 0;
         _physicalDefense = 7;
         _magicDefense = 3;
-        _physicalCritical = 10;
+        _physicalCritical = 1000;
         _magicCritical = 0;
         _evasion = 0;
         _accuracy = 0;
