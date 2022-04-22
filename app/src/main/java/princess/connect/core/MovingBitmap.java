@@ -193,12 +193,13 @@ public class MovingBitmap implements GameObject {
      * @param width  新的圖片寬度
      * @param height 新的圖片高度
      */
-    public void resize(int width, int height) {
+    public MovingBitmap resize(int width, int height) {
         width = (width <= 0) ? 1 : width;
         height = (height <= 0) ? 1 : height;
         _width = width;
         _height = height;
         _matrixScale.setScale((float) width/_bitmap.getWidth(), (float) height/_bitmap.getHeight());
+        return this;
     }
     public void resize(double ratio){
         resize((int)(getWidth()*ratio),(int)(getHeight()*ratio));

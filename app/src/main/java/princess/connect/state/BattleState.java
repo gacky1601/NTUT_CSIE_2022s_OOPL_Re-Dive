@@ -38,9 +38,7 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        MovingBitmap background = new MovingBitmap(R.drawable.bg_100021, -200, -200);
-        background.resize(1920, 1080);
-        addGameObject(background);
+        addGameObject(new MovingBitmap(R.drawable.bg_100021, -200, -200).resize(1920, 1080));
         List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
@@ -167,9 +165,9 @@ public class BattleState extends AbstractGameState {
             options.inSampleSize = SAMPLE_SIZE;
             try {
                 for (String asset : runtime.getAssets().list(path)) {
-                    MovingBitmap movingBitmap = new MovingBitmap(path + "/" + asset, options);
-                    movingBitmap.resize(movingBitmap.getWidth() * SAMPLE_SIZE, movingBitmap.getHeight() * SAMPLE_SIZE);
-                    addFrame(movingBitmap);
+                    MovingBitmap bitmap = new MovingBitmap(path + "/" + asset, options);
+                    bitmap.resize(bitmap.getWidth() * SAMPLE_SIZE, bitmap.getHeight() * SAMPLE_SIZE);
+                    addFrame(bitmap);
                 }
             } catch (IOException ignored) {
             }
@@ -205,25 +203,36 @@ public class BattleState extends AbstractGameState {
         private List<ValueAnimation> _values;
 
         private class ValueAnimation extends Animation {
-            final int MOVE_SPEED = 5;
-            final int MOVE_TIME = 4;
+            final int MOVE_SPEED = 3;
+            final int MOVE_TIME = 3;
 
             private int _count;
 
             public ValueAnimation(String value) {
                 _count = 0;
+                MovingBitmap bitmap;
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inScaled = false;
                 options.inTargetDensity = 1;
                 options.inSampleSize = 2;
+                if (_valueDisplay.isCritical) {
+                    bitmap = new MovingBitmap("value/white/" + value + ".png", options);
+                    addFrame(bitmap.resize((int) (bitmap.getWidth() * 1.2), (int) (bitmap.getHeight() * 1.2)));
+                }
+                bitmap = new MovingBitmap(
+                        "value/" + _valueDisplay.valueType.name().toLowerCase() + "/" + value + ".png", options);
                 if (_valueDisplay.isCritical)
-                    addFrame(new MovingBitmap("value/white/" + value + ".png", options));
-                addFrame(new MovingBitmap(
-                        "value/" + _valueDisplay.valueType.name().toLowerCase() + "/" + value + ".png", options));
-                try {
-                    Double.parseDouble(value);
-                    setVisible(false);
-                } catch (NumberFormatException ignored) {
+                    addFrame(bitmap.resize((int) (bitmap.getWidth() * 1.2), (int) (bitmap.getHeight() * 1.2)));
+                else
+                    addFrame(bitmap);
+                switch (_valueDisplay.valueType) {
+                    case PHYSICAL:
+                    case MAGIC:
+                        try {
+                            Double.parseDouble(value);
+                            setVisible(false);
+                        } catch (NumberFormatException ignored) {
+                        }
                 }
             }
 
@@ -233,11 +242,28 @@ public class BattleState extends AbstractGameState {
                     return;
                 if (_frameIndex == 0 && getFrameCount() != 1)
                     _frameIndex++;
-                else if (_count < MOVE_TIME / SPEED)
-                    setLocation(getX(),
-                            getY() - (int) (MOVE_SPEED * SPEED * Math.cos(Math.PI / 2 * _count++ / MOVE_TIME * SPEED)));
-                // setLocation(getX(), getY() - (int) (MOVE_SPEED * SPEED * Math.sin(Math.PI / 2
-                // * _counter / DELAY * SPEED)));
+                else {
+                    switch (_valueDisplay.valueType) {
+                        case HP:
+                        case TP:
+                            if (_count++ < 5 * MOVE_TIME / SPEED)
+                                setLocation(getX(),
+                                        getY() - (int) (2 * MOVE_SPEED * SPEED
+                                                * Math.cos(Math.PI / 10 * _count / MOVE_TIME * SPEED)));
+                            break;
+                        case PHYSICAL:
+                        case MAGIC:
+                            if (_count < 4 * MOVE_TIME / SPEED) {
+                                setLocation(
+                                        getX() + (int) (0.5 * MOVE_SPEED * SPEED
+                                                * Math.cos(Math.PI / 2 * _count / MOVE_TIME * SPEED)),
+                                        getY() - (int) (MOVE_SPEED * SPEED
+                                                * Math.cos(Math.PI / 2 * _count / MOVE_TIME * SPEED)));
+                                _count += _count < 2 * MOVE_TIME / SPEED ? 1 : 2;
+                            }
+                            break;
+                    }
+                }
             }
         }
 
@@ -259,24 +285,49 @@ public class BattleState extends AbstractGameState {
                 width -= valueAnimation.getWidth() / 2;
             x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
             y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
-            if (_text != null)
-                _text.setLocation(x + width, y - 120);
-            for (ValueAnimation valueAnimation : _values) {
-                valueAnimation.setLocation(x + width, y - 100);
-                width += valueAnimation.getWidth();
+            switch (_valueDisplay.valueType) {
+                case HP:
+                case TP:
+                    for (ValueAnimation valueAnimation : _values) {
+                        valueAnimation.setLocation(x + width, y - 130);
+                        width += valueAnimation.getWidth();
+                    }
+                    break;
+                case PHYSICAL:
+                case MAGIC:
+                    if (_text != null)
+                        _text.setLocation(x + width, y - 120);
+                    for (ValueAnimation valueAnimation : _values) {
+                        valueAnimation.setLocation(x + width, y - 100);
+                        width += valueAnimation.getWidth();
+                    }
+                    break;
             }
+        }
+
+        public void setVisible(boolean isVisible) {
+            if (_text != null)
+                _text.setVisible(isVisible);
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.setVisible(isVisible);
         }
 
         @Override
         public void move() {
-            for (int i = 0; i < SPEED; i++)
-                if (_index < _values.size())
-                    _values.get(_index++).setVisible(true);
-            if (_index == _values.size() && ++_count == DELAY / SPEED) {
-                if (_text != null)
-                    _text.setVisible(false);
-                for(ValueAnimation valueAnimation : _values)
-                    valueAnimation.setVisible(false);
+            switch (_valueDisplay.valueType) {
+                case HP:
+                case TP:
+                    if (++_count > 0.75 * DELAY / SPEED)
+                        setVisible(false);
+                    break;
+                case PHYSICAL:
+                case MAGIC:
+                    for (int i = 0; i < SPEED; i++)
+                        if (_index < _values.size())
+                            _values.get(_index++).setVisible(true);
+                    if (_index == _values.size() && ++_count == DELAY / SPEED)
+                        setVisible(false);
+                    break;
             }
             if (_text != null)
                 _text.move();

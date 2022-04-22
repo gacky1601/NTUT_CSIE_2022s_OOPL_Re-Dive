@@ -33,16 +33,18 @@ public class BattleGround {
 
     public void initialize() {
         _time = 90 * FRAME;
-        int[] y = { 2, 4, 0, 3, 1 };
+        Character chara;
         for (int i = 0; i < _characterLeft.size(); i++) {
-            _characterLeft.get(i)._x = SPACING * (4 - i);
-            _characterLeft.get(i)._y = y[i] * HEIGHT / 4;
-            _characterLeft.get(i)._direction = Direction.LEFT;
+            chara = _characterLeft.get(i);
+            chara._x = SPACING * (4 - i);
+            chara._direction = Direction.LEFT;
+            initCharacter(chara, i);
         }
         for (int i = 0; i < _characterRight.size(); i++) {
-            _characterRight.get(i)._x = WIDTH - SPACING * (4 - i);
-            _characterRight.get(i)._y = y[i] * HEIGHT / 4;
-            _characterRight.get(i)._direction = Direction.RIGHT;
+            chara = _characterRight.get(i);
+            chara._x = WIDTH - SPACING * (4 - i);
+            chara._direction = Direction.RIGHT;
+            initCharacter(chara, i);
         }
     }
 
@@ -79,5 +81,12 @@ public class BattleGround {
             if (chara.isAlive())
                 isAliveRight = true;
         return !(isAliveLeft && isAliveRight);
+    }
+
+    private void initCharacter(Character chara, int index) {
+        int[] y = { 2, 4, 0, 3, 1 };
+        chara._y = y[index] * HEIGHT / 4;
+        chara._hp = chara._hitpoints;
+        chara._tp = 0;
     }
 }

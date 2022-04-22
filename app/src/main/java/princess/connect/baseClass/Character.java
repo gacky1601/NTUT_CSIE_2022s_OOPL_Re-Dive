@@ -7,6 +7,9 @@ public class Character extends BasicStats {
     protected int _id;
     protected String _name;
 
+    protected int _hp;
+    protected int _tp;
+
     protected int _attackRange;
     protected int _moveSpeed;
     protected double _attackSpeed;
@@ -191,7 +194,7 @@ public class Character extends BasicStats {
             valueDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
         if (valueDisplay.isMiss)
             return;
-        switch (valueDisplay.valueType) {
+        switch (_damageType) {
             case PHYSICAL:
                 valueDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
                 valueDisplay.value = (int) (damage / (1 + chara._physicalDefense / 100.0));
@@ -237,7 +240,7 @@ public class Character extends BasicStats {
     }
 
     public enum ValueType {
-        PHYSICAL, MAGIC
+        HP, TP, PHYSICAL, MAGIC
     }
 
     protected enum SkillType {

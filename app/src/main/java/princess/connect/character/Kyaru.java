@@ -11,7 +11,7 @@ public class Kyaru extends Character {
         _id = 1060;
         _name = "Kyaru";
 
-        _hp = 427;
+        _hitpoints = 427;
         _physicalAttack = 0;
         _magicAttack = 584;
         _physicalDefense = 3;

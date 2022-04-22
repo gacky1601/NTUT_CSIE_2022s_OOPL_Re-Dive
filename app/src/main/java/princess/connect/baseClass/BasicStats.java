@@ -1,8 +1,7 @@
 package princess.connect.baseClass;
 
 public class BasicStats {
-    protected int _hp;
-    protected int _tp = 0;
+    protected int _hitpoints ;
     protected int _physicalAttack;
     protected int _magicAttack;
     protected int _physicalDefense;

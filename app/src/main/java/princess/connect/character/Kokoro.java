@@ -11,7 +11,7 @@ public class Kokoro extends Character {
         _id = 1059;
         _name = "Kokoro";
 
-        _hp = 521;
+        _hitpoints = 521;
         _physicalAttack = 619;
         _magicAttack = 0;
         _physicalDefense = 6;
