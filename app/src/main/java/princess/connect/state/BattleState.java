@@ -35,15 +35,17 @@ public class BattleState extends AbstractGameState {
     private Timer _timer;
     private TimerTask _timeTask;
     private List<List<CharacterAnimation>> _charAnimations;
+    private List<Integer> _valueAnimationNums;
 
     @Override
     public void initialize(Map<String, Object> data) {
         addGameObject(new MovingBitmap(R.drawable.bg_100021, -200, -200).resize(1920, 1080));
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
-        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kyaru(), new Kyaru());
+        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kyaru(), new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
 
         _ground.initialize();
+        initValueAnimationNums();
         loadCharacterAnimation();
 
         main();
@@ -85,6 +87,12 @@ public class BattleState extends AbstractGameState {
         List<Character> chars = _ground.characters();
         Collections.sort(chars, new CharacterComparator());
         return chars;
+    }
+
+    private void initValueAnimationNums() {
+        _valueAnimationNums = new ArrayList<>();
+        for (int i = 0; i < getSortedCharacter().size(); i++)
+            _valueAnimationNums.add(0);
     }
 
     private void loadCharacterAnimation() {
@@ -148,7 +156,7 @@ public class BattleState extends AbstractGameState {
             chara = chars.get(i);
             valueDisplays = chara.valueDisplays();
             for (Character.ValueDisplay valueDisplay : valueDisplays) {
-                addGameObject(new ValueDisplayAnimation(valueDisplay, chara.x(), chara.y()));
+                addGameObject(new ValueDisplayAnimation(valueDisplay, i));
             }
         }
     }
@@ -196,11 +204,106 @@ public class BattleState extends AbstractGameState {
     private class ValueDisplayAnimation implements GameObject {
         final int DELAY = 20;
 
-        private int _index;
+        private int _charaIndex;
+        private int _valueIndex;
         private int _count;
         private final Character.ValueDisplay _valueDisplay;
         private ValueAnimation _text;
         private List<ValueAnimation> _values;
+
+        public ValueDisplayAnimation(Character.ValueDisplay valueDisplay, int index) {
+            _charaIndex = index;
+            _valueIndex = 0;
+            _count = 0;
+            _valueDisplay = valueDisplay;
+            _values = new ArrayList<>();
+            switch (_valueDisplay.valueType) {
+                case PHYSICAL:
+                case MAGIC:
+                    _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) + 1);
+                    break;
+            }
+            Character chara = getSortedCharacter().get(_charaIndex);
+            if (_valueDisplay.isCritical)
+                _text = new ValueAnimation("critical");
+            for (char value : String.valueOf(_valueDisplay.value).toCharArray())
+                _values.add(new ValueAnimation(String.valueOf(value)));
+            setLocation(chara.x(), chara.y());
+        }
+
+        public void setLocation(int x, int y) {
+            int width = 0;
+            int height = _valueAnimationNums.get(_charaIndex) * -30;
+            for (ValueAnimation valueAnimation : _values)
+                width -= valueAnimation.getWidth() / 2;
+            x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
+            y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
+            switch (_valueDisplay.valueType) {
+                case HP:
+                case TP:
+                    for (ValueAnimation valueAnimation : _values) {
+                        valueAnimation.setLocation(x + width, y - 130);
+                        width += valueAnimation.getWidth();
+                    }
+                    break;
+                case PHYSICAL:
+                case MAGIC:
+                    if (_text != null)
+                        _text.setLocation(x + width, y + height - 120);
+                    for (ValueAnimation valueAnimation : _values) {
+                        valueAnimation.setLocation(x + width, y + height - 100);
+                        width += valueAnimation.getWidth();
+                    }
+                    break;
+            }
+        }
+
+        public void setVisible(boolean isVisible) {
+            if (_text != null)
+                _text.setVisible(isVisible);
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.setVisible(isVisible);
+        }
+
+        @Override
+        public void move() {
+            switch (_valueDisplay.valueType) {
+                case HP:
+                case TP:
+                    if (++_count > 0.75 * DELAY / SPEED)
+                        setVisible(false);
+                    break;
+                case PHYSICAL:
+                case MAGIC:
+                    for (int i = 0; i < SPEED; i++)
+                        if (_valueIndex < _values.size())
+                            _values.get(_valueIndex++).setVisible(true);
+                    if (_valueIndex == _values.size() && ++_count == DELAY / SPEED) {
+                        _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) - 1);
+                        setVisible(false);
+                    }
+                    break;
+            }
+            if (_text != null)
+                _text.move();
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.move();
+        }
+
+        @Override
+        public void show() {
+            if (_text != null)
+                _text.show();
+            for (ValueAnimation valueAnimation : _values)
+                valueAnimation.show();
+        }
+
+        @Override
+        public void release() {
+            _text = null;
+            _values.clear();
+            _values = null;
+        }
 
         private class ValueAnimation extends Animation {
             final int MOVE_SPEED = 3;
@@ -265,89 +368,6 @@ public class BattleState extends AbstractGameState {
                     }
                 }
             }
-        }
-
-        public ValueDisplayAnimation(Character.ValueDisplay valueDisplay, int x, int y) {
-            _index = 0;
-            _count = 0;
-            _valueDisplay = valueDisplay;
-            _values = new ArrayList<>();
-            if (_valueDisplay.isCritical)
-                _text = new ValueAnimation("critical");
-            for (char value : String.valueOf(_valueDisplay.value).toCharArray())
-                _values.add(new ValueAnimation(String.valueOf(value)));
-            setLocation(x, y);
-        }
-
-        public void setLocation(int x, int y) {
-            int width = 0;
-            for (ValueAnimation valueAnimation : _values)
-                width -= valueAnimation.getWidth() / 2;
-            x = (int) (Game.GAME_FRAME_WIDTH * 2 * x / BattleGround.WIDTH - Game.GAME_FRAME_WIDTH * 0.5);
-            y = (int) (Game.GAME_FRAME_HEIGHT * 0.2 * y / BattleGround.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.4);
-            switch (_valueDisplay.valueType) {
-                case HP:
-                case TP:
-                    for (ValueAnimation valueAnimation : _values) {
-                        valueAnimation.setLocation(x + width, y - 130);
-                        width += valueAnimation.getWidth();
-                    }
-                    break;
-                case PHYSICAL:
-                case MAGIC:
-                    if (_text != null)
-                        _text.setLocation(x + width, y - 120);
-                    for (ValueAnimation valueAnimation : _values) {
-                        valueAnimation.setLocation(x + width, y - 100);
-                        width += valueAnimation.getWidth();
-                    }
-                    break;
-            }
-        }
-
-        public void setVisible(boolean isVisible) {
-            if (_text != null)
-                _text.setVisible(isVisible);
-            for (ValueAnimation valueAnimation : _values)
-                valueAnimation.setVisible(isVisible);
-        }
-
-        @Override
-        public void move() {
-            switch (_valueDisplay.valueType) {
-                case HP:
-                case TP:
-                    if (++_count > 0.75 * DELAY / SPEED)
-                        setVisible(false);
-                    break;
-                case PHYSICAL:
-                case MAGIC:
-                    for (int i = 0; i < SPEED; i++)
-                        if (_index < _values.size())
-                            _values.get(_index++).setVisible(true);
-                    if (_index == _values.size() && ++_count == DELAY / SPEED)
-                        setVisible(false);
-                    break;
-            }
-            if (_text != null)
-                _text.move();
-            for (ValueAnimation valueAnimation : _values)
-                valueAnimation.move();
-        }
-
-        @Override
-        public void show() {
-            if (_text != null)
-                _text.show();
-            for (ValueAnimation valueAnimation : _values)
-                valueAnimation.show();
-        }
-
-        @Override
-        public void release() {
-            _text = null;
-            _values.clear();
-            _values = null;
         }
     }
 
