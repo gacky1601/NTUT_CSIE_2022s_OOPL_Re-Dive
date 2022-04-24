@@ -40,8 +40,8 @@ public class BattleState extends AbstractGameState {
     @Override
     public void initialize(Map<String, Object> data) {
         addGameObject(new MovingBitmap(R.drawable.bg_100021, -200, -200).resize(1920, 1080));
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kyaru(), new Kyaru());
-        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kyaru(), new Kyaru());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
+        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
 
         _ground.initialize();

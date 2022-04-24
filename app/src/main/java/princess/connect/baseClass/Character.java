@@ -66,6 +66,14 @@ public class Character extends BasicStats {
         return _name;
     }
 
+    public int hp() {
+        return _hp;
+    }
+
+    public int hitpoints() {
+        return _hitpoints;
+    }
+
     public int x() {
         return (int) _x;
     }
@@ -124,6 +132,78 @@ public class Character extends BasicStats {
         }
     }
 
+    protected Character frontmost(List<Character> chars) {
+        return frontmost(chars, false);
+    }
+
+    protected Character frontmost(List<Character> chars, boolean isCondition) {
+        Character chara = null;
+        double distance = Double.MAX_VALUE, tmp;
+        for (int i = 0; i < chars.size(); i++) {
+            if (chars.get(i).isAlive() || !isCondition) {
+                tmp = distance(chars.get(i));
+                if (tmp < distance) {
+                    distance = tmp;
+                    chara = chars.get(i);
+                }
+            }
+        }
+        return chara;
+    }
+
+    protected void inflictDamage(Character chara, int damage) {
+        if (chara == null || !chara.isAlive())
+            return;
+        ValueDisplay valueDisplay = new ValueDisplay();
+        chara._valueDisplays.add(valueDisplay);
+        valueDisplay.valueType = ValueType.valueOf(_damageType.name());
+        if (chara._evasion - _accuracy > 0 && valueDisplay.valueType == ValueType.PHYSICAL)
+            valueDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
+        if (valueDisplay.isMiss)
+            return;
+        switch (_damageType) {
+            case PHYSICAL:
+                valueDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
+                valueDisplay.value = (int) (damage / (1 + chara._physicalDefense / 100.0));
+                break;
+            case MAGIC:
+                valueDisplay.isCritical = Math.random() < (_magicCritical * 0.005 * _level / chara._level);
+                valueDisplay.value = (int) (damage / (1 + chara._magicDefense / 100.0));
+                break;
+        }
+        if (valueDisplay.isCritical)
+            valueDisplay.value *= 2;
+        chara._hp -= valueDisplay.value;
+        if (chara._hp <= 0) {
+            chara._hp = 0;
+            chara.changeAction(Action.DIE);
+        }
+    }
+
+    protected void grantsRecoverHP(Character chara, int hp) {
+        if (chara == null || !chara.isAlive())
+            return;
+        ValueDisplay valueDisplay = new ValueDisplay();
+        chara._valueDisplays.add(valueDisplay);
+        valueDisplay.valueType = ValueType.HP;
+        valueDisplay.value = (int) (hp * (1 + _hpRecoveryRate / 100.0));
+        chara._hp += valueDisplay.value;
+        if (chara._hp > chara._hitpoints)
+            chara._hp = chara._hitpoints;
+    }
+
+    protected void grantsRecoverTP(Character chara, int tp) {
+        if (chara == null || !chara.isAlive())
+            return;
+        ValueDisplay valueDisplay = new ValueDisplay();
+        chara._valueDisplays.add(valueDisplay);
+        valueDisplay.valueType = ValueType.TP;
+        valueDisplay.value = (int) (tp * (1 + _tpRecoveryRate / 100.0));
+        chara._tp += valueDisplay.value;
+        if (chara._tp > 1000)
+            chara._tp = 1000;
+    }
+
     private void changeAction(Action action) {
         if (_action != action) {
             _preAction = _action;
@@ -154,25 +234,6 @@ public class Character extends BasicStats {
         changeAction(Action.RUN);
     }
 
-    private Character frontmost(List<Character> chars) {
-        return frontmost(chars, false);
-    }
-
-    private Character frontmost(List<Character> chars, boolean isCondition) {
-        Character chara = null;
-        double distance = Double.MAX_VALUE, tmp;
-        for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i).isAlive() || !isCondition) {
-                tmp = distance(chars.get(i));
-                if (tmp < distance) {
-                    distance = tmp;
-                    chara = chars.get(i);
-                }
-            }
-        }
-        return chara;
-    }
-
     private void setTarget(List<Character> allies, List<Character> enemies) {
         _allies.clear();
         _enemies.clear();
@@ -182,35 +243,6 @@ public class Character extends BasicStats {
         for (Character chara : enemies)
             if (chara.isAlive())
                 _enemies.add(chara);
-    }
-
-    private void inflictDamage(Character chara, int damage) {
-        if (chara == null || !chara.isAlive())
-            return;
-        ValueDisplay valueDisplay = new ValueDisplay();
-        chara._valueDisplays.add(valueDisplay);
-        valueDisplay.valueType = ValueType.valueOf(_damageType.name());
-        if (chara._evasion - _accuracy > 0 && valueDisplay.valueType == ValueType.PHYSICAL)
-            valueDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
-        if (valueDisplay.isMiss)
-            return;
-        switch (_damageType) {
-            case PHYSICAL:
-                valueDisplay.isCritical = Math.random() < (_physicalCritical * 0.005 * _level / chara._level);
-                valueDisplay.value = (int) (damage / (1 + chara._physicalDefense / 100.0));
-                break;
-            case MAGIC:
-                valueDisplay.isCritical = Math.random() < (_magicCritical * 0.005 * _level / chara._level);
-                valueDisplay.value = (int) (damage / (1 + chara._magicDefense / 100.0));
-                break;
-        }
-        if (valueDisplay.isCritical)
-            valueDisplay.value *= 2;
-        chara._hp -= valueDisplay.value;
-        if (chara._hp <= 0) {
-            chara._hp = 0;
-            chara.changeAction(Action.DIE);
-        }
     }
 
     private SkillType skillType() {
@@ -263,6 +295,14 @@ public class Character extends BasicStats {
         protected double _skillTime = 0;
         protected double _castTime = 0;
 
+        protected boolean isCastTime() {
+            return isCastTime(0);
+        }
+
+        protected boolean isCastTime(double castTime) {
+            return _actionFrame == (int) ((_skillTime - _castTime - castTime) * BattleGround.FRAME);
+        }
+
         protected abstract void cast();
     }
 
@@ -273,7 +313,7 @@ public class Character extends BasicStats {
         }
 
         protected void cast() {
-            if (_actionFrame == (int) (_castTime * BattleGround.FRAME)) {
+            if (isCastTime()) {
                 Character chara = frontmost(_enemies);
                 switch (_damageType) {
                     case PHYSICAL:

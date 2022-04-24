@@ -7,10 +7,10 @@ import princess.connect.baseClass.Character;
 public class Pecorine extends Character {
     public Pecorine() {
         super();
-        
+
         _id = 1058;
         _name = "Pecorine";
-        
+
         _hitpoints = 2991;
         _physicalAttack = 503;
         _magicAttack = 0;
@@ -55,10 +55,15 @@ public class Pecorine extends Character {
     private class Skill1 extends Skill {
         private Skill1() {
             _skillTime = 3.033;
-            _castTime = 0.21;
+            _castTime = 1.21;
         }
 
         protected void cast() {
+            if (isCastTime(0.3)) {
+            }
+            if (isCastTime(0.5)) {
+                grantsRecoverHP(Pecorine.this, 5 * (_level + 1) + _physicalAttack);
+            }
         }
     }
 
@@ -69,6 +74,10 @@ public class Pecorine extends Character {
         }
 
         protected void cast() {
+            if (isCastTime()) {
+                Character chara = frontmost(_enemies);
+                inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6)));
+            }
         }
     }
 
