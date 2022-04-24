@@ -217,18 +217,17 @@ public class BattleState extends AbstractGameState {
             _count = 0;
             _valueDisplay = valueDisplay;
             _values = new ArrayList<>();
+            if (_valueDisplay.isMiss)
+                _text = new ValueAnimation("miss");
+            else {
+                if (_valueDisplay.isCritical)
+                    _text = new ValueAnimation("critical");
+                for (char value : String.valueOf(_valueDisplay.value).toCharArray())
+                    _values.add(new ValueAnimation(String.valueOf(value)));
+            }
             switch (_valueDisplay.valueType) {
                 case PHYSICAL:
-                    if (_valueDisplay.isMiss) {
-                        _text = new ValueAnimation("miss");
-                        _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) + 1);
-                        break;
-                    }
                 case MAGIC:
-                    if (_valueDisplay.isCritical)
-                        _text = new ValueAnimation("critical");
-                    for (char value : String.valueOf(_valueDisplay.value).toCharArray())
-                        _values.add(new ValueAnimation(String.valueOf(value)));
                     _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) + 1);
                     break;
             }
