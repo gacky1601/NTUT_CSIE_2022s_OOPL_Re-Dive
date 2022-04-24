@@ -204,7 +204,7 @@ public class BattleState extends AbstractGameState {
     private class ValueDisplayAnimation implements GameObject {
         final int DELAY = 20;
 
-        private int _charaIndex;
+        private final int _charaIndex;
         private int _valueIndex;
         private int _count;
         private final Character.ValueDisplay _valueDisplay;
@@ -249,9 +249,9 @@ public class BattleState extends AbstractGameState {
                 case PHYSICAL:
                 case MAGIC:
                     if (_text != null)
-                        _text.setLocation(x + width, y + height - 120);
+                        _text.setLocation(x + width, y + height - 70);
                     for (ValueAnimation valueAnimation : _values) {
-                        valueAnimation.setLocation(x + width, y + height - 100);
+                        valueAnimation.setLocation(x + width, y + height - 50);
                         width += valueAnimation.getWidth();
                     }
                     break;

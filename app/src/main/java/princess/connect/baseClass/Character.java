@@ -296,25 +296,28 @@ public class Character extends BasicStats {
         protected double _castTime = 0;
 
         protected boolean isCastTime() {
-            return isCastTime(0);
+            return isCastTime(_castTime);
         }
 
         protected boolean isCastTime(double castTime) {
-            return _actionFrame == (int) ((_skillTime - _castTime - castTime) * BattleGround.FRAME);
+            return _actionFrame == (int) ((_skillTime - castTime) * BattleGround.FRAME);
         }
 
         protected abstract void cast();
     }
 
     protected class Attack extends Skill {
+        private Character chara;
+
         public Attack(Double skillTime) {
             _skillTime = skillTime;
             _castTime = skillTime / 2;
         }
 
         protected void cast() {
-            if (isCastTime()) {
-                Character chara = frontmost(_enemies);
+            if (isCastTime(_skillTime))
+                chara = frontmost(_enemies);
+            else if (isCastTime()) {
                 switch (_damageType) {
                     case PHYSICAL:
                         inflictDamage(chara, _physicalAttack);

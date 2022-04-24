@@ -55,15 +55,14 @@ public class Pecorine extends Character {
     private class Skill1 extends Skill {
         private Skill1() {
             _skillTime = 3.033;
-            _castTime = 1.21;
+            _castTime = 0.21;
         }
 
         protected void cast() {
-            if (isCastTime(0.3)) {
+            if (isCastTime(1.55)) {
             }
-            if (isCastTime(0.5)) {
+            else if (isCastTime(1.75))
                 grantsRecoverHP(Pecorine.this, 5 * (_level + 1) + _physicalAttack);
-            }
         }
     }
 

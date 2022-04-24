@@ -53,12 +53,35 @@ public class Kokoro extends Character {
     }
 
     private class Skill1 extends Skill {
+        private double x;
+        private Character chara;
+
         private Skill1() {
             _skillTime = 2.733;
             _castTime = 0.66;
         }
 
         protected void cast() {
+            if (isCastTime(_skillTime))
+                chara = frontmost(_enemies);
+            else if (isCastTime(0.48)) {
+                x = _x;
+                switch (_direction) {
+                    case LEFT:
+                        _x = chara.x() - 100;
+                        break;
+                    case RIGHT:
+                        _x = chara.x() + 100;
+                        break;
+                }
+            } else if (isCastTime(0.83))
+                inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
+            else if (isCastTime(1.06))
+                inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
+            else if (isCastTime(1.38))
+                inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
+            else if (isCastTime(2.18))
+                _x = x;
         }
     }
 
