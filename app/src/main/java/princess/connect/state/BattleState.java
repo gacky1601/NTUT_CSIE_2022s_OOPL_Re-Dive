@@ -162,8 +162,8 @@ public class BattleState extends AbstractGameState {
     }
 
     private static class CharacterAnimation extends Animation {
-        int ANIMATION_FRAME = 10;
-        int SAMPLE_SIZE = 2;
+        final int ANIMATION_FRAME = 10;
+        final int SAMPLE_SIZE = 2;
 
         public CharacterAnimation(String charName, String action) {
             String path = "action/" + charName + "/" + action;
@@ -219,15 +219,20 @@ public class BattleState extends AbstractGameState {
             _values = new ArrayList<>();
             switch (_valueDisplay.valueType) {
                 case PHYSICAL:
+                    if (_valueDisplay.isMiss) {
+                        _text = new ValueAnimation("miss");
+                        _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) + 1);
+                        break;
+                    }
                 case MAGIC:
+                    if (_valueDisplay.isCritical)
+                        _text = new ValueAnimation("critical");
+                    for (char value : String.valueOf(_valueDisplay.value).toCharArray())
+                        _values.add(new ValueAnimation(String.valueOf(value)));
                     _valueAnimationNums.set(_charaIndex, _valueAnimationNums.get(_charaIndex) + 1);
                     break;
             }
             Character chara = getSortedCharacter().get(_charaIndex);
-            if (_valueDisplay.isCritical)
-                _text = new ValueAnimation("critical");
-            for (char value : String.valueOf(_valueDisplay.value).toCharArray())
-                _values.add(new ValueAnimation(String.valueOf(value)));
             setLocation(chara.x(), chara.y());
         }
 
@@ -247,8 +252,12 @@ public class BattleState extends AbstractGameState {
                     }
                     break;
                 case PHYSICAL:
+                    if (_valueDisplay.isMiss) {
+                        _text.setLocation(x - _text.getWidth() / 2, y + height - 50);
+                        break;
+                    }
                 case MAGIC:
-                    if (_text != null)
+                    if (_valueDisplay.isCritical)
                         _text.setLocation(x + width, y + height - 70);
                     for (ValueAnimation valueAnimation : _values) {
                         valueAnimation.setLocation(x + width, y + height - 50);
@@ -292,6 +301,10 @@ public class BattleState extends AbstractGameState {
 
         @Override
         public void show() {
+            if (_valueDisplay.isMiss) {
+                _text.show();
+                return;
+            }
             if (_text != null)
                 _text.show();
             for (ValueAnimation valueAnimation : _values)
@@ -324,7 +337,7 @@ public class BattleState extends AbstractGameState {
                 }
                 bitmap = new MovingBitmap(
                         "value/" + _valueDisplay.valueType.name().toLowerCase() + "/" + value + ".png", options);
-                if (_valueDisplay.isCritical)
+                if (_valueDisplay.isCritical || _valueDisplay.isMiss)
                     addFrame(bitmap.resize((int) (bitmap.getWidth() * 1.2), (int) (bitmap.getHeight() * 1.2)));
                 else
                     addFrame(bitmap);
@@ -350,11 +363,17 @@ public class BattleState extends AbstractGameState {
                         case HP:
                         case TP:
                             if (_count++ < 5 * MOVE_TIME / SPEED)
-                                setLocation(getX(),
-                                        getY() - (int) (2 * MOVE_SPEED * SPEED
-                                                * Math.cos(Math.PI / 10 * _count / MOVE_TIME * SPEED)));
+                                setLocation(getX(), getY() - (int) (2 * MOVE_SPEED * SPEED
+                                        * Math.cos(Math.PI / 10 * _count / MOVE_TIME * SPEED)));
                             break;
                         case PHYSICAL:
+                            if (_valueDisplay.isMiss) {
+                                if (_count < 2 * MOVE_TIME / SPEED) {
+                                    setLocation(getX(), getY() - (int) (MOVE_SPEED * SPEED
+                                            * Math.cos(Math.PI / 2 * _count++ / MOVE_TIME * SPEED)));
+                                }
+                                break;
+                            }
                         case MAGIC:
                             if (_count < 4 * MOVE_TIME / SPEED) {
                                 setLocation(
