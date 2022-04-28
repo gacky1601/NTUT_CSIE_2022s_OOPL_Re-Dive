@@ -7,6 +7,18 @@
 ####  Idea: http://www.princessconnect.so-net.tw/
 #### Markdown Page:https://hackmd.io/@VjYpuTxxTumNrQ-DNZTdvw/rJ2eSk745
 
+## Under Development Features
+#### 冒險：朱諾平原選單
+
+抽卡畫面
+體力
+
+新增角色動畫
+
+角色list
+
+播放影片
+
 
 ## Changelog
 ##### Apr 11, 2022
