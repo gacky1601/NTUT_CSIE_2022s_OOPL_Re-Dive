@@ -66,12 +66,16 @@ public class Character extends BasicStats {
         return _name;
     }
 
+    public int hitpoints() {
+        return _hitpoints;
+    }
+
     public int hp() {
         return _hp;
     }
 
-    public int hitpoints() {
-        return _hitpoints;
+    public int tp() {
+        return _tp;
     }
 
     public int x() {

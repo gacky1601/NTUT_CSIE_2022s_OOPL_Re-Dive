@@ -3,6 +3,7 @@ package princess.connect.state;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import princess.connect.GameObject;
 import princess.connect.KeyEventHandler;
@@ -53,6 +54,10 @@ public abstract class AbstractGameState extends GameState {
      */
     public void changeState(int state) {
         _engine.setGameState(state);
+    }
+
+    public void changeState(int state, Map<String, Object> data) {
+        _engine.setGameState(state, data);
     }
 
     public void keyPressed(int keyCode) {

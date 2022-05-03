@@ -25,7 +25,7 @@ public class CharaterPage extends PlayerMenu {
 
     public void initialize(Map<String, Object> data) {
         _onShowPage=0;
-        add();
+        super.initialize(data);
         MovingBitmap _Charbackground = new MovingBitmap(R.drawable.cha);
         _Charbackground.setLocation(100,50);
         _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3)+15);

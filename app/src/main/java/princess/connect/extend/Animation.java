@@ -251,9 +251,10 @@ public class Animation implements GameObject {
         _visible = visible;
     }
 
-    public void inversion() {
+    public Animation inversion() {
         for (MovingBitmap frame : _frames) {
             frame.inversion();
         }
+        return this;
     }
 }

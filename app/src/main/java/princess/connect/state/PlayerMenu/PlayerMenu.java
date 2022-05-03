@@ -1,5 +1,6 @@
 package princess.connect.state.PlayerMenu;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import princess.connect.Game;
@@ -24,24 +25,6 @@ public class PlayerMenu extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        add();
-    }
-
-    @Override
-    public void pause() {}
-
-    @Override
-    public void resume() {}
-
-    private void initializeButton(BitmapButton Button,int image_a,int image_b,int x,int y,int state) {
-        Button= new BitmapButton(image_a, image_b, x, y);
-        addGameObject(Button);
-        Button.addButtonEventHandler(button -> changeState(state));
-        addPointerEventHandler(Button);
-
-    }
-
-    public void add(){
         _background = new MovingBitmap(R.drawable.background);
         addGameObject(_background);
         _background.resize(0.85);
@@ -58,6 +41,25 @@ public class PlayerMenu extends AbstractGameState {
         addGameObject(new MovingBitmap(R.drawable.ic_draw,280+178+170+170,630));
         addGameObject(new MovingBitmap(R.drawable.ic_setting,280+178+170+170+170,630));
     }
+
+    @Override
+    public void pause() {}
+
+    @Override
+    public void resume() {}
+
+    private void initializeButton(BitmapButton Button,int image_a,int image_b,int x,int y,int state) {
+        initializeButton(Button, image_a, image_b, x, y, state, null);
+    }
+
+    private void initializeButton(BitmapButton Button,int image_a,int image_b,int x,int y,int state, Map<String, Object> data) {
+        Button= new BitmapButton(image_a, image_b, x, y);
+        addGameObject(Button);
+        Button.addButtonEventHandler(button -> changeState(state, data));
+        addPointerEventHandler(Button);
+
+    }
+
     public void changebg(int bg){
         _background.loadBitmap(bg);
     }
