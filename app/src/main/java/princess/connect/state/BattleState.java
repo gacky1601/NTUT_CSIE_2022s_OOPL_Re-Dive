@@ -47,7 +47,7 @@ public class BattleState extends AbstractGameState {
         _ground.initialize();
         initCharacterAnimation();
         initValueAnimationNums();
-        initBarAnimation();
+        initStatusBar();
 
         main();
     }
@@ -83,11 +83,11 @@ public class BattleState extends AbstractGameState {
             _valueAnimationNums.add(0);
     }
 
-    private void initBarAnimation() {
-        int width = 0, x;
+    private void initStatusBar() {
+        int x, width = 0, spacing = 50;
         BarAnimation barAnimation = null;
         List<Character> chars = getSortedCharacter();
-        for(Character chara : chars) {
+        for (Character chara : chars) {
             switch (chara.direction()) {
                 case LEFT:
                     barAnimation = new BarAnimation(BarType.GREEN, chara);
@@ -99,14 +99,15 @@ public class BattleState extends AbstractGameState {
             width = barAnimation.getWidth();
             addGameObject(barAnimation);
         }
-        width += 50;
-        x = Game.GAME_FRAME_WIDTH / 2 + 2 * width;
+        x = Game.GAME_FRAME_WIDTH / 2 + 2 * (width + spacing);
         chars = _ground.characters();
-        for(Character chara : chars) {
+        for (Character chara : chars) {
             if (chara.direction() == Character.Direction.LEFT) {
                 addGameObject(new BarAnimation(BarType.BLUE, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95), chara));
                 addGameObject(new BarAnimation(BarType.GREEN, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - 25, chara));
-                x -= width;
+                addGameObject(new MovingBitmap("character/icon_unit_" + chara.id() + "11.png", x - width / 2,
+                        (int) (Game.GAME_FRAME_HEIGHT * 0.95) - width - 30));
+                x -= width + spacing;
             }
         }
     }
@@ -415,7 +416,9 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private enum BarType {BG, GREEN, RED, YELLOW, BLUE}
+    private enum BarType {
+        BG, GREEN, RED, YELLOW, BLUE
+    }
 
     private class BarAnimation implements GameObject {
         final int DELAY = 10;
@@ -460,7 +463,7 @@ public class BattleState extends AbstractGameState {
         public void setLocation(int x, int y) {
             _frame.setLocation(x - _frame.getWidth() / 2, y);
             if (_background != null)
-                _background.setLocation( _frame.getX() + 6, y + 6);
+                _background.setLocation(_frame.getX() + 6, y + 6);
             _main.setLocation(_frame.getX() + 6, y + 6);
         }
 
@@ -486,7 +489,7 @@ public class BattleState extends AbstractGameState {
         @Override
         public void move() {
             double value;
-            if(!_isAlwaysShow)
+            if (!_isAlwaysShow)
                 setLocation(convertX(_chara.x()), convertY(_chara.y()) - 225);
             switch (_barType) {
                 case GREEN:
@@ -495,7 +498,8 @@ public class BattleState extends AbstractGameState {
                     if (Math.abs(_value - value) > DELTA)
                         setValue(value);
                     else if (_count < MOVE_TIME / SPEED)
-                        _background.setValue(_value + (_background.getValue() - _value) * Math.cos(Math.PI / 2 * ++_count / MOVE_TIME * SPEED));
+                        _background.setValue(_value + (_background.getValue() - _value)
+                                * Math.cos(Math.PI / 2 * ++_count / MOVE_TIME * SPEED));
                     else if (++_count == (DELAY + MOVE_TIME) / SPEED)
                         setVisible(_isAlwaysShow);
                     break;
@@ -523,7 +527,7 @@ public class BattleState extends AbstractGameState {
             _main.release();
             _frame = null;
             _background = null;
-            _main  = null;
+            _main = null;
         }
 
         private class Bar implements GameObject {
@@ -534,9 +538,10 @@ public class BattleState extends AbstractGameState {
 
             public Bar(BarType barType) {
                 _left = new MovingBitmap("bar/" + barType.name().toLowerCase() + "Rnd.png");
-                _center = new MovingBitmap("bar/" + barType.name().toLowerCase() + "Sq.png").resize(LENGTH, _left.getHeight());
+                _center = new MovingBitmap("bar/" + barType.name().toLowerCase() + "Sq.png").resize(LENGTH,
+                        _left.getHeight());
                 _right = new MovingBitmap("bar/" + barType.name().toLowerCase() + "Rnd.png").inversion();
-                setLocation(0,0);
+                setLocation(0, 0);
             }
 
             public int getWidth() {
@@ -565,8 +570,7 @@ public class BattleState extends AbstractGameState {
                     _center.resize((int) (LENGTH * _value), _center.getHeight());
                     setLocation(_left.getX(), _left.getY());
                     setVisible(true);
-                }
-                else
+                } else
                     setVisible(false);
             }
 

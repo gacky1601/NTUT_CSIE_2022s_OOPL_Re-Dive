@@ -62,6 +62,10 @@ public class Character extends BasicStats {
         _valueDisplays = null;
     }
 
+    public int id() {
+        return _id;
+    }
+
     public String name() {
         return _name;
     }
@@ -118,14 +122,15 @@ public class Character extends BasicStats {
 
     protected void act(List<Character> allies, List<Character> enemies) {
         if (_idleFrame == 0) {
-            if (frontmost(enemies, true) == null)
+            if (frontmost(enemies) == null)
                 changeAction(Action.IDLE);
-            else if (!isInAttackRange(frontmost(enemies, true)))
+            else if (!isInAttackRange(frontmost(enemies)))
                 move();
             else {
                 _skillIndex++;
                 setTarget(allies, enemies);
                 castSkill();
+                grantsRecoverTP(this, 90, false);
             }
         } else if (_actionFrame == 0) {
             _idleFrame--;
@@ -137,14 +142,10 @@ public class Character extends BasicStats {
     }
 
     protected Character frontmost(List<Character> chars) {
-        return frontmost(chars, false);
-    }
-
-    protected Character frontmost(List<Character> chars, boolean isCondition) {
         Character chara = null;
         double distance = Double.MAX_VALUE, tmp;
         for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i).isAlive() || !isCondition) {
+            if (chars.get(i).isAlive()) {
                 tmp = distance(chars.get(i));
                 if (tmp < distance) {
                     distance = tmp;
@@ -156,10 +157,9 @@ public class Character extends BasicStats {
     }
 
     protected void inflictDamage(Character chara, int damage) {
-        if (chara == null || !chara.isAlive())
+        if (!chara.isAlive())
             return;
         ValueDisplay valueDisplay = new ValueDisplay();
-        chara._valueDisplays.add(valueDisplay);
         valueDisplay.valueType = ValueType.valueOf(_damageType.name());
         if (chara._evasion - _accuracy > 0 && valueDisplay.valueType == ValueType.PHYSICAL)
             valueDisplay.isMiss = Math.random() < (1 / (1 + 100.0 / (chara._evasion - _accuracy)));
@@ -180,32 +180,40 @@ public class Character extends BasicStats {
         chara._hp -= valueDisplay.value;
         if (chara._hp <= 0) {
             chara._hp = 0;
+            chara._tp = 0;
             chara.changeAction(Action.DIE);
+            grantsRecoverTP(this, 200, false);
         }
+        chara._valueDisplays.add(valueDisplay);
+        grantsRecoverHP(this, (int) (valueDisplay.value * _hpReduceRate / (100.0 + chara._level + _hpReduceRate)),
+                false);
+        grantsRecoverTP(chara, (int) (500.0 * valueDisplay.value / chara._hitpoints), false);
     }
 
-    protected void grantsRecoverHP(Character chara, int hp) {
-        if (chara == null || !chara.isAlive())
+    protected void grantsRecoverHP(Character chara, int hp, boolean isRecoveryRate) {
+        if (!chara.isAlive())
             return;
         ValueDisplay valueDisplay = new ValueDisplay();
-        chara._valueDisplays.add(valueDisplay);
         valueDisplay.valueType = ValueType.HP;
-        valueDisplay.value = (int) (hp * (1 + _hpRecoveryRate / 100.0));
+        valueDisplay.value = isRecoveryRate ? (int) (hp * (1 + _hpRecoveryRate / 100.0)) : hp;
         chara._hp += valueDisplay.value;
         if (chara._hp > chara._hitpoints)
             chara._hp = chara._hitpoints;
+        if (valueDisplay.value != 0)
+            chara._valueDisplays.add(valueDisplay);
     }
 
-    protected void grantsRecoverTP(Character chara, int tp) {
-        if (chara == null || !chara.isAlive())
+    protected void grantsRecoverTP(Character chara, int tp, boolean isDisplay) {
+        if (!chara.isAlive())
             return;
         ValueDisplay valueDisplay = new ValueDisplay();
-        chara._valueDisplays.add(valueDisplay);
         valueDisplay.valueType = ValueType.TP;
         valueDisplay.value = (int) (tp * (1 + _tpRecoveryRate / 100.0));
         chara._tp += valueDisplay.value;
         if (chara._tp > 1000)
             chara._tp = 1000;
+        if (isDisplay)
+            chara._valueDisplays.add(valueDisplay);
     }
 
     private void changeAction(Action action) {
@@ -259,12 +267,12 @@ public class Character extends BasicStats {
     private void castSkill() {
         SkillType skillType = skillType();
         Skill skill = _skills.get(skillType.ordinal());
-        skill.cast();
-        changeAction(Action.valueOf(skillType.name()));
         if (_idleFrame == 0) {
             _actionFrame = (int) (skill._skillTime * BattleGround.FRAME);
             _idleFrame = (int) (_attackSpeed * BattleGround.FRAME);
         }
+        skill.cast();
+        changeAction(Action.valueOf(skillType.name()));
     }
 
     public enum Direction {
@@ -319,7 +327,7 @@ public class Character extends BasicStats {
         }
 
         protected void cast() {
-            if (isCastTime(_skillTime))
+            if (isCastTime(0))
                 chara = frontmost(_enemies);
             else if (isCastTime()) {
                 switch (_damageType) {

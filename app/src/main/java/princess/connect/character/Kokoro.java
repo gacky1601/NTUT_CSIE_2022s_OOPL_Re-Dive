@@ -62,7 +62,7 @@ public class Kokoro extends Character {
         }
 
         protected void cast() {
-            if (isCastTime(_skillTime))
+            if (isCastTime(0))
                 chara = frontmost(_enemies);
             else if (isCastTime(0.48)) {
                 x = _x;

@@ -61,7 +61,7 @@ public class Pecorine extends Character {
         protected void cast() {
             if (isCastTime(1.55)) {
             } else if (isCastTime(1.75))
-                grantsRecoverHP(Pecorine.this, 5 * (_level + 1) + _physicalAttack);
+                grantsRecoverHP(Pecorine.this, 5 * (_level + 1) + _physicalAttack, true);
         }
     }
 
@@ -74,7 +74,7 @@ public class Pecorine extends Character {
         }
 
         protected void cast() {
-            if (isCastTime(_skillTime))
+            if (isCastTime(0))
                 chara = frontmost(_enemies);
             else if (isCastTime())
                 inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6)));
