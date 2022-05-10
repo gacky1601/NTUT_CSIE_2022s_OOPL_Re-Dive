@@ -23,6 +23,8 @@ import princess.connect.baseClass.BattleGround;
 import princess.connect.baseClass.Character;
 import princess.connect.character.*;
 import princess.connect.extend.Animation;
+import princess.connect.extend.BitmapButton;
+import princess.connect.extend.ButtonEventHandler;
 
 public class BattleState extends AbstractGameState {
     public BattleState(GameEngine engine) {
@@ -40,8 +42,8 @@ public class BattleState extends AbstractGameState {
     @Override
     public void initialize(Map<String, Object> data) {
         addGameObject(new MovingBitmap(R.drawable.bg_100021, -200, -200).resize(1920, 1080));
-        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
-        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
+        List<Character> characterLeft = Arrays.asList(new Pecorine(), new Kokoro(), new Arisa(), new Kyaru());
+        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(),new Kyaru());
         _ground = new BattleGround(characterLeft, characterRight);
 
         _ground.initialize();
@@ -441,7 +443,6 @@ public class BattleState extends AbstractGameState {
                 case GREEN:
                 case RED:
                     _background = new Bar(BarType.YELLOW);
-                    _background.setValue(1);
                     setValue(1);
                     break;
                 case BLUE:

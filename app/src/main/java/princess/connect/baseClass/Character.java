@@ -128,13 +128,17 @@ public class Character extends BasicStats {
                 move();
             else {
                 _skillIndex++;
-                setTarget(allies, enemies);
+                setTargets(allies, enemies);
                 castSkill();
                 grantsRecoverTP(this, 90, false);
             }
         } else if (_actionFrame == 0) {
-            _idleFrame--;
-            changeAction(Action.IDLE);
+            if (frontmost(enemies) != null && !isInAttackRange(frontmost(enemies)))
+                move();
+            else {
+                _idleFrame--;
+                changeAction(Action.IDLE);
+            }
         } else {
             _actionFrame--;
             castSkill();
@@ -142,18 +146,41 @@ public class Character extends BasicStats {
     }
 
     protected Character frontmost(List<Character> chars) {
-        Character chara = null;
+        Character target = null;
         double distance = Double.MAX_VALUE, tmp;
-        for (int i = 0; i < chars.size(); i++) {
-            if (chars.get(i).isAlive()) {
-                tmp = distance(chars.get(i));
+        for (Character chara : chars) {
+            if (chara.isAlive()) {
+                tmp = distance(chara);
                 if (tmp < distance) {
                     distance = tmp;
-                    chara = chars.get(i);
+                    target = chara;
                 }
             }
         }
-        return chara;
+        return target;
+    }
+
+    protected List<Character> defaultOrder(List<Character> chars) {
+        List<Character> result = new ArrayList<>(), alives = aliveChars(chars);
+        int order[][] = { { 0 }, { 1, 0 }, { 2, 1, 0 }, { 2, 3, 1, 0 }, { 3, 4, 2, 1, 0 } };
+        for (int i : order[alives.size() - 1])
+            result.add(alives.get(i));
+        return result;
+    }
+
+    protected Character highestAttack(List<Character> chars, DamageType damageType) {
+        Character target = null;
+        int attack = -1;
+        for (Character chara : defaultOrder(chars)) {
+            if (damageType == DamageType.PHYSICAL && chara._physicalAttack > attack) {
+                attack = chara._physicalAttack;
+                target = chara;
+            } else if (damageType == DamageType.MAGIC && chara._magicAttack > attack) {
+                attack = chara._magicAttack;
+                target = chara;
+            }
+        }
+        return target;
     }
 
     protected void inflictDamage(Character chara, int damage) {
@@ -246,7 +273,15 @@ public class Character extends BasicStats {
         changeAction(Action.RUN);
     }
 
-    private void setTarget(List<Character> allies, List<Character> enemies) {
+    private List<Character> aliveChars(List<Character> chars) {
+        List<Character> alives = new ArrayList<>();
+        for (Character chara : chars)
+            if (chara.isAlive())
+                alives.add(chara);
+        return alives;
+    }
+
+    private void setTargets(List<Character> allies, List<Character> enemies) {
         _allies.clear();
         _enemies.clear();
         for (Character chara : allies)
@@ -322,8 +357,12 @@ public class Character extends BasicStats {
         private Character chara;
 
         public Attack(Double skillTime) {
+            this(skillTime, skillTime / 2);
+        }
+
+        public Attack(Double skillTime, Double castTime) {
             _skillTime = skillTime;
-            _castTime = skillTime / 2;
+            _castTime = castTime;
         }
 
         protected void cast() {

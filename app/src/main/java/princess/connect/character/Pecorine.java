@@ -66,7 +66,7 @@ public class Pecorine extends Character {
     }
 
     private class Skill2 extends Skill {
-        private Character chara;
+        private Character target;
 
         private Skill2() {
             _skillTime = 2.033;
@@ -75,9 +75,9 @@ public class Pecorine extends Character {
 
         protected void cast() {
             if (isCastTime(0))
-                chara = frontmost(_enemies);
+                target = frontmost(_enemies);
             else if (isCastTime())
-                inflictDamage(chara, (int) (20 * (_level + 1) + (_physicalAttack * 1.6)));
+                inflictDamage(target, (int) (20 * (_level + 1) + (_physicalAttack * 1.6)));
         }
     }
 
