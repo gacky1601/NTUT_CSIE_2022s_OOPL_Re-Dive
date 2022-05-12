@@ -16,17 +16,18 @@ public class AdventurePage extends PlayerMenu{
     private BitmapButton _battle;
     public void initialize(Map<String, Object> data) {
         super.initialize(data);
+        changebg(R.drawable.bg2,-100,-200,1920,1080);
+        boolean min=false;
         for(int i =0 ; i<10;i++) {
-            initializeButton(_battle, R.drawable.empty_btn, R.drawable.empty_btn_pressed, 80+120*i, randInt(200,550), Game.ADV_STATE);
+            if(min)
+                initializeButton(_battle, R.drawable.empty_btn, R.drawable.empty_btn_pressed, 80+120*i, 300+randInt(20,100), Game.ADV_STATE);
+            else
+                initializeButton(_battle, R.drawable.empty_btn, R.drawable.empty_btn_pressed, 80+120*i, 300-randInt(20,100), Game.ADV_STATE);
+            min=!min;
         }
     }
     public static int randInt(int min, int max) {
-        int x;
         Random randomNum = new Random();
-        x = min + randomNum.nextInt((max - min) + 1);
-        if(x>350&&x<500){
-            return randInt(min, max);
-        }
-        return x;
+        return min + randomNum.nextInt((max - min) + 1);
     }
 }

@@ -15,7 +15,7 @@ public class DrawPage extends PlayerMenu{
     }
     public void initialize(Map<String, Object> data) {
         super.initialize(data);
-        changebg(R.drawable.bg_100503,0,-200,1920,1080);
+        changebg(R.drawable.bg_100503,-100,-200,1920,1080);
     }
 
 

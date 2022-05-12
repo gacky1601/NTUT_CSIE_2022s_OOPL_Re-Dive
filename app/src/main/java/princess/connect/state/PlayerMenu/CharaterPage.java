@@ -29,7 +29,7 @@ public class CharaterPage extends PlayerMenu {
         MovingBitmap _Charbackground = new MovingBitmap(R.drawable.cha);
         _Charbackground.setLocation(100,50);
         _Charbackground.resize((int) ( _Charbackground.getWidth()*1.3), (int) (_Charbackground.getHeight()*1.3)+15);
-        changebg(R.drawable.bg_100941,0,-200,1920,1080);
+        changebg(R.drawable.bg_100941,-100,-200,1920,1080);
         addGameObject(_Charbackground);
         showallcharacter();
         BitmapButton nextpage =new BitmapButton(R.drawable.empty_btn,R.drawable.empty_btn_pressed,1245,350);
@@ -49,9 +49,9 @@ public class CharaterPage extends PlayerMenu {
     private ArrayList loadallcharaters(){
         ArrayList<BitmapButton> _charater=new ArrayList();
         try {
-            for (String charater : runtime.getAssets().list("character")){
+            for (String charater : runtime.getAssets().list("character/plate")){
                 Log.d("charater:",charater);
-                _charater.add((new BitmapButton("character/"+charater)));
+                _charater.add((new BitmapButton("character/plate/"+charater)));
             }
         } catch (IOException e) {
             e.printStackTrace();
