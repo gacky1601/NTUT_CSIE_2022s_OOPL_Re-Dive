@@ -63,8 +63,10 @@ public class BattleState extends AbstractGameState {
             @Override
             public void run() {
                 _ground.main();
-                changeAction();
-                nextFrame();
+                try {
+                    changeAction();
+                    nextFrame();
+                } catch (NullPointerException ignored) {}
             }
         };
         _timer.scheduleAtFixedRate(_timeTask, 0, 1000 / SPEED / BattleGround.FRAME);
@@ -104,8 +106,7 @@ public class BattleState extends AbstractGameState {
             if (chara.direction() == Character.Direction.LEFT) {
                 addGameObject(new BarAnimation(BarType.BLUE, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95), chara));
                 addGameObject(new BarAnimation(BarType.GREEN, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - 25, chara));
-                addGameObject(new MovingBitmap("character/icon_unit_" + chara.id() + "11.png", x - width / 2,
-                        (int) (Game.GAME_FRAME_HEIGHT * 0.95) - width - 30));
+                addGameObject(new CharacterButton(chara, x - width / 2 + 1, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - width - 30));
                 x -= width + spacing;
             }
         }
@@ -596,6 +597,59 @@ public class BattleState extends AbstractGameState {
                 _center = null;
                 _right = null;
             }
+        }
+    }
+
+    private class CharacterButton implements GameObject {
+        private Character _chara;
+        private MovingBitmap _icon, _gray;
+        private MovingBitmap _frame;
+
+        public CharacterButton(Character chara, int x, int y) {
+            _chara = chara;
+            _icon = new MovingBitmap("character/icon_unit_" + _chara.id() + "11.png");
+            _icon.resize(_icon.getWidth() - 2, _icon.getHeight() - 2);
+            _gray = new MovingBitmap("character/icon_unit_gray.png");
+            _gray.resize(_icon.getWidth(), _icon.getHeight());
+            _gray.setVisible(false);
+            if (_chara.rank() <= 1)
+                _frame = new MovingBitmap("frame/blueSq.png");
+            else if (_chara.rank() <= 3)
+                _frame = new MovingBitmap("frame/brownSq.png");
+            else if (_chara.rank() <= 6)
+                _frame = new MovingBitmap("frame/greySq.png");
+            else if (_chara.rank() <= 10)
+                _frame = new MovingBitmap("frame/yellowSq.png");
+            setLocation(x, y);
+        }
+
+        public void setLocation(int x, int y) {
+            _icon.setLocation(x + 1, y + 1);
+            _gray.setLocation(_icon.getX(), _icon.getY());
+            _frame.setLocation(x, y);
+        }
+
+        @Override
+        public void move() {
+            if (!_chara.isAlive())
+                _gray.setVisible(true);
+        }
+
+        @Override
+        public void show() {
+            _icon.show();
+            _gray.show();
+            _frame.show();
+        }
+
+        @Override
+        public void release() {
+            _icon.release();
+            _gray.release();
+            _frame.release();
+            _icon = null;
+            _gray = null;
+            _frame = null;
         }
     }
 
