@@ -10,5 +10,6 @@ public class SettingPage extends PlayerMenu{
     public void initialize(Map<String, Object> data) {
         super.initialize(data);
         changebg(R.drawable.bg_100742,0,-200,1920,1080);
+        super.initButton();
     }
 }

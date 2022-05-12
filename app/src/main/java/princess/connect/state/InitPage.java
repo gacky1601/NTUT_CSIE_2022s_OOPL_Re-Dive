@@ -1,9 +1,20 @@
 package princess.connect.state;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import princess.connect.Game;
 import princeconnect.game.R;
+import princess.connect.baseClass.Character;
+import princess.connect.character.Arisa;
+import princess.connect.character.Kokoro;
+import princess.connect.character.Kyaru;
+import princess.connect.character.Pecorine;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.extend.BitmapButton;
@@ -29,10 +40,16 @@ public class InitPage extends AbstractGameState{
         addGameObject(_background);
         addGameObject(_icon);
         addGameObject(_startButton);
-
-        _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU));
+        data = new HashMap<>();
+        List<Character> charsList = Arrays.asList(new Pecorine(), new Kokoro(), new Arisa(), new Kyaru(), new Pecorine(),
+                new Kokoro(), new Arisa(), new Kyaru(), new Pecorine(), new Kokoro(), new Arisa(), new Kyaru(),
+                new Pecorine(), new Kokoro(), new Arisa(), new Kyaru(), new Pecorine(), new Kokoro(), new Arisa(),
+                new Kyaru());
+        Collections.sort(charsList, new CharacterComparator());
+        data.put("charsList", charsList);
+        Map<String, Object> finalData = data;
+        _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU, finalData));
         addPointerEventHandler(_startButton);
-
     }
 
     @Override
@@ -41,5 +58,11 @@ public class InitPage extends AbstractGameState{
     @Override
     public void resume() { }
 
+    private static class CharacterComparator implements Comparator<Character> {
+        @Override
+        public int compare(Character char1, Character char2) {
+            return -(char1.id() - char2.id());
+        }
+    }
 }
 

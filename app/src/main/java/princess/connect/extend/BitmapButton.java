@@ -46,6 +46,8 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      */
     private List<ButtonEventHandler> _handlers;
 
+    private Pointer _pointer;
+
     /**
      * 用指定的圖片資源ID，建立一個<code>BitmapButton</code>實體。
      *
@@ -233,6 +235,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
 
     @Override
     public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
+        _pointer = actionPointer;
         if (pointers.size() == 1 && _visible) {
             Pointer pointer = pointers.get(0);
             if (pointer.getType() == Pointer.LEFT_MOUSE_BUTTON && contains(pointer)) {
@@ -259,7 +262,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
         _pressed = false;
         if (pointers.size() == 1 && _visible) {
             Pointer pointer = pointers.get(0);
-            if (pointer.getType() == Pointer.LEFT_MOUSE_BUTTON && contains(pointer)) {
+            if (pointer.getType() == Pointer.LEFT_MOUSE_BUTTON && contains(pointer) && _pointer != null && contains(_pointer)) {
                 notifyButtonEventHandlers();
                 return true;
             }

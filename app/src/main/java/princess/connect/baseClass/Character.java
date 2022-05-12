@@ -70,6 +70,14 @@ public class Character extends BasicStats {
         return _name;
     }
 
+    public int rank() {
+        return _rank;
+    }
+
+    public int attackRange() {
+        return _attackRange;
+    }
+
     public int hitpoints() {
         return _hitpoints;
     }

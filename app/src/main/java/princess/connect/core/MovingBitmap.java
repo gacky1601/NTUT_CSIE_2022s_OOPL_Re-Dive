@@ -182,10 +182,11 @@ public class MovingBitmap implements GameObject {
      * @param x 新位置的x座標
      * @param y 新位置的y座標
      */
-    public void setLocation(int x, int y) {
+    public MovingBitmap setLocation(int x, int y) {
         _x = x;
         _y = y;
         _matrixTranslate.setTranslate(x, y);
+        return this;
     }
     /**
      * 將圖片縮放到指定的大小。
@@ -201,8 +202,9 @@ public class MovingBitmap implements GameObject {
         _matrixScale.setScale((float) width/_bitmap.getWidth(), (float) height/_bitmap.getHeight());
         return this;
     }
-    public void resize(double ratio){
+    public MovingBitmap resize(double ratio){
         resize((int)(getWidth()*ratio),(int)(getHeight()*ratio));
+        return this;
     }
     public void rotate(int degree) {
         _matrixRotate.setRotate(degree,_bitmap.getWidth()/2,_bitmap.getHeight()/2);
@@ -258,5 +260,12 @@ public class MovingBitmap implements GameObject {
     public MovingBitmap inversion() {
         _matrixScale.postScale(-1,1, getWidth()/2,0);
         return this;
+    }
+
+    public MovingBitmap crop(int x, int y, int width, int height) {
+        MovingBitmap result = new MovingBitmap();
+        result._bitmap = Bitmap.createBitmap(_bitmap, (int) ((double) _bitmap.getWidth() * x / _width), (int) ((double) _bitmap.getHeight() * y / _height), (int) ((double) _bitmap.getWidth() * width / _width), (int) ((double) _bitmap.getHeight() * height / _height));
+        result.resize(width, height);
+        return result;
     }
 }
