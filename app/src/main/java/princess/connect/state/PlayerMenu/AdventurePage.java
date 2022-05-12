@@ -40,10 +40,10 @@ public class AdventurePage extends PlayerMenu {
     private class CharacterSelector implements GameObject, PointerEventHandler {
         final int MAG = 18;
 
-        private final List<MovingBitmap> _frames;
-        private final List<GraySquare> _background;
-        private final List<CharacterButton> _charBtns;
-        private final List<SelectedButton> _selectedBtns;
+        private List<MovingBitmap> _frames;
+        private List<GraySquare> _background;
+        private List<CharacterButton> _charBtns;
+        private List<SelectedButton> _selectedBtns;
         private Pointer _pointer;
         private boolean _isInGarySquare, _isMoved, _isPress;
         private MovingBitmap _confirm, _cancle;
@@ -252,7 +252,7 @@ public class AdventurePage extends PlayerMenu {
 
         private class CharacterButton implements GameObject {
             protected Character _chara;
-            private final MovingBitmap _icon, _gray;
+            private MovingBitmap _icon, _gray;
             private MovingBitmap _frame;
             private int _x, _y;
             private boolean _isGray, _isVisible;
@@ -340,6 +340,12 @@ public class AdventurePage extends PlayerMenu {
 
             @Override
             public void release() {
+                _icon.release();
+                _gray.release();
+                _frame.release();
+                _icon = null;
+                _gray = null;
+                _frame = null;
             }
         }
 
@@ -367,7 +373,7 @@ public class AdventurePage extends PlayerMenu {
         }
 
         private class GraySquare implements GameObject {
-            private final List<MovingBitmap> _bitmaps;
+            private List<MovingBitmap> _bitmaps;
 
             public GraySquare(int width, int height) {
                 _bitmaps = new ArrayList<>();
@@ -422,6 +428,10 @@ public class AdventurePage extends PlayerMenu {
 
             @Override
             public void release() {
+                for (MovingBitmap bitmap : _bitmaps)
+                    bitmap.release();
+                _bitmaps.clear();
+                _bitmaps = null;
             }
         }
 
@@ -434,6 +444,26 @@ public class AdventurePage extends PlayerMenu {
 
         @Override
         public void release() {
+            for (MovingBitmap bitmap : _frames)
+                bitmap.release();
+            for (GraySquare gray : _background)
+                gray.release();
+            for (CharacterButton btn : _charBtns)
+                btn.release();
+            for (SelectedButton btn : _selectedBtns)
+                btn.release();
+            _confirm.release();
+            _cancle.release();
+            _frames.clear();
+            _background.clear();
+            _charBtns.clear();
+            _selectedBtns.clear();
+            _frames = null;
+            _background = null;
+            _charBtns = null;
+            _selectedBtns = null;
+            _confirm = null;
+            _cancle = null;
         }
     }
 
