@@ -33,12 +33,12 @@ public class CharaterPage extends PlayerMenu {
         addGameObject(_Charbackground);
         showallcharacter();
         BitmapButton nextpage =new BitmapButton(R.drawable.empty_btn,R.drawable.empty_btn_pressed,1245,350);
-        nextpage.resize_w(0.3);
+//        nextpage.resize_w(0.3);
         nextpage.addButtonEventHandler(button -> change_page("+"));
         addPointerEventHandler(nextpage);
         addGameObject(nextpage);
         BitmapButton lastpage =new BitmapButton(R.drawable.empty_btn,R.drawable.empty_btn_pressed,1245,260);
-        lastpage.resize_w(0.3);
+//        lastpage.resize_w(0.3);
         lastpage.addButtonEventHandler(button -> change_page("-"));
         addPointerEventHandler(lastpage);
         addGameObject(lastpage);
@@ -50,9 +50,9 @@ public class CharaterPage extends PlayerMenu {
     private ArrayList loadallcharaters(){
         ArrayList<BitmapButton> _charater=new ArrayList();
         try {
-            for (String charater : runtime.getAssets().list("character")){
+            for (String charater : runtime.getAssets().list("character/plate")){
                 Log.d("charater:",charater);
-                _charater.add((new BitmapButton("character/"+charater)));
+                _charater.add((new BitmapButton("character/plate/"+charater)));
             }
         } catch (IOException e) {
             e.printStackTrace();
