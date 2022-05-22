@@ -17,6 +17,7 @@ import java.util.TimerTask;
 import princeconnect.game.R;
 import princess.connect.Game;
 import princess.connect.GameObject;
+import princess.connect.baseClass.Area;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.baseClass.BattleGround;
@@ -39,9 +40,9 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        addGameObject(new MovingBitmap(R.drawable.bg_100021, -200, -200).resize(1920, 1080));
-        List<Character> characterRight = Arrays.asList(new Pecorine(), new Kokoro(),new Kyaru());
-        _ground = new BattleGround((List<Character>) data.get("selectChars"), characterRight);
+        Area.AreaLevel level = (Area.AreaLevel) data.get("selectAreaLevel");
+        addGameObject(new MovingBitmap("map/bg_" + level.map() + ".png", -200, -200).resize(1920, 1080));
+        _ground = new BattleGround((List<Character>) data.get("selectChars"), level.chars());
 
         _ground.initialize();
         initCharacterAnimation();
@@ -447,7 +448,7 @@ public class BattleState extends AbstractGameState {
                     setValue(0);
                     break;
             }
-            _count = 0;
+            _count = MOVE_TIME / SPEED;
             _isAlwaysShow = false;
             setVisible(false);
         }
@@ -600,8 +601,8 @@ public class BattleState extends AbstractGameState {
         }
     }
 
-    private class CharacterButton implements GameObject {
-        private Character _chara;
+    private static class CharacterButton implements GameObject {
+        private final Character _chara;
         private MovingBitmap _icon, _gray;
         private MovingBitmap _frame;
 

@@ -10,6 +10,8 @@ import java.util.Map;
 
 import princess.connect.Game;
 import princeconnect.game.R;
+import princess.connect.area.Area1;
+import princess.connect.baseClass.Area;
 import princess.connect.baseClass.Character;
 import princess.connect.character.Arisa;
 import princess.connect.character.Kokoro;
@@ -47,6 +49,8 @@ public class InitPage extends AbstractGameState{
                 new Kyaru());
         Collections.sort(charsList, new CharacterComparator());
         data.put("charsList", charsList);
+        List<Area> areaList = Arrays.asList(new Area1());
+        data.put("areaList", areaList);
         Map<String, Object> finalData = data;
         _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU, finalData));
         addPointerEventHandler(_startButton);
