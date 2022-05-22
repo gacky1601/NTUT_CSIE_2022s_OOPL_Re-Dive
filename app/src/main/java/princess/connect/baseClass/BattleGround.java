@@ -6,10 +6,7 @@ import java.util.List;
 import princess.connect.baseClass.Character.Direction;
 
 public class BattleGround {
-    public static final int FRAME = 100;
-    public static final int WIDTH = 3000;
-    public static final int HEIGHT = 100;
-    public static final int SPACING = 100;
+    public static final int FRAME = 100, WIDTH = 3000, HEIGHT = 100, SPACING = 100;
 
     private int _time;
     private List<Character> _characterLeft;

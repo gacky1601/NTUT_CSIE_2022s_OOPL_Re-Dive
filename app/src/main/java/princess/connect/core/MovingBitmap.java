@@ -154,6 +154,20 @@ public class MovingBitmap implements GameObject {
         }
     }
 
+    public void loadBitmap(MovingBitmap movingBitmap) {
+        try {
+            if (_bitmap != null)
+                _bitmap.recycle();
+            _bitmap = movingBitmap._bitmap;
+            //new new new new new new new new new new new new new new new new new new new new new new new new
+            //_bitmapBackUp = BitmapFactory.decodeStream(runtime.getAssets().open(fileName), null, options);
+            _width = _bitmap.getWidth();
+            _height = _bitmap.getHeight();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void move() {
     }

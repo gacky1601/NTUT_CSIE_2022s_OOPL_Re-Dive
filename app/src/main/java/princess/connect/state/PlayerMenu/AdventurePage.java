@@ -5,17 +5,16 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import princeconnect.game.R;
 import princess.connect.Game;
 import princess.connect.GameObject;
 import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
+import princess.connect.baseClass.Area;
 import princess.connect.baseClass.Character;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
-import princess.connect.extend.BitmapButton;
 
 public class AdventurePage extends PlayerMenu {
     public AdventurePage(GameEngine engine) {
@@ -23,18 +22,132 @@ public class AdventurePage extends PlayerMenu {
     }
 
     private Map<String, Object> _data;
+    private CharacterSelector _selector;
     private List<Character> _selectChars;
+    private List<Area> _areaList;
+    private boolean _isSelect;
 
     public void initialize(Map<String, Object> data) {
         super.initialize(data);
-        changebg(R.drawable.bg_530011, -200, -200, 1920, 1080);
-        _data = data;
-        CharacterSelector selector = new CharacterSelector((List<Character>) _data.get("charsList"));
-        addGameObject(selector);
-        addPointerEventHandler(selector);
         _selectChars = new ArrayList<>();
+        _data = data;
         _data.put("selectChars", _selectChars);
+        _areaList = (List<Area>) _data.get("areaList");
+        initArea();
+        _selector = new CharacterSelector((List<Character>) _data.get("charsList"));
+        _selector.setVisible(false);
+        addGameObject(_selector);
+        addPointerEventHandler(_selector);
         super.initButton();
+    }
+
+    private double distance(Area.AreaLevel level1, Area.AreaLevel level2) {
+        return Math.sqrt(Math.pow(convertX(level1.x()) - convertX(level2.x()), 2) + Math.pow(convertY(level1.y()) - convertY(level2.y()), 2));
+    }
+
+    private double slope(Area.AreaLevel level1, Area.AreaLevel level2) {
+        return (double) (convertY(level1.y()) - convertY(level2.y())) / (convertX(level1.x()) - convertX(level2.x()));
+    }
+    
+    private void initArea() {
+        Area area = _areaList.get(0);
+        Area.AreaLevel preLevel = null;
+        MovingBitmap worldmap = new MovingBitmap("map/worldmap.png");
+        MovingBitmap road = new MovingBitmap("map/road.png");
+        _background.loadBitmap(worldmap.crop(area.mapX() - 1024 / 2, area.mapY() - 1024 / 2, 1024, 1024));
+        _background.resize(1920, 1080).setLocation(-200,-200);
+        for (Area.AreaLevel level : area.levels()) {
+            if (preLevel != null) {
+                int length = (int) distance(level, preLevel);
+                double radians = Math.atan(slope(level, preLevel));
+                MovingBitmap newRoad = road.crop(0, (road.getHeight() - length) / 2, length, length);
+                newRoad.rotate((int) Math.toDegrees(radians));
+                newRoad.setLocation(convertX(preLevel.x()) - length / 2 + (int) (length / 2 * Math.cos(radians)), convertY(preLevel.y()) - length / 2 + (int) (length / 2 * Math.sin(radians)));
+                addGameObject(newRoad);
+            }
+            preLevel = level;
+        }
+        for (Area.AreaLevel level : area.levels()) {
+            LevelButton btn = new LevelButton(level);
+            addGameObject(btn);
+            addPointerEventHandler(btn);
+        }
+    }
+
+    private int convertX(int x) {
+        return (int) (Game.GAME_FRAME_WIDTH * 0.8 * x / Area.AreaLevel.WIDTH + Game.GAME_FRAME_WIDTH * 0.1);
+    }
+
+    private int convertY(int y) {
+        return (int) (Game.GAME_FRAME_HEIGHT * 0.7 * y / Area.AreaLevel.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.05);
+    }
+
+    private class LevelButton implements GameObject, PointerEventHandler {
+        private final Area.AreaLevel _level;
+        private MovingBitmap _icon, _base;
+        private Pointer _pointer;
+
+        public LevelButton(Area.AreaLevel level) {
+            _level = level;
+            _base = new MovingBitmap("map/base.png");
+            _icon = new MovingBitmap("map/icon_map_" + level.icon() + ".png");
+            setLocation(level.x(), level.y());
+        }
+
+        public void setLocation(int x, int y) {
+            x = convertX(x);
+            y = convertY(y);
+            _base.setLocation(x - _base.getWidth() / 2, y - _base.getHeight() / 2);
+            _icon.setLocation(x - _icon.getWidth() / 2, y - _icon.getHeight() / 2 - 40);
+        }
+
+        public boolean contain(Pointer pointer, MovingBitmap bitmap) {
+            return pointer.getX() >= bitmap.getX() && pointer.getX() < bitmap.getX() + bitmap.getWidth()
+                    && pointer.getY() >= bitmap.getY() && pointer.getY() < bitmap.getY() + bitmap.getHeight();
+        }
+
+        public boolean contain(Pointer pointer) {
+            return contain(pointer, _base) || contain(pointer, _icon);
+        }
+
+        @Override
+        public void move() {
+        }
+
+        @Override
+        public void show() {
+            _base.show();
+            _icon.show();
+        }
+
+        @Override
+        public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
+            _pointer = actionPointer;
+            return pointers.size() == 1 && !_isSelect && contain(actionPointer);
+        }
+
+        @Override
+        public boolean pointerMoved(Pointer actionPointer, List<Pointer> pointers) {
+            return false;
+        }
+
+        @Override
+        public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
+            if (pointers.size() == 1 && !_isSelect && contain(_pointer) && contain(actionPointer)) {
+                _data.put("selectAreaLevel", _level);
+                _selector.setVisible(true);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void release() {
+            _base.release();
+            _icon.release();
+            _base = null;
+            _icon = null;
+        }
     }
 
     private class CharacterSelector implements GameObject, PointerEventHandler {
@@ -45,7 +158,7 @@ public class AdventurePage extends PlayerMenu {
         private List<CharacterButton> _charBtns;
         private List<SelectedButton> _selectedBtns;
         private Pointer _pointer;
-        private boolean _isInGarySquare, _isMoved, _isPress;
+        private boolean _isInGarySquare, _isMoved, _isPress, _isVisible;
         private MovingBitmap _confirm, _cancle;
 
         public CharacterSelector(List<Character> chars) {
@@ -78,11 +191,13 @@ public class AdventurePage extends PlayerMenu {
                                     - _background.get(0).getHeight())
                     .setLocation(_background.get(0).getX(),
                             _background.get(0).getY() + _background.get(0).getHeight()));
-            _frames.add(tmp.crop(0, 0, tmp.getWidth(), getY() - tmp.getY() + 1).setLocation(tmp.getX(), tmp.getY()));
+            _frames.add(tmp.crop(0, 1, tmp.getWidth(), getY() - tmp.getY() + 2).setLocation(tmp.getX(), tmp.getY() + 1));
+            _frames.get(10).resize(_frames.get(10).getWidth(), _frames.get(10).getHeight() - 2);
             _frames.add(tmp
                     .crop(0, getY() + getHeight() - tmp.getY() - 1, tmp.getWidth(),
                             tmp.getY() + tmp.getHeight() - getY() - getHeight())
-                    .setLocation(tmp.getX(), getY() + getHeight() - 1));
+                    .setLocation(tmp.getX(), getY() + getHeight() - 2));
+            setVisible(false);
         }
 
         private void initLoaction() {
@@ -119,6 +234,20 @@ public class AdventurePage extends PlayerMenu {
                     y += _charBtns.get(i).getHeight() + spacing;
                 }
             }
+        }
+
+        public void setVisible(boolean isVisible) {
+            _isVisible = isVisible;
+            for (MovingBitmap bitmap : _frames)
+                bitmap.setVisible(isVisible);
+            for (GraySquare square : _background)
+                square.setVisible(isVisible);
+            for (CharacterButton btn : _charBtns)
+                btn.setVisible(isVisible);
+            _confirm.setVisible(isVisible);
+            _cancle.setVisible(isVisible);
+            _selectChars.clear();
+            _isSelect = isVisible;
         }
 
         public int getX() {
@@ -185,7 +314,7 @@ public class AdventurePage extends PlayerMenu {
 
         @Override
         public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
-            if (pointers.size() == 1) {
+            if (pointers.size() == 1 && _isVisible) {
                 _pointer = actionPointer;
                 _isPress = contains(_pointer, getX(), getY(), getWidth(), getHeight());
                 _isInGarySquare = contains(_pointer, _background.get(0).getX(), _background.get(0).getY(),
@@ -202,7 +331,7 @@ public class AdventurePage extends PlayerMenu {
 
         @Override
         public boolean pointerMoved(Pointer actionPointer, List<Pointer> pointers) {
-            if (pointers.size() == 1 && _isInGarySquare) {
+            if (pointers.size() == 1 && _isInGarySquare && _isVisible) {
                 _isMoved = distance(_pointer, actionPointer) > 1;
                 int y = actionPointer.getY() - _pointer.getY();
                 for (CharacterButton btn : _charBtns)
@@ -214,7 +343,7 @@ public class AdventurePage extends PlayerMenu {
 
         @Override
         public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
-            if (pointers.size() == 1 && _isPress) {
+            if (pointers.size() == 1 && _isPress && _isVisible) {
                 if (_isInGarySquare) {
                     if (_charBtns.get(0).getY() > _background.get(0).getY() + 25) {
                         int y = _background.get(0).getY() + 25 - _charBtns.get(0).getY();
@@ -230,7 +359,8 @@ public class AdventurePage extends PlayerMenu {
                         for (CharacterButton btn : _charBtns)
                             btn.setLocation(btn.getX(), btn.getY() + y);
                     }
-                    if (!_isMoved)
+                    if (!_isMoved && contains(actionPointer, _background.get(0).getX(), _background.get(0).getY(),
+                            _background.get(0).getWidth(), _background.get(0).getHeight()))
                         for (CharacterButton btn : _charBtns)
                             if (contains(_pointer, btn.getX(), btn.getY(), btn.getWidth(), btn.getHeight())
                                     && (_selectChars.size() != 5 || btn._isGray))
@@ -244,6 +374,9 @@ public class AdventurePage extends PlayerMenu {
                             && contains(actionPointer, _confirm.getX(), _confirm.getY(), _confirm.getWidth(), _confirm.getHeight())
                             && _selectChars.size() != 0)
                         changeState(Game.ADV_STATE, _data);
+                    else if (contains(_pointer, _cancle.getX(), _cancle.getY(), _cancle.getWidth(), _cancle.getHeight())
+                            && contains(actionPointer, _cancle.getX(), _cancle.getY(), _cancle.getWidth(), _cancle.getHeight()))
+                        setVisible(false);
                 }
                 return true;
             }
@@ -386,6 +519,13 @@ public class AdventurePage extends PlayerMenu {
                 _bitmaps.get(4).resize(_bitmaps.get(1).getWidth(), _bitmaps.get(3).getHeight());
             }
 
+            public void setVisible(boolean isVisible) {
+                for (MovingBitmap bitmap : _bitmaps)
+                    bitmap.setVisible(isVisible);
+                for (CharacterButton btn : _charBtns)
+                    btn.setGray(false);
+            }
+
             public void setLocation(int x, int y) {
                 MovingBitmap bitmap;
                 for (int i = 0; i < 9; i++) {
@@ -466,22 +606,4 @@ public class AdventurePage extends PlayerMenu {
             _cancle = null;
         }
     }
-
-    /*private BitmapButton _battle;
-    public void initialize(Map<String, Object> data) {
-        super.initialize(data);
-        changebg(R.drawable.bg2,-100,-200,1920,1080);
-        boolean min=false;
-        for(int i =0 ; i<10;i++) {
-            if(min)
-                initializeButton(_battle, R.drawable.empty_btn, R.drawable.empty_btn_pressed, 80+120*i, 300+randInt(20,100), Game.ADV_STATE);
-            else
-                initializeButton(_battle, R.drawable.empty_btn, R.drawable.empty_btn_pressed, 80+120*i, 300-randInt(20,100), Game.ADV_STATE);
-            min=!min;
-        }
-    }
-    public static int randInt(int min, int max) {
-        Random randomNum = new Random();
-        return min + randomNum.nextInt((max - min) + 1);
-    }*/
 }
