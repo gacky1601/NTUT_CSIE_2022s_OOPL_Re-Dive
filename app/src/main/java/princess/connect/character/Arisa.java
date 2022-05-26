@@ -31,13 +31,13 @@ public class Arisa extends Character {
 
         _attackRange = 625;
         _moveSpeed = 450;
-        _attackSpeed = 1.97;
+        _attackSpeed = 1.970;
 
         _level = 1;
         _star = 3;
         _rank = 1;
 
-        _skills = Arrays.asList(new Attack(1.50, 1.0), new Skill0(), new Skill1(), new Skill2(), new SkillEx());
+        _skills = Arrays.asList(new Attack(1.500, 1.000), new Skill0(), new Skill1(), new Skill2(), new SkillEx());
         _initialPattern = Arrays.asList(SkillType.SKILL1, SkillType.SKILL2, SkillType.ATTACK, SkillType.SKILL2);
         _loopPattern = Arrays.asList(SkillType.ATTACK, SkillType.SKILL2, SkillType.SKILL1, SkillType.ATTACK,
                 SkillType.SKILL2, SkillType.ATTACK, SkillType.SKILL2, SkillType.SKILL2);
@@ -49,7 +49,7 @@ public class Arisa extends Character {
 
     private class Skill0 extends Skill {
         private Skill0() {
-            _skillTime = 4.70;
+            _skillTime = 4.700;
         }
 
         protected void cast() {
@@ -61,8 +61,8 @@ public class Arisa extends Character {
         private Character target;
 
         private Skill1() {
-            _skillTime = 1.90;
-            _castTime = 1.90;
+            _skillTime = 1.900;
+            _castTime = 1.900;
         }
 
         protected void cast() {
@@ -75,8 +75,8 @@ public class Arisa extends Character {
 
     private class Skill2 extends Skill {
         private Skill2() {
-            _skillTime = 2.50;
-            _castTime = 0.51;
+            _skillTime = 2.500;
+            _castTime = 0.510;
         }
 
         protected void cast() {

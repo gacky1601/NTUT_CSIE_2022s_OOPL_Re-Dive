@@ -29,7 +29,7 @@ public class Pecorine extends Character {
 
         _attackRange = 155;
         _moveSpeed = 450;
-        _attackSpeed = 2.25;
+        _attackSpeed = 2.250;
 
         _level = 1;
         _star = 1;
@@ -55,12 +55,12 @@ public class Pecorine extends Character {
     private class Skill1 extends Skill {
         private Skill1() {
             _skillTime = 3.033;
-            _castTime = 0.21;
+            _castTime = 0.210;
         }
 
         protected void cast() {
-            if (isCastTime(1.55)) {
-            } else if (isCastTime(1.75))
+            if (isCastTime(1.550)) {
+            } else if (isCastTime(1.750))
                 grantsRecoverHP(Pecorine.this, 5 * (_level + 1) + _physicalAttack, true);
         }
     }
@@ -70,7 +70,7 @@ public class Pecorine extends Character {
 
         private Skill2() {
             _skillTime = 2.033;
-            _castTime = 1.21;
+            _castTime = 1.210;
         }
 
         protected void cast() {

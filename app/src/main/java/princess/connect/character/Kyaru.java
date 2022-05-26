@@ -7,7 +7,7 @@ import princess.connect.baseClass.Character;
 public class Kyaru extends Character {
     public Kyaru() {
         super();
-        
+
         _id = 1060;
         _name = "Kyaru";
 
@@ -29,7 +29,7 @@ public class Kyaru extends Character {
 
         _attackRange = 750;
         _moveSpeed = 450;
-        _attackSpeed = 2.07;
+        _attackSpeed = 2.070;
 
         _level = 1;
         _star = 1;
@@ -55,7 +55,7 @@ public class Kyaru extends Character {
     private class Skill1 extends Skill {
         private Skill1() {
             _skillTime = 2.133;
-            _castTime = 1.27;
+            _castTime = 1.270;
         }
 
         protected void cast() {
@@ -65,7 +65,7 @@ public class Kyaru extends Character {
     private class Skill2 extends Skill {
         private Skill2() {
             _skillTime = 2.567;
-            _castTime = 0.83;
+            _castTime = 0.830;
         }
 
         protected void cast() {

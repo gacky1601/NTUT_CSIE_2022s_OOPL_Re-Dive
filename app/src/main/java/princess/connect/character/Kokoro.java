@@ -29,7 +29,7 @@ public class Kokoro extends Character {
 
         _attackRange = 500;
         _moveSpeed = 450;
-        _attackSpeed = 2.34;
+        _attackSpeed = 2.340;
 
         _level = 1;
         _star = 1;
@@ -58,13 +58,13 @@ public class Kokoro extends Character {
 
         private Skill1() {
             _skillTime = 2.733;
-            _castTime = 0.66;
+            _castTime = 0.660;
         }
 
         protected void cast() {
             if (isCastTime(0))
                 target = frontmost(_enemies);
-            else if (isCastTime(0.48)) {
+            else if (isCastTime(0.480)) {
                 x = _x;
                 switch (_direction) {
                     case LEFT:
@@ -74,13 +74,13 @@ public class Kokoro extends Character {
                         _x = target.x() + 100;
                         break;
                 }
-            } else if (isCastTime(0.83))
+            } else if (isCastTime(0.830))
                 inflictDamage(target, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
-            else if (isCastTime(1.06))
+            else if (isCastTime(1.060))
                 inflictDamage(target, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
-            else if (isCastTime(1.38))
+            else if (isCastTime(1.380))
                 inflictDamage(target, (int) (20 * (_level + 1) + (_physicalAttack * 1.6) / 3));
-            else if (isCastTime(2.18))
+            else if (isCastTime(2.180))
                 _x = x;
         }
     }
@@ -88,7 +88,7 @@ public class Kokoro extends Character {
     private class Skill2 extends Skill {
         private Skill2() {
             _skillTime = 2.000;
-            _castTime = 1.4;
+            _castTime = 1.400;
         }
 
         protected void cast() {
