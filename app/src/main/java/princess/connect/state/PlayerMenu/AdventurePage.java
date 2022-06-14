@@ -14,6 +14,7 @@ import princess.connect.baseClass.Area;
 import princess.connect.baseClass.Character;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
+import princess.connect.extend.Animation;
 import princess.connect.extend.BitmapButton;
 import princess.connect.extend.CharacterButton;
 import princess.connect.state.InitPage;
@@ -31,6 +32,7 @@ public class AdventurePage extends PlayerMenu {
     private List<Character> _selectChars;
     private List<Area> _areaList;
     private boolean _isSelect;
+    private Loading _loading;
 
     public void initialize(Map<String, Object> data) {
         super.initialize(data);
@@ -44,6 +46,9 @@ public class AdventurePage extends PlayerMenu {
         addGameObject(_selector);
         addPointerEventHandler(_selector);
         super.initButton();
+        _loading = new Loading();
+        _loading.setVisible(false);
+        addGameObject(_loading);
     }
 
     private double distance(Area.AreaLevel level1, Area.AreaLevel level2) {
@@ -206,7 +211,7 @@ public class AdventurePage extends PlayerMenu {
                 _selectedBtns.add(btn);
             }
             _confirm = new BitmapButton("interface/button/blue.png").resize(1.5);
-            _confirm.addButtonEventHandler(button -> changeState(Game.ADV_STATE, _data));
+            _confirm.addButtonEventHandler(button -> _loading.loading());
             _cancle = new BitmapButton("interface/button/white.png").resize(1.5);
             _cancle.addButtonEventHandler(button -> setVisible(false));
             initLoaction();
@@ -495,6 +500,27 @@ public class AdventurePage extends PlayerMenu {
                 bitmap.release();
             _bitmaps.clear();
             _bitmaps = null;
+        }
+    }
+
+    private class Loading extends Animation {
+        public Loading() {
+            for (int i = 0; i <= 4; i++)
+                addFrame(new MovingBitmap("loading/" + i + ".png").resize(1920, 1080));
+            setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - getHeight()) / 2);
+        }
+
+        public void loading() {
+            removeAllPointerEventHandler();
+            setVisible(true);
+        }
+
+        @Override
+        public void move() {
+            if (getCurrentFrameIndex() != getFrameCount() - 1)
+                super.move();
+            else
+                changeState(Game.ADV_STATE, _data);
         }
     }
 

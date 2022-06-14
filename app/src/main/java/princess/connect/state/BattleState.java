@@ -1,5 +1,6 @@
 package princess.connect.state;
 
+import static android.view.View.AUTOFILL_FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
 import static princess.connect.GameView.runtime;
 
 import android.graphics.BitmapFactory;
@@ -21,6 +22,7 @@ import princess.connect.engine.GameEngine;
 import princess.connect.baseClass.BattleGround;
 import princess.connect.baseClass.Character;
 import princess.connect.extend.Animation;
+import princess.connect.extend.BitmapButton;
 import princess.connect.extend.CharacterButton;
 import princess.connect.state.PlayerMenu.AdventurePage;
 
@@ -31,22 +33,32 @@ public class BattleState extends AbstractGameState {
 
     private final int SPEED = 2;
 
+    private Map<String, Object> _data;
     private BattleGround _ground;
     private Timer _timer;
     private TimerTask _timeTask;
     private List<List<CharacterAnimation>> _charAnimations;
     private List<Integer> _valueAnimationNums;
+    private List<CharacterButton> _charBtns;
+    private List<BarAnimation> _barAnimations;
+    private BitmapButton _menuBtn, _confirmBtn;
+    private boolean _isFinish;
 
     @Override
     public void initialize(Map<String, Object> data) {
-        Area.AreaLevel level = (Area.AreaLevel) data.get(AdventurePage.SELECTED_LEVEL);
+        _data = data;
+        _isFinish = false;
+        Area.AreaLevel level = (Area.AreaLevel) _data.get(AdventurePage.SELECTED_LEVEL);
         addGameObject(new MovingBitmap("map/bg_" + level.map() + ".png", -200, -200).resize(1920, 1080));
-        _ground = new BattleGround((List<Character>) data.get(AdventurePage.SELECTED_CHARACTER), level.chars());
+        _ground = new BattleGround((List<Character>) _data.get(AdventurePage.SELECTED_CHARACTER), level.chars());
 
         _ground.initialize();
         initCharacterAnimation();
         initValueAnimationNums();
         initStatusBar();
+        initButtons();
+
+        addGameObject(new Loading());
 
         main();
     }
@@ -55,6 +67,9 @@ public class BattleState extends AbstractGameState {
     public void move() {
         super.move();
         valueDisplay();
+        updateIcon();
+        if (_ground.isEnd() && _ground.isIdle())
+            finish();
     }
 
     private void main() {
@@ -78,6 +93,20 @@ public class BattleState extends AbstractGameState {
         return chars;
     }
 
+    private void initButtons() {
+        _menuBtn = new BitmapButton("interface/button/menu.png");
+        _menuBtn.setLocation(Game.GAME_FRAME_WIDTH - _menuBtn.getWidth() - 30, 15);
+        _menuBtn.addButtonEventHandler(button -> changeState(Game.ADV_PAGE, _data));
+        _confirmBtn = new BitmapButton("interface/button/blue.png").resize(1.5);
+        _confirmBtn.setLocation(Game.GAME_FRAME_WIDTH - _confirmBtn.getWidth() - 60, Game.GAME_FRAME_HEIGHT - _confirmBtn.getHeight() - 30);
+        _confirmBtn.addButtonEventHandler(button -> changeState(Game.ADV_PAGE, _data));
+        _confirmBtn.setVisible(false);
+        addPointerEventHandler(_menuBtn);
+        addPointerEventHandler(_confirmBtn);
+        addGameObject(_menuBtn);
+        addGameObject(_confirmBtn);
+    }
+
     private void initValueAnimationNums() {
         _valueAnimationNums = new ArrayList<>();
         for (int i = 0; i < getSortedCharacter().size(); i++)
@@ -85,6 +114,8 @@ public class BattleState extends AbstractGameState {
     }
 
     private void initStatusBar() {
+        _barAnimations = new ArrayList<>();
+        _charBtns = new ArrayList<>();
         int x, width = 0, spacing = 50;
         BarAnimation barAnimation = null;
         List<Character> chars = getSortedCharacter();
@@ -104,9 +135,12 @@ public class BattleState extends AbstractGameState {
         chars = _ground.characters();
         for (Character chara : chars) {
             if (chara.direction() == Character.Direction.LEFT) {
-                addGameObject(new BarAnimation(BarType.BLUE, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95), chara));
-                addGameObject(new BarAnimation(BarType.GREEN, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - 25, chara));
-                addGameObject(new CharacterButton(chara, x - width / 2 + 1, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - width - 30));
+                _barAnimations.add(new BarAnimation(BarType.BLUE, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95), chara));
+                _barAnimations.add(new BarAnimation(BarType.GREEN, x, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - 25, chara));
+                _charBtns.add(new CharacterButton(chara, x - width / 2 + 1, (int) (Game.GAME_FRAME_HEIGHT * 0.95) - width - 30));
+                addGameObject(_barAnimations.get(_barAnimations.size() - 2));
+                addGameObject(_barAnimations.get(_barAnimations.size() - 1));
+                addGameObject(_charBtns.get(_charBtns.size() - 1));
                 x -= width + spacing;
             }
         }
@@ -174,6 +208,26 @@ public class BattleState extends AbstractGameState {
             valueDisplays = chara.valueDisplays();
             for (Character.ValueDisplay valueDisplay : valueDisplays)
                 addGameObject(new ValueDisplayAnimation(valueDisplay, i));
+        }
+    }
+
+    private void updateIcon() {
+        for (Character chara : getSortedCharacter())
+            if (chara.direction() == Character.Direction.LEFT && !chara.isAlive())
+                for (CharacterButton btn : _charBtns)
+                    if (btn.id() == chara.id())
+                        btn.setGray(true);
+    }
+
+    private void finish() {
+        for (CharacterButton btn : _charBtns)
+            btn.setVisible(false);
+        for (BarAnimation animation : _barAnimations)
+            animation.setVisible(false);
+        _menuBtn.setVisible(false);
+        if (!_isFinish) {
+            _isFinish = true;
+            addGameObject(new Result(_ground.isWin() ? "win" : "lose"));
         }
     }
 
@@ -597,6 +651,40 @@ public class BattleState extends AbstractGameState {
                 _center = null;
                 _right = null;
             }
+        }
+    }
+
+    private static class Loading extends Animation {
+        public Loading() {
+            for (int i = 4; i >= 0; i--)
+                addFrame(new MovingBitmap("loading/" + i + ".png").resize(1920, 1080));
+            setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - getHeight()) / 2);
+            setRepeating(false);
+        }
+    }
+
+    private class Result extends MovingBitmap {
+        final int MOVE_SPEED = 12;
+        final int MOVE_TIME = 4;
+
+        private int _count;
+
+        public Result(String result) {
+            super("value/result/" + result.toLowerCase() + ".png");
+            resize(2.5);
+            setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, (Game.GAME_FRAME_HEIGHT) / 2);
+            _count = 0;
+        }
+
+        @Override
+        public void move() {
+            if (!_visible)
+                return;
+            if (_count++ < 5 * MOVE_TIME / SPEED)
+                setLocation(getX(), getY() - (int) (2 * MOVE_SPEED * SPEED
+                        * Math.cos(Math.PI / 10 * _count / MOVE_TIME * SPEED)));
+            else
+                _confirmBtn.setVisible(true);
         }
     }
 

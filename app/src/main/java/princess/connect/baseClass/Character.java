@@ -46,10 +46,6 @@ public class Character extends BasicStats {
     public Character() {
         _allies = new ArrayList<>();
         _enemies = new ArrayList<>();
-        _isChangeAction = true;
-        _actionFrame = 0;
-        _idleFrame = 0;
-        _skillIndex = -1;
         _valueDisplays = new ArrayList<>();
     }
 
@@ -60,6 +56,19 @@ public class Character extends BasicStats {
         _allies = null;
         _enemies = null;
         _valueDisplays = null;
+    }
+
+    public void initialize() {
+        _hp = _hitpoints;
+        _tp = 0;
+        _action = Action.IDLE;
+        _isChangeAction = true;
+        _actionFrame = 0;
+        _idleFrame = 0;
+        _skillIndex = -1;
+        _allies.clear();
+        _enemies.clear();
+        _valueDisplays.clear();
     }
 
     public int id() {
@@ -259,7 +268,7 @@ public class Character extends BasicStats {
             chara._valueDisplays.add(valueDisplay);
     }
 
-    private void changeAction(Action action) {
+    protected void changeAction(Action action) {
         if (_action != action) {
             _preAction = _action;
             _action = action;

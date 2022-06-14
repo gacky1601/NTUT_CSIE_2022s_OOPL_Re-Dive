@@ -198,6 +198,7 @@ public class CharaterPage extends PlayerMenu {
                     for (CharacterBigButton btn : _charBtns)
                         btn.setLocation(btn.getX(), btn.getY() + y);
                 }
+                _isInGarySquare = false;
                 return true;
             }
             return false;

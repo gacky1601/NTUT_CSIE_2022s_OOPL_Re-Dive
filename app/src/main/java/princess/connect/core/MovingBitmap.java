@@ -30,7 +30,7 @@ public class MovingBitmap implements GameObject {
     /**
      * 設定圖片顯示與否。
      */
-    private boolean _visible;
+    protected boolean _visible;
 
     /**
      * 圖片所使用的系統層資源。
