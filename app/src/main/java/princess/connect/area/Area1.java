@@ -3,6 +3,7 @@ package princess.connect.area;
 import java.util.Arrays;
 
 import princess.connect.baseClass.Area;
+import princess.connect.baseClass.Character;
 import princess.connect.character.*;
 
 public class Area1 extends Area {
@@ -20,6 +21,8 @@ public class Area1 extends Area {
             _x = 10;
             _y = 55;
             _chars = Arrays.asList(new Suzuna(), new Io(), new Misaki());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -30,6 +33,8 @@ public class Area1 extends Area {
             _x = 42;
             _y = 42;
             _chars = Arrays.asList(new Hiyori(), new Rei(), new Yui());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -40,6 +45,8 @@ public class Area1 extends Area {
             _x = 63;
             _y = 77;
             _chars = Arrays.asList(new Eriko(), new Anna(), new Mitsuki());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -50,6 +57,8 @@ public class Area1 extends Area {
             _x = 78;
             _y = 42;
             _chars = Arrays.asList(new Kaori(), new Makoto(), new Maho());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -60,6 +69,8 @@ public class Area1 extends Area {
             _x = 104;
             _y = 60;
             _chars = Arrays.asList(new Kurumi(), new Saren(), new Suzume());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -70,6 +81,8 @@ public class Area1 extends Area {
             _x = 120;
             _y = 92;
             _chars = Arrays.asList(new Rima(), new Mahiru(), new Shiori());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -80,6 +93,8 @@ public class Area1 extends Area {
             _x = 136;
             _y = 64;
             _chars = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -90,6 +105,8 @@ public class Area1 extends Area {
             _x = 140;
             _y = 30;
             _chars = Arrays.asList(new Akino(), new Tamaki(), new Yukari(), new Mifuyu());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -100,6 +117,8 @@ public class Area1 extends Area {
             _x = 172;
             _y = 43;
             _chars = Arrays.asList(new Kuuka(), new Monika(), new Ninon(), new Yuki());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 
@@ -110,6 +129,8 @@ public class Area1 extends Area {
             _x = 190;
             _y = 83;
             _chars = Arrays.asList(new Miyako(), new Shinobu(), new Akari(), new Yori());
+            for (Character chara : _chars)
+                chara.setRank(7);
         }
     }
 }

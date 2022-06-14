@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import princeconnect.game.R;
 import princess.connect.Game;
 import princess.connect.GameObject;
 import princess.connect.baseClass.Area;
@@ -22,8 +20,9 @@ import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.baseClass.BattleGround;
 import princess.connect.baseClass.Character;
-import princess.connect.character.*;
 import princess.connect.extend.Animation;
+import princess.connect.extend.CharacterButton;
+import princess.connect.state.PlayerMenu.AdventurePage;
 
 public class BattleState extends AbstractGameState {
     public BattleState(GameEngine engine) {
@@ -40,9 +39,9 @@ public class BattleState extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        Area.AreaLevel level = (Area.AreaLevel) data.get("selectAreaLevel");
+        Area.AreaLevel level = (Area.AreaLevel) data.get(AdventurePage.SELECTED_LEVEL);
         addGameObject(new MovingBitmap("map/bg_" + level.map() + ".png", -200, -200).resize(1920, 1080));
-        _ground = new BattleGround((List<Character>) data.get("selectChars"), level.chars());
+        _ground = new BattleGround((List<Character>) data.get(AdventurePage.SELECTED_CHARACTER), level.chars());
 
         _ground.initialize();
         initCharacterAnimation();
@@ -598,59 +597,6 @@ public class BattleState extends AbstractGameState {
                 _center = null;
                 _right = null;
             }
-        }
-    }
-
-    private static class CharacterButton implements GameObject {
-        private final Character _chara;
-        private MovingBitmap _icon, _gray;
-        private MovingBitmap _frame;
-
-        public CharacterButton(Character chara, int x, int y) {
-            _chara = chara;
-            _icon = new MovingBitmap("character/icon_unit_" + _chara.id() + "11.png");
-            _icon.resize(_icon.getWidth() - 2, _icon.getHeight() - 2);
-            _gray = new MovingBitmap("character/icon_unit_gray.png");
-            _gray.resize(_icon.getWidth(), _icon.getHeight());
-            _gray.setVisible(false);
-            if (_chara.rank() <= 1)
-                _frame = new MovingBitmap("frame/blueSq.png");
-            else if (_chara.rank() <= 3)
-                _frame = new MovingBitmap("frame/brownSq.png");
-            else if (_chara.rank() <= 6)
-                _frame = new MovingBitmap("frame/greySq.png");
-            else if (_chara.rank() <= 10)
-                _frame = new MovingBitmap("frame/yellowSq.png");
-            setLocation(x, y);
-        }
-
-        public void setLocation(int x, int y) {
-            _icon.setLocation(x + 1, y + 1);
-            _gray.setLocation(_icon.getX(), _icon.getY());
-            _frame.setLocation(x, y);
-        }
-
-        @Override
-        public void move() {
-            if (!_chara.isAlive())
-                _gray.setVisible(true);
-        }
-
-        @Override
-        public void show() {
-            _icon.show();
-            _gray.show();
-            _frame.show();
-        }
-
-        @Override
-        public void release() {
-            _icon.release();
-            _gray.release();
-            _frame.release();
-            _icon = null;
-            _gray = null;
-            _frame = null;
         }
     }
 

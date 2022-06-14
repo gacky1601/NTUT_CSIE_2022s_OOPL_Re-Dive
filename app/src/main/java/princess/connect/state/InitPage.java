@@ -62,6 +62,9 @@ import princess.connect.extend.BitmapButton;
 import princess.connect.extend.ButtonEventHandler;
 
 public class InitPage extends AbstractGameState{
+    public static final String ALL_CHARACTER_LIST = "ALL_CHARACTER_LIST";
+    public static final String ALL_AREA_LIST = "ALL_AREA_LIST";
+    public static final String PLAYER_CHARACTER_LIST = "PLAYER_CHARACTER_LIST";
 
     public InitPage(GameEngine engine) {
         super(engine);
@@ -73,21 +76,23 @@ public class InitPage extends AbstractGameState{
     @Override
     public void initialize(Map<String, Object> data) {
         _background = new MovingBitmap(R.drawable.background);
-        _background.resize((int) (_background.getWidth() * 0.85), (int) (_background.getHeight() * 0.85));
-        _background.setLocation(-300,-300);
+        _background.setLocation((Game.GAME_FRAME_WIDTH - _background.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - _background.getHeight()) / 2);
         _startButton = new BitmapButton(R.drawable.start, R.drawable.start_pressed, 0, 0);
         _icon=new MovingBitmap(R.drawable.icon_init,430,500);
         _icon.resize((int)(_icon.getWidth()*1.3),(int)(_icon.getHeight()*1.3));
         addGameObject(_background);
         addGameObject(_icon);
         addGameObject(_startButton);
+
         data = new HashMap<>();
-        List<Character> charsList = Arrays.asList(new Hiyori(), new Rei(), new Yui(), new Misogi(), new Akari(), new Miyako(), new Yuki(), new Anna(), new Maho(), new Rino(), new Hatsune(), new Suzuna(), new Kaori(), new Io(), new Mimi(), new Kurumi(), new Yori(), new Suzume(), new Eriko(), new Saren(), new Nozomi(), new Ninon(), new Shinobu(), new Akino(), new Mahiru(), new Yukari(), new Shiori(), new Aoi(), new Chika(), new Makoto(), new Kuuka(), new Tamaki(), new Mifuyu(), new Shizuru(), new Misaki(), new Mitsuki(), new Rima(), new Monika(), new Djeeta(), new Pecorine(), new Kokoro(), new Kyaru(), new Arisa());
-        Collections.sort(charsList, new CharacterComparator());
-        data.put("charsList", charsList);
-        List<Area> areaList = Arrays.asList(new Area1());
-        data.put("areaList", areaList);
+        List<Character> allCharsList = Arrays.asList(new Hiyori(), new Rei(), new Yui(), new Misogi(), new Akari(), new Miyako(), new Yuki(), new Anna(), new Maho(), new Rino(), new Hatsune(), new Suzuna(), new Kaori(), new Io(), new Mimi(), new Kurumi(), new Yori(), new Suzume(), new Eriko(), new Saren(), new Nozomi(), new Ninon(), new Shinobu(), new Akino(), new Mahiru(), new Yukari(), new Shiori(), new Aoi(), new Chika(), new Makoto(), new Kuuka(), new Tamaki(), new Mifuyu(), new Shizuru(), new Misaki(), new Mitsuki(), new Rima(), new Monika(), new Djeeta(), new Pecorine(), new Kokoro(), new Kyaru(), new Arisa());
+        List<Area> allAreasList = Arrays.asList(new Area1());
+        List<Character> playerCharsList = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru(), new Yui());
+        data.put(ALL_CHARACTER_LIST, allCharsList);
+        data.put(ALL_AREA_LIST, allAreasList);
+        data.put(PLAYER_CHARACTER_LIST, playerCharsList);
         Map<String, Object> finalData = data;
+
         _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU, finalData));
         addPointerEventHandler(_startButton);
     }
@@ -97,12 +102,5 @@ public class InitPage extends AbstractGameState{
 
     @Override
     public void resume() { }
-
-    private static class CharacterComparator implements Comparator<Character> {
-        @Override
-        public int compare(Character char1, Character char2) {
-            return -(char1.id() - char2.id());
-        }
-    }
 }
 

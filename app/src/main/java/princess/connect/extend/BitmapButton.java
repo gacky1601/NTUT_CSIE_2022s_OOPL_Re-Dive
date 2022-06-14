@@ -327,7 +327,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      * @param pointer 指定的指標點
      * @return true代表指定的座標在按鈕上方，反之false
      */
-    private boolean contains(Pointer pointer) {
+    public boolean contains(Pointer pointer) {
         return contains(pointer.getX(), pointer.getY());
     }
 
@@ -338,7 +338,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      * @param y 指定的Y座標
      * @return true代表指定的座標在按鈕上方，反之false
      */
-    private boolean contains(int x, int y) {
+    public boolean contains(int x, int y) {
         return (x > _x && x < (_x + _normalImage.getWidth()) &&
                 y > _y && y < (_y + _normalImage.getHeight()));
     }
@@ -366,7 +366,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
             image.release();
         }
     }
-    public void resize(double ratio){
+    public BitmapButton resize(double ratio){
         int resized_h=(int)(_normalImage.getHeight()*ratio),resized_w=(int)(_normalImage.getWidth()*ratio);
         if (_normalImage!=null)
             _normalImage.resize(resized_w,resized_h);
@@ -374,6 +374,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
             _hoveredImage.resize(resized_h,resized_w);
         if (_pressedImage!=null)
             _pressedImage.resize(resized_h,resized_w);
+        return this;
     }
     public void resize_w(double ratio){
         int resized_h=(int)(_normalImage.getHeight()),resized_w=(int)(_normalImage.getWidth()*ratio);
@@ -397,9 +398,25 @@ public class BitmapButton implements GameObject, PointerEventHandler {
     /**
      * 通知所有已註冊的按鈕事件處理者。
      */
-    private void notifyButtonEventHandlers() {
+    public void notifyButtonEventHandlers() {
         for (ButtonEventHandler handler : _handlers) {
             handler.perform(this);
         }
+    }
+
+    public int getX() {
+        return _x;
+    }
+
+    public int getY() {
+        return _y;
+    }
+
+    public int getWidth() {
+        return _normalImage.getWidth();
+    }
+
+    public int getHeight() {
+        return _normalImage.getHeight();
     }
 }

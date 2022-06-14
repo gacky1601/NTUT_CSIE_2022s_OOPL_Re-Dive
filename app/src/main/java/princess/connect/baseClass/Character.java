@@ -70,6 +70,10 @@ public class Character extends BasicStats {
         return _name;
     }
 
+    public int star() {
+        return _star;
+    }
+
     public int rank() {
         return _rank;
     }
@@ -120,6 +124,10 @@ public class Character extends BasicStats {
             return true;
         }
         return false;
+    }
+
+    public void setRank(int rank) {
+        _rank = rank;
     }
 
     public List<ValueDisplay> valueDisplays() {
@@ -309,6 +317,9 @@ public class Character extends BasicStats {
 
     private void castSkill() {
         SkillType skillType = skillType();
+        if ((skillType == SkillType.SKILL1 && _rank < 2) || (skillType == SkillType.SKILL2 && _rank < 4)
+                || (skillType == SkillType.SkillEX && _rank < 7))
+            skillType = SkillType.ATTACK;
         Skill skill = _skills.get(skillType.ordinal());
         if (_idleFrame == 0) {
             _actionFrame = (int) (skill._skillTime * BattleGround.FRAME);

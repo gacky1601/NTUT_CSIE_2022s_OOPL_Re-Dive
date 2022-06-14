@@ -25,9 +25,10 @@ public class PlayerMenu extends AbstractGameState {
 
     @Override
     public void initialize(Map<String, Object> data) {
-        _background = new MovingBitmap();
         _data = data;
-        changebg(R.drawable.bg_530011,-200,-200,1920,1080);
+        _background = new MovingBitmap();
+        _background.loadBitmap(new MovingBitmap(R.drawable.bg_500133));
+        _background.resize(1920, 1080).setLocation((Game.GAME_FRAME_WIDTH - _background.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - _background.getHeight()) / 2);
         addGameObject(_background);
         initButton();
     }

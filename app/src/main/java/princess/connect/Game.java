@@ -18,7 +18,7 @@ import princess.connect.state.InitPage;
 import princess.connect.state.BattleState;
 import princess.connect.state.PlayerMenu.AdventurePage;
 import princess.connect.state.PlayerMenu.CharaterPage;
-import princess.connect.state.PlayerMenu.DrawPage;
+import princess.connect.state.PlayerMenu.GachaPage;
 import princess.connect.state.PlayerMenu.PlayerMenu;
 import princeconnect.game.R;
 import princess.connect.state.PlayerMenu.SettingPage;
@@ -47,7 +47,7 @@ public class Game extends Activity {
     /**
      * 開啟或關閉在選單上顯示資訊選項、除錯資訊、畫面更新速度與感應器的資訊。
      */
-    public static boolean ENABLE_INFO_SWITCH_MENU = false, showDebugInfo = false, showDeviceInfo = true;
+    public static boolean ENABLE_INFO_SWITCH_MENU = false, showDebugInfo = false, showDeviceInfo = false;
     /**
      * 選單項目的ID。
      */
@@ -92,7 +92,7 @@ public class Game extends Activity {
             _engine.registerGameState(ADV_PAGE, new AdventurePage(_engine));
             _engine.registerGameState(ADV_STATE, new BattleState(_engine));
             _engine.registerGameState(CHA_PAGE, new CharaterPage(_engine));
-            _engine.registerGameState(DRAW_PAGE, new DrawPage(_engine));
+            _engine.registerGameState(DRAW_PAGE, new GachaPage(_engine));
             _engine.registerGameState(SETTING_PAGE, new SettingPage(_engine));
             _engine.setGameState(INITIAL_STATE);
             _view.setGameEngine(_engine);
