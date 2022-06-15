@@ -208,6 +208,7 @@ public class CharaterPage extends PlayerMenu {
     private class CharacterBigButton implements GameObject {
         private Character _chara;
         private MovingBitmap _icon, _iconFrame, _gray, _frame;
+        private List<MovingBitmap> _stars;
         private int _x, _y;
         private boolean _isGray, _isVisible;
 
@@ -227,6 +228,13 @@ public class CharaterPage extends PlayerMenu {
             else if (_chara.rank() <= 10)
                 _frame = new MovingBitmap("frame/yellowRect.png");
             _frame.resize(_icon.getWidth() + 12, _icon.getHeight() + 2);
+            _stars = new ArrayList<>();
+            for(int i = 0; i < 5; i++) {
+                if (i < _chara.star())
+                    _stars.add(new MovingBitmap("frame/star.png").resize(0.85));
+                else
+                    _stars.add(new MovingBitmap("frame/grayStar.png").resize(0.85));
+            }
             setVisible(true);
         }
 
@@ -283,6 +291,8 @@ public class CharaterPage extends PlayerMenu {
         public void move() {
             _icon.setLocation(_x + 1, _y + 1);
             _iconFrame.setLocation(_icon.getX(), _icon.getY());
+            for (int i = 0; i < _stars.size(); i++)
+                _stars.get(i).setLocation(_icon.getX() + i * _stars.get(i).getWidth() + 10 , _icon.getY() + _icon.getHeight() - _stars.get(i).getHeight() - 10);
             _gray.setLocation(_icon.getX(), _icon.getY());
             _frame.setLocation(_x, _y);
         }
@@ -291,6 +301,8 @@ public class CharaterPage extends PlayerMenu {
         public void show() {
             _icon.show();
             _iconFrame.show();
+            for (MovingBitmap bitmap : _stars)
+                bitmap.show();
             _gray.show();
             _frame.show();
         }
@@ -299,10 +311,13 @@ public class CharaterPage extends PlayerMenu {
         public void release() {
             _icon.release();
             _iconFrame.release();
+            for (MovingBitmap bitmap : _stars)
+                bitmap.release();
             _gray.release();
             _frame.release();
             _icon = null;
             _iconFrame = null;
+            _stars = null;
             _gray = null;
             _frame = null;
         }

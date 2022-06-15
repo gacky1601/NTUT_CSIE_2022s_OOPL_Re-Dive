@@ -681,15 +681,15 @@ public class BattleState extends AbstractGameState {
     }
 
     private class Result extends MovingBitmap {
-        final int MOVE_SPEED = 12;
+        final int MOVE_SPEED = 30;
         final int MOVE_TIME = 4;
+        final double MAG = 1.2;
 
         private int _count;
 
         public Result(String result) {
             super("value/result/" + result.toLowerCase() + ".png");
-            resize(2.5);
-            setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, (Game.GAME_FRAME_HEIGHT) / 2);
+            setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - getHeight()) / 2 - 150);
             _count = 0;
         }
 
@@ -697,9 +697,14 @@ public class BattleState extends AbstractGameState {
         public void move() {
             if (!_visible)
                 return;
-            if (_count++ < 5 * MOVE_TIME / SPEED)
-                setLocation(getX(), getY() - (int) (2 * MOVE_SPEED * SPEED
-                        * Math.cos(Math.PI / 10 * _count / MOVE_TIME * SPEED)));
+            if (_count < 4 * MOVE_TIME / SPEED) {
+                resize(MAG);
+                setLocation((Game.GAME_FRAME_WIDTH - getWidth()) / 2, getY() - (getHeight() - (int) ((double) getHeight() / MAG)) / 2);
+                setLocation(
+                        getX(), getY() - (int) (MOVE_SPEED * SPEED
+                                * Math.cos(Math.PI / 2 * _count / MOVE_TIME * SPEED)));
+                _count += _count < 2 * MOVE_TIME / SPEED ? 1 : 2;
+            }
             else
                 _confirmBtn.setVisible(true);
         }
