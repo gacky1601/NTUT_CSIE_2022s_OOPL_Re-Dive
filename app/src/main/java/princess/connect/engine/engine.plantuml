@@ -1,0 +1,164 @@
+@startuml
+
+title __ENGINE's Class Diagram__\n
+
+  namespace princess.connect {
+    namespace engine {
+      class princess.connect.engine.EmptyState {
+          + initialize()
+          + pause()
+          + resume()
+          ~ EmptyState()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace engine {
+      class princess.connect.engine.EventDispatcher {
+          {static} - ACCELERATION_INFO_FORMAT : String
+          {static} - ORIENTATION_INFO_FORMAT : String
+          - _accelerationInfo : String
+          - _orientationInfo : String
+          + getAccelerationIfno()
+          + getOrientationInfo()
+          + onAccuracyChanged()
+          + onSensorChanged()
+          + onTouch()
+          ~ EventDispatcher()
+          - getActionPointer()
+          - getPointers()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace engine {
+      class princess.connect.engine.GameEngine {
+          {static} + canvas : Canvas
+          {static} - ACCELERATION_INFO_OFFSET : int
+          {static} - ENGINE_VERSION : String
+          {static} - FRAME_RATE_INFO_OFFSET : int
+          {static} - FRAME_TIME_INFO_FORMAT : String
+          {static} - LINE_HEIGHT : int
+          {static} - NO_DEBUG_INFO_HISTORY : String
+          {static} - ONE_SECOND : int
+          {static} - ORIENTATION_INFO_OFFSET : int
+          {static} - RATIO_INFO_OFFSET : int
+          - _backgroundPaint : Paint
+          - _currentState : int
+          - _debugInfo : ArrayList<String>
+          - _gameStates : HashMap<Integer, GameState>
+          - _normalPaint : Paint
+          - _paused : boolean
+          - _refreshTime : int
+          - _running : boolean
+          - _surface : SurfaceHolder
+          - _warningPaint : Paint
+          + GameEngine()
+          + addDebugInfo()
+          + clearDebugInfo()
+          + exit()
+          + getCurrentState()
+          + getGameState()
+          + getOnTouchListener()
+          + getSensorEventListener()
+          + getSurfaceHolderCallback()
+          + isPaused()
+          + isRunning()
+          + keyPressed()
+          + keyReleased()
+          + pause()
+          + registerGameState()
+          + release()
+          + resume()
+          + run()
+          + setDisplayRatio()
+          + setFrameRate()
+          + setGameFrameSize()
+          + setGameState()
+          + setGameState()
+          + setRunning()
+          + setSurfaceSize()
+          ~ getGameFrame()
+          - initializePaints()
+          - postUpdateFrame()
+          - updateDebugInfo()
+          - updateDeviceInfo()
+          - updateFrame()
+          - waitUntil()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace engine {
+      class princess.connect.engine.GameFrame {
+          {static} + DISPLAY_RATIO : float
+          {static} - RATIO_INFO_FORMAT : String
+          - _displayRatio : float
+          - _height : int
+          - _info : String
+          - _originX : float
+          - _originY : float
+          - _scaledHeight : float
+          - _scaledWidth : float
+          - _width : int
+          + getDisplayRatio()
+          + getHeight()
+          + getInfo()
+          + getOriginX()
+          + getOriginY()
+          + getScaledHeight()
+          + getScaledWidth()
+          + getWidth()
+          + getXOnGameFrame()
+          + getYOnGameFrame()
+          ~ GameFrame()
+          ~ GameFrame()
+          ~ setDisplayRatio()
+          ~ setSize()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace engine {
+      class princess.connect.engine.SurfaceEventHandler {
+          - _engineThread : Thread
+          + surfaceChanged()
+          + surfaceCreated()
+          + surfaceDestroyed()
+          ~ SurfaceEventHandler()
+      }
+    }
+  }
+  
+
+  princess.connect.engine.EmptyState -up-|> princess.connect.state.AbstractGameState
+  princess.connect.engine.EventDispatcher .up.|> android.hardware.SensorEventListener
+  princess.connect.engine.EventDispatcher .up.|> android.view.View.OnTouchListener
+  princess.connect.engine.EventDispatcher o-- princess.connect.engine.GameEngine : _engine
+  princess.connect.engine.GameEngine .up.|> java.lang.Runnable
+  princess.connect.engine.GameEngine o-- princess.connect.state.GameState : _emptyState
+  princess.connect.engine.GameEngine o-- princess.connect.engine.EventDispatcher : _eventDispatcher
+  princess.connect.engine.GameEngine o-- princess.connect.Game : _game
+  princess.connect.engine.GameEngine o-- princess.connect.engine.GameFrame : _gameFrame
+  princess.connect.engine.GameEngine o-- princess.connect.state.GameState : _gameState
+  princess.connect.engine.GameEngine o-- princess.connect.engine.SurfaceEventHandler : _surfaceEventHandler
+  princess.connect.engine.SurfaceEventHandler .up.|> android.view.SurfaceHolder.Callback
+  princess.connect.engine.SurfaceEventHandler o-- princess.connect.engine.GameEngine : _engine
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

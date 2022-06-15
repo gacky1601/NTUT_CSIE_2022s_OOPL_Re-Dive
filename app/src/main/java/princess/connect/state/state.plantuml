@@ -1,0 +1,287 @@
+@startuml
+
+title __STATE's Class Diagram__\n
+
+  namespace princess.connect {
+    namespace state {
+      abstract class princess.connect.state.AbstractGameState {
+          - _keyHandlers : List<KeyEventHandler>
+          - _objects : List<GameObject>
+          - _pointerHandlers : List<PointerEventHandler>
+          - _resources : List<ReleasableResource>
+          + AbstractGameState()
+          + accelerationChanged()
+          + addGameObject()
+          + addReleasableResource()
+          + changeState()
+          + changeState()
+          + keyPressed()
+          + keyReleased()
+          + move()
+          + orientationChanged()
+          + pointerMoved()
+          + pointerPressed()
+          + pointerReleased()
+          + release()
+          + show()
+          # addKeyEventHandler()
+          # addPointerEventHandler()
+          # moveAllGameObjects()
+          # notifyKeyPressedEvent()
+          # notifyKeyReleasedEvent()
+          # notifyPointerMovedEvent()
+          # notifyPointerPressedEvent()
+          # notifyPointerReleasedEvent()
+          # releaseAllResources()
+          # removeGameObject()
+          # removeKeyEventHandler()
+          # removePointerEventHandler()
+          # showAllGameObjects()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState {
+          - SPEED : int
+          - _charAnimations : List<List<CharacterAnimation>>
+          - _timeTask : TimerTask
+          - _timer : Timer
+          - _valueAnimationNums : List<Integer>
+          + BattleState()
+          + initialize()
+          + move()
+          + pause()
+          + release()
+          + resume()
+          - changeAction()
+          {static} - convertX()
+          {static} - convertY()
+          - getSortedCharacter()
+          - initCharacterAnimation()
+          - initStatusBar()
+          - initValueAnimationNums()
+          - main()
+          - nextFrame()
+          - valueDisplay()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.BarAnimation {
+          ~ DELAY : int
+          ~ DELTA : double
+          ~ MOVE_TIME : int
+          - _count : int
+          - _isAlwaysShow : boolean
+          - _value : double
+          + BarAnimation()
+          + BarAnimation()
+          + getWidth()
+          + move()
+          + release()
+          + setLocation()
+          + setValue()
+          + setVisible()
+          + show()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.BarAnimation.Bar {
+          ~ LENGTH : int
+          - _value : double
+          + Bar()
+          + getValue()
+          + getWidth()
+          + getX()
+          + move()
+          + release()
+          + setLocation()
+          + setValue()
+          + setVisible()
+          + show()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      enum BarType {
+        BG
+        BLUE
+        GREEN
+        RED
+        YELLOW
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.CharacterAnimation {
+          ~ ANIMATION_FRAME : int
+          ~ SAMPLE_SIZE : int
+          + CharacterAnimation()
+          + move()
+          + nextFrame()
+          + setLocation()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.CharacterButton {
+          + CharacterButton()
+          + move()
+          + release()
+          + setLocation()
+          + show()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.CharacterComparator {
+          + compare()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.ValueDisplayAnimation {
+          ~ DELAY : int
+          - _charaIndex : int
+          - _count : int
+          - _valueIndex : int
+          - _values : List<ValueAnimation>
+          + ValueDisplayAnimation()
+          + move()
+          + release()
+          + setLocation()
+          + setVisible()
+          + show()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.BattleState.ValueDisplayAnimation.ValueAnimation {
+          ~ MOVE_SPEED : int
+          ~ MOVE_TIME : int
+          - _count : int
+          + ValueAnimation()
+          + move()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      abstract class princess.connect.state.GameState {
+          + changeState()
+          + changeState()
+          + clearDebugInfo()
+          {abstract} + initialize()
+          {abstract} + pause()
+          + printDebugInfo()
+          {abstract} + resume()
+          # GameState()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.InitPage {
+          + InitPage()
+          + initialize()
+          + pause()
+          + resume()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace state {
+      class princess.connect.state.InitPage.CharacterComparator {
+          + compare()
+      }
+    }
+  }
+  
+
+  princess.connect.state.AbstractGameState -up-|> princess.connect.state.GameState
+  princess.connect.state.BattleState -up-|> princess.connect.state.AbstractGameState
+  princess.connect.state.BattleState o-- princess.connect.baseClass.BattleGround : _ground
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.BarAnimation
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.BarType
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.CharacterAnimation
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.CharacterButton
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.CharacterComparator
+  princess.connect.state.BattleState +-down- princess.connect.state.BattleState.ValueDisplayAnimation
+  princess.connect.state.BattleState.BarAnimation .up.|> princess.connect.GameObject
+  princess.connect.state.BattleState.BarAnimation o-- princess.connect.state.BattleState.BarAnimation.Bar : _background
+  princess.connect.state.BattleState.BarAnimation o-- princess.connect.state.BattleState.BarType : _barType
+  princess.connect.state.BattleState.BarAnimation o-- princess.connect.baseClass.Character : _chara
+  princess.connect.state.BattleState.BarAnimation o-- princess.connect.state.BattleState.BarAnimation.Bar : _frame
+  princess.connect.state.BattleState.BarAnimation o-- princess.connect.state.BattleState.BarAnimation.Bar : _main
+  princess.connect.state.BattleState.BarAnimation +-down- princess.connect.state.BattleState.BarAnimation.Bar
+  princess.connect.state.BattleState.BarAnimation.Bar .up.|> princess.connect.GameObject
+  princess.connect.state.BattleState.BarAnimation.Bar o-- princess.connect.core.MovingBitmap : _center
+  princess.connect.state.BattleState.BarAnimation.Bar o-- princess.connect.core.MovingBitmap : _left
+  princess.connect.state.BattleState.BarAnimation.Bar o-- princess.connect.core.MovingBitmap : _right
+  princess.connect.state.BattleState.CharacterAnimation -up-|> princess.connect.extend.Animation
+  princess.connect.state.BattleState.CharacterButton .up.|> princess.connect.GameObject
+  princess.connect.state.BattleState.CharacterButton o-- princess.connect.baseClass.Character : _chara
+  princess.connect.state.BattleState.CharacterButton o-- princess.connect.core.MovingBitmap : _frame
+  princess.connect.state.BattleState.CharacterButton o-- princess.connect.core.MovingBitmap : _gray
+  princess.connect.state.BattleState.CharacterButton o-- princess.connect.core.MovingBitmap : _icon
+  princess.connect.state.BattleState.CharacterComparator .up.|> java.util.Comparator
+  princess.connect.state.BattleState.ValueDisplayAnimation .up.|> princess.connect.GameObject
+  princess.connect.state.BattleState.ValueDisplayAnimation o-- princess.connect.state.BattleState.ValueDisplayAnimation.ValueAnimation : _text
+  princess.connect.state.BattleState.ValueDisplayAnimation o-- princess.connect.baseClass.Character.ValueDisplay : _valueDisplay
+  princess.connect.state.BattleState.ValueDisplayAnimation +-down- princess.connect.state.BattleState.ValueDisplayAnimation.ValueAnimation
+  princess.connect.state.BattleState.ValueDisplayAnimation.ValueAnimation -up-|> princess.connect.extend.Animation
+  princess.connect.state.GameState .up.|> princess.connect.GameObject
+  princess.connect.state.GameState .up.|> princess.connect.KeyEventHandler
+  princess.connect.state.GameState .up.|> princess.connect.PointerEventHandler
+  princess.connect.state.GameState .up.|> princess.connect.SensorEventHandler
+  princess.connect.state.GameState o-- princess.connect.engine.GameEngine : _engine
+  princess.connect.state.InitPage -up-|> princess.connect.state.AbstractGameState
+  princess.connect.state.InitPage o-- princess.connect.core.MovingBitmap : _background
+  princess.connect.state.InitPage o-- princess.connect.core.MovingBitmap : _icon
+  princess.connect.state.InitPage o-- princess.connect.extend.BitmapButton : _startButton
+  princess.connect.state.InitPage +-down- princess.connect.state.InitPage.CharacterComparator
+  princess.connect.state.InitPage.CharacterComparator .up.|> java.util.Comparator
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

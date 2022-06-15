@@ -1,0 +1,2513 @@
+@startuml
+
+title __CHARACTER's Class Diagram__\n
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akari {
+          + Akari()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akari.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akari.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akari.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akari.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akino {
+          + Akino()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akino.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akino.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akino.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Akino.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Anna {
+          + Anna()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Anna.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Anna.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Anna.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Anna.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Aoi {
+          + Aoi()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Aoi.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Aoi.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Aoi.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Aoi.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Arisa {
+          - _ubTime : int
+          + Arisa()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Arisa.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Arisa.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Arisa.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Arisa.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Chika {
+          + Chika()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Chika.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Chika.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Chika.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Chika.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Djeeta {
+          + Djeeta()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Djeeta.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Djeeta.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Djeeta.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Djeeta.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Eriko {
+          + Eriko()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Eriko.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Eriko.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Eriko.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Eriko.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hatsune {
+          + Hatsune()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hatsune.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hatsune.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hatsune.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hatsune.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hiyori {
+          + Hiyori()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hiyori.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hiyori.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hiyori.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Hiyori.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Io {
+          + Io()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Io.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Io.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Io.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Io.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kaori {
+          + Kaori()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kaori.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kaori.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kaori.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kaori.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kokoro {
+          + Kokoro()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kokoro.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kokoro.Skill1 {
+          - x : double
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kokoro.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kokoro.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kurumi {
+          + Kurumi()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kurumi.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kurumi.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kurumi.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kurumi.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kuuka {
+          + Kuuka()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kuuka.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kuuka.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kuuka.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kuuka.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kyaru {
+          + Kyaru()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kyaru.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kyaru.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kyaru.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Kyaru.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mahiru {
+          + Mahiru()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mahiru.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mahiru.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mahiru.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mahiru.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Maho {
+          + Maho()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Maho.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Maho.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Maho.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Maho.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Makoto {
+          + Makoto()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Makoto.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Makoto.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Makoto.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Makoto.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mifuyu {
+          + Mifuyu()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mifuyu.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mifuyu.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mifuyu.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mifuyu.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mimi {
+          + Mimi()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mimi.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mimi.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mimi.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mimi.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misaki {
+          + Misaki()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misaki.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misaki.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misaki.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misaki.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misogi {
+          + Misogi()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misogi.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misogi.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misogi.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Misogi.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mitsuki {
+          + Mitsuki()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mitsuki.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mitsuki.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mitsuki.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Mitsuki.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Miyako {
+          + Miyako()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Miyako.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Miyako.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Miyako.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Miyako.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Monika {
+          + Monika()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Monika.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Monika.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Monika.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Monika.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Ninon {
+          + Ninon()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Ninon.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Ninon.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Ninon.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Ninon.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Nozomi {
+          + Nozomi()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Nozomi.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Nozomi.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Nozomi.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Nozomi.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Pecorine {
+          + Pecorine()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Pecorine.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Pecorine.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Pecorine.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Pecorine.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rei {
+          + Rei()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rei.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rei.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rei.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rei.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rima {
+          + Rima()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rima.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rima.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rima.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rima.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rino {
+          + Rino()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rino.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rino.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rino.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Rino.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Saren {
+          + Saren()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Saren.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Saren.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Saren.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Saren.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shinobu {
+          + Shinobu()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shinobu.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shinobu.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shinobu.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shinobu.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shiori {
+          + Shiori()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shiori.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shiori.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shiori.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shiori.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shizuru {
+          + Shizuru()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shizuru.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shizuru.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shizuru.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Shizuru.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzume {
+          + Suzume()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzume.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzume.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzume.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzume.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzuna {
+          + Suzuna()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzuna.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzuna.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzuna.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Suzuna.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Tamaki {
+          + Tamaki()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Tamaki.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Tamaki.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Tamaki.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Tamaki.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yori {
+          + Yori()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yori.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yori.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yori.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yori.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yui {
+          + Yui()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yui.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yui.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yui.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yui.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yukari {
+          + Yukari()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yukari.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yukari.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yukari.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yukari.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yuki {
+          + Yuki()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yuki.Skill0 {
+          # cast()
+          - Skill0()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yuki.Skill1 {
+          # cast()
+          - Skill1()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yuki.Skill2 {
+          # cast()
+          - Skill2()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace character {
+      class princess.connect.character.Yuki.SkillEx {
+          # cast()
+          - SkillEx()
+      }
+    }
+  }
+  
+
+  princess.connect.character.Akari -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Akari +-down- princess.connect.character.Akari.Skill0
+  princess.connect.character.Akari +-down- princess.connect.character.Akari.Skill1
+  princess.connect.character.Akari +-down- princess.connect.character.Akari.Skill2
+  princess.connect.character.Akari +-down- princess.connect.character.Akari.SkillEx
+  princess.connect.character.Akari.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akari.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akari.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akari.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akino -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Akino +-down- princess.connect.character.Akino.Skill0
+  princess.connect.character.Akino +-down- princess.connect.character.Akino.Skill1
+  princess.connect.character.Akino +-down- princess.connect.character.Akino.Skill2
+  princess.connect.character.Akino +-down- princess.connect.character.Akino.SkillEx
+  princess.connect.character.Akino.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akino.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akino.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Akino.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Anna -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Anna +-down- princess.connect.character.Anna.Skill0
+  princess.connect.character.Anna +-down- princess.connect.character.Anna.Skill1
+  princess.connect.character.Anna +-down- princess.connect.character.Anna.Skill2
+  princess.connect.character.Anna +-down- princess.connect.character.Anna.SkillEx
+  princess.connect.character.Anna.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Anna.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Anna.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Anna.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Aoi -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Aoi +-down- princess.connect.character.Aoi.Skill0
+  princess.connect.character.Aoi +-down- princess.connect.character.Aoi.Skill1
+  princess.connect.character.Aoi +-down- princess.connect.character.Aoi.Skill2
+  princess.connect.character.Aoi +-down- princess.connect.character.Aoi.SkillEx
+  princess.connect.character.Aoi.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Aoi.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Aoi.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Aoi.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Arisa -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Arisa +-down- princess.connect.character.Arisa.Skill0
+  princess.connect.character.Arisa +-down- princess.connect.character.Arisa.Skill1
+  princess.connect.character.Arisa +-down- princess.connect.character.Arisa.Skill2
+  princess.connect.character.Arisa +-down- princess.connect.character.Arisa.SkillEx
+  princess.connect.character.Arisa.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Arisa.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Arisa.Skill1 o-- princess.connect.baseClass.Character : target
+  princess.connect.character.Arisa.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Arisa.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Chika -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Chika +-down- princess.connect.character.Chika.Skill0
+  princess.connect.character.Chika +-down- princess.connect.character.Chika.Skill1
+  princess.connect.character.Chika +-down- princess.connect.character.Chika.Skill2
+  princess.connect.character.Chika +-down- princess.connect.character.Chika.SkillEx
+  princess.connect.character.Chika.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Chika.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Chika.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Chika.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Djeeta -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Djeeta +-down- princess.connect.character.Djeeta.Skill0
+  princess.connect.character.Djeeta +-down- princess.connect.character.Djeeta.Skill1
+  princess.connect.character.Djeeta +-down- princess.connect.character.Djeeta.Skill2
+  princess.connect.character.Djeeta +-down- princess.connect.character.Djeeta.SkillEx
+  princess.connect.character.Djeeta.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Djeeta.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Djeeta.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Djeeta.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Eriko -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Eriko +-down- princess.connect.character.Eriko.Skill0
+  princess.connect.character.Eriko +-down- princess.connect.character.Eriko.Skill1
+  princess.connect.character.Eriko +-down- princess.connect.character.Eriko.Skill2
+  princess.connect.character.Eriko +-down- princess.connect.character.Eriko.SkillEx
+  princess.connect.character.Eriko.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Eriko.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Eriko.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Eriko.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hatsune -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Hatsune +-down- princess.connect.character.Hatsune.Skill0
+  princess.connect.character.Hatsune +-down- princess.connect.character.Hatsune.Skill1
+  princess.connect.character.Hatsune +-down- princess.connect.character.Hatsune.Skill2
+  princess.connect.character.Hatsune +-down- princess.connect.character.Hatsune.SkillEx
+  princess.connect.character.Hatsune.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hatsune.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hatsune.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hatsune.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hiyori -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Hiyori +-down- princess.connect.character.Hiyori.Skill0
+  princess.connect.character.Hiyori +-down- princess.connect.character.Hiyori.Skill1
+  princess.connect.character.Hiyori +-down- princess.connect.character.Hiyori.Skill2
+  princess.connect.character.Hiyori +-down- princess.connect.character.Hiyori.SkillEx
+  princess.connect.character.Hiyori.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hiyori.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hiyori.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Hiyori.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Io -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Io +-down- princess.connect.character.Io.Skill0
+  princess.connect.character.Io +-down- princess.connect.character.Io.Skill1
+  princess.connect.character.Io +-down- princess.connect.character.Io.Skill2
+  princess.connect.character.Io +-down- princess.connect.character.Io.SkillEx
+  princess.connect.character.Io.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Io.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Io.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Io.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kaori -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Kaori +-down- princess.connect.character.Kaori.Skill0
+  princess.connect.character.Kaori +-down- princess.connect.character.Kaori.Skill1
+  princess.connect.character.Kaori +-down- princess.connect.character.Kaori.Skill2
+  princess.connect.character.Kaori +-down- princess.connect.character.Kaori.SkillEx
+  princess.connect.character.Kaori.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kaori.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kaori.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kaori.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kokoro -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Kokoro +-down- princess.connect.character.Kokoro.Skill0
+  princess.connect.character.Kokoro +-down- princess.connect.character.Kokoro.Skill1
+  princess.connect.character.Kokoro +-down- princess.connect.character.Kokoro.Skill2
+  princess.connect.character.Kokoro +-down- princess.connect.character.Kokoro.SkillEx
+  princess.connect.character.Kokoro.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kokoro.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kokoro.Skill1 o-- princess.connect.baseClass.Character : target
+  princess.connect.character.Kokoro.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kokoro.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kurumi -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Kurumi +-down- princess.connect.character.Kurumi.Skill0
+  princess.connect.character.Kurumi +-down- princess.connect.character.Kurumi.Skill1
+  princess.connect.character.Kurumi +-down- princess.connect.character.Kurumi.Skill2
+  princess.connect.character.Kurumi +-down- princess.connect.character.Kurumi.SkillEx
+  princess.connect.character.Kurumi.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kurumi.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kurumi.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kurumi.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kuuka -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Kuuka +-down- princess.connect.character.Kuuka.Skill0
+  princess.connect.character.Kuuka +-down- princess.connect.character.Kuuka.Skill1
+  princess.connect.character.Kuuka +-down- princess.connect.character.Kuuka.Skill2
+  princess.connect.character.Kuuka +-down- princess.connect.character.Kuuka.SkillEx
+  princess.connect.character.Kuuka.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kuuka.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kuuka.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kuuka.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kyaru -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Kyaru +-down- princess.connect.character.Kyaru.Skill0
+  princess.connect.character.Kyaru +-down- princess.connect.character.Kyaru.Skill1
+  princess.connect.character.Kyaru +-down- princess.connect.character.Kyaru.Skill2
+  princess.connect.character.Kyaru +-down- princess.connect.character.Kyaru.SkillEx
+  princess.connect.character.Kyaru.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kyaru.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kyaru.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Kyaru.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mahiru -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Mahiru +-down- princess.connect.character.Mahiru.Skill0
+  princess.connect.character.Mahiru +-down- princess.connect.character.Mahiru.Skill1
+  princess.connect.character.Mahiru +-down- princess.connect.character.Mahiru.Skill2
+  princess.connect.character.Mahiru +-down- princess.connect.character.Mahiru.SkillEx
+  princess.connect.character.Mahiru.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mahiru.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mahiru.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mahiru.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Maho -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Maho +-down- princess.connect.character.Maho.Skill0
+  princess.connect.character.Maho +-down- princess.connect.character.Maho.Skill1
+  princess.connect.character.Maho +-down- princess.connect.character.Maho.Skill2
+  princess.connect.character.Maho +-down- princess.connect.character.Maho.SkillEx
+  princess.connect.character.Maho.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Maho.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Maho.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Maho.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Makoto -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Makoto +-down- princess.connect.character.Makoto.Skill0
+  princess.connect.character.Makoto +-down- princess.connect.character.Makoto.Skill1
+  princess.connect.character.Makoto +-down- princess.connect.character.Makoto.Skill2
+  princess.connect.character.Makoto +-down- princess.connect.character.Makoto.SkillEx
+  princess.connect.character.Makoto.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Makoto.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Makoto.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Makoto.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mifuyu -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Mifuyu +-down- princess.connect.character.Mifuyu.Skill0
+  princess.connect.character.Mifuyu +-down- princess.connect.character.Mifuyu.Skill1
+  princess.connect.character.Mifuyu +-down- princess.connect.character.Mifuyu.Skill2
+  princess.connect.character.Mifuyu +-down- princess.connect.character.Mifuyu.SkillEx
+  princess.connect.character.Mifuyu.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mifuyu.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mifuyu.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mifuyu.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mimi -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Mimi +-down- princess.connect.character.Mimi.Skill0
+  princess.connect.character.Mimi +-down- princess.connect.character.Mimi.Skill1
+  princess.connect.character.Mimi +-down- princess.connect.character.Mimi.Skill2
+  princess.connect.character.Mimi +-down- princess.connect.character.Mimi.SkillEx
+  princess.connect.character.Mimi.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mimi.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mimi.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mimi.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misaki -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Misaki +-down- princess.connect.character.Misaki.Skill0
+  princess.connect.character.Misaki +-down- princess.connect.character.Misaki.Skill1
+  princess.connect.character.Misaki +-down- princess.connect.character.Misaki.Skill2
+  princess.connect.character.Misaki +-down- princess.connect.character.Misaki.SkillEx
+  princess.connect.character.Misaki.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misaki.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misaki.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misaki.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misogi -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Misogi +-down- princess.connect.character.Misogi.Skill0
+  princess.connect.character.Misogi +-down- princess.connect.character.Misogi.Skill1
+  princess.connect.character.Misogi +-down- princess.connect.character.Misogi.Skill2
+  princess.connect.character.Misogi +-down- princess.connect.character.Misogi.SkillEx
+  princess.connect.character.Misogi.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misogi.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misogi.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Misogi.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mitsuki -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Mitsuki +-down- princess.connect.character.Mitsuki.Skill0
+  princess.connect.character.Mitsuki +-down- princess.connect.character.Mitsuki.Skill1
+  princess.connect.character.Mitsuki +-down- princess.connect.character.Mitsuki.Skill2
+  princess.connect.character.Mitsuki +-down- princess.connect.character.Mitsuki.SkillEx
+  princess.connect.character.Mitsuki.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mitsuki.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mitsuki.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Mitsuki.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Miyako -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Miyako +-down- princess.connect.character.Miyako.Skill0
+  princess.connect.character.Miyako +-down- princess.connect.character.Miyako.Skill1
+  princess.connect.character.Miyako +-down- princess.connect.character.Miyako.Skill2
+  princess.connect.character.Miyako +-down- princess.connect.character.Miyako.SkillEx
+  princess.connect.character.Miyako.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Miyako.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Miyako.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Miyako.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Monika -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Monika +-down- princess.connect.character.Monika.Skill0
+  princess.connect.character.Monika +-down- princess.connect.character.Monika.Skill1
+  princess.connect.character.Monika +-down- princess.connect.character.Monika.Skill2
+  princess.connect.character.Monika +-down- princess.connect.character.Monika.SkillEx
+  princess.connect.character.Monika.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Monika.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Monika.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Monika.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Ninon -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Ninon +-down- princess.connect.character.Ninon.Skill0
+  princess.connect.character.Ninon +-down- princess.connect.character.Ninon.Skill1
+  princess.connect.character.Ninon +-down- princess.connect.character.Ninon.Skill2
+  princess.connect.character.Ninon +-down- princess.connect.character.Ninon.SkillEx
+  princess.connect.character.Ninon.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Ninon.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Ninon.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Ninon.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Nozomi -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Nozomi +-down- princess.connect.character.Nozomi.Skill0
+  princess.connect.character.Nozomi +-down- princess.connect.character.Nozomi.Skill1
+  princess.connect.character.Nozomi +-down- princess.connect.character.Nozomi.Skill2
+  princess.connect.character.Nozomi +-down- princess.connect.character.Nozomi.SkillEx
+  princess.connect.character.Nozomi.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Nozomi.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Nozomi.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Nozomi.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Pecorine -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Pecorine +-down- princess.connect.character.Pecorine.Skill0
+  princess.connect.character.Pecorine +-down- princess.connect.character.Pecorine.Skill1
+  princess.connect.character.Pecorine +-down- princess.connect.character.Pecorine.Skill2
+  princess.connect.character.Pecorine +-down- princess.connect.character.Pecorine.SkillEx
+  princess.connect.character.Pecorine.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Pecorine.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Pecorine.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Pecorine.Skill2 o-- princess.connect.baseClass.Character : target
+  princess.connect.character.Pecorine.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rei -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Rei +-down- princess.connect.character.Rei.Skill0
+  princess.connect.character.Rei +-down- princess.connect.character.Rei.Skill1
+  princess.connect.character.Rei +-down- princess.connect.character.Rei.Skill2
+  princess.connect.character.Rei +-down- princess.connect.character.Rei.SkillEx
+  princess.connect.character.Rei.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rei.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rei.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rei.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rima -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Rima +-down- princess.connect.character.Rima.Skill0
+  princess.connect.character.Rima +-down- princess.connect.character.Rima.Skill1
+  princess.connect.character.Rima +-down- princess.connect.character.Rima.Skill2
+  princess.connect.character.Rima +-down- princess.connect.character.Rima.SkillEx
+  princess.connect.character.Rima.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rima.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rima.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rima.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rino -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Rino +-down- princess.connect.character.Rino.Skill0
+  princess.connect.character.Rino +-down- princess.connect.character.Rino.Skill1
+  princess.connect.character.Rino +-down- princess.connect.character.Rino.Skill2
+  princess.connect.character.Rino +-down- princess.connect.character.Rino.SkillEx
+  princess.connect.character.Rino.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rino.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rino.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Rino.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Saren -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Saren +-down- princess.connect.character.Saren.Skill0
+  princess.connect.character.Saren +-down- princess.connect.character.Saren.Skill1
+  princess.connect.character.Saren +-down- princess.connect.character.Saren.Skill2
+  princess.connect.character.Saren +-down- princess.connect.character.Saren.SkillEx
+  princess.connect.character.Saren.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Saren.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Saren.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Saren.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shinobu -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Shinobu +-down- princess.connect.character.Shinobu.Skill0
+  princess.connect.character.Shinobu +-down- princess.connect.character.Shinobu.Skill1
+  princess.connect.character.Shinobu +-down- princess.connect.character.Shinobu.Skill2
+  princess.connect.character.Shinobu +-down- princess.connect.character.Shinobu.SkillEx
+  princess.connect.character.Shinobu.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shinobu.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shinobu.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shinobu.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shiori -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Shiori +-down- princess.connect.character.Shiori.Skill0
+  princess.connect.character.Shiori +-down- princess.connect.character.Shiori.Skill1
+  princess.connect.character.Shiori +-down- princess.connect.character.Shiori.Skill2
+  princess.connect.character.Shiori +-down- princess.connect.character.Shiori.SkillEx
+  princess.connect.character.Shiori.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shiori.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shiori.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shiori.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shizuru -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Shizuru +-down- princess.connect.character.Shizuru.Skill0
+  princess.connect.character.Shizuru +-down- princess.connect.character.Shizuru.Skill1
+  princess.connect.character.Shizuru +-down- princess.connect.character.Shizuru.Skill2
+  princess.connect.character.Shizuru +-down- princess.connect.character.Shizuru.SkillEx
+  princess.connect.character.Shizuru.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shizuru.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shizuru.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Shizuru.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzume -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Suzume +-down- princess.connect.character.Suzume.Skill0
+  princess.connect.character.Suzume +-down- princess.connect.character.Suzume.Skill1
+  princess.connect.character.Suzume +-down- princess.connect.character.Suzume.Skill2
+  princess.connect.character.Suzume +-down- princess.connect.character.Suzume.SkillEx
+  princess.connect.character.Suzume.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzume.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzume.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzume.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzuna -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Suzuna +-down- princess.connect.character.Suzuna.Skill0
+  princess.connect.character.Suzuna +-down- princess.connect.character.Suzuna.Skill1
+  princess.connect.character.Suzuna +-down- princess.connect.character.Suzuna.Skill2
+  princess.connect.character.Suzuna +-down- princess.connect.character.Suzuna.SkillEx
+  princess.connect.character.Suzuna.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzuna.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzuna.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Suzuna.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Tamaki -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Tamaki +-down- princess.connect.character.Tamaki.Skill0
+  princess.connect.character.Tamaki +-down- princess.connect.character.Tamaki.Skill1
+  princess.connect.character.Tamaki +-down- princess.connect.character.Tamaki.Skill2
+  princess.connect.character.Tamaki +-down- princess.connect.character.Tamaki.SkillEx
+  princess.connect.character.Tamaki.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Tamaki.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Tamaki.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Tamaki.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yori -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Yori +-down- princess.connect.character.Yori.Skill0
+  princess.connect.character.Yori +-down- princess.connect.character.Yori.Skill1
+  princess.connect.character.Yori +-down- princess.connect.character.Yori.Skill2
+  princess.connect.character.Yori +-down- princess.connect.character.Yori.SkillEx
+  princess.connect.character.Yori.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yori.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yori.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yori.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yui -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Yui +-down- princess.connect.character.Yui.Skill0
+  princess.connect.character.Yui +-down- princess.connect.character.Yui.Skill1
+  princess.connect.character.Yui +-down- princess.connect.character.Yui.Skill2
+  princess.connect.character.Yui +-down- princess.connect.character.Yui.SkillEx
+  princess.connect.character.Yui.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yui.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yui.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yui.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yukari -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Yukari +-down- princess.connect.character.Yukari.Skill0
+  princess.connect.character.Yukari +-down- princess.connect.character.Yukari.Skill1
+  princess.connect.character.Yukari +-down- princess.connect.character.Yukari.Skill2
+  princess.connect.character.Yukari +-down- princess.connect.character.Yukari.SkillEx
+  princess.connect.character.Yukari.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yukari.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yukari.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yukari.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yuki -up-|> princess.connect.baseClass.Character
+  princess.connect.character.Yuki +-down- princess.connect.character.Yuki.Skill0
+  princess.connect.character.Yuki +-down- princess.connect.character.Yuki.Skill1
+  princess.connect.character.Yuki +-down- princess.connect.character.Yuki.Skill2
+  princess.connect.character.Yuki +-down- princess.connect.character.Yuki.SkillEx
+  princess.connect.character.Yuki.Skill0 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yuki.Skill1 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yuki.Skill2 -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.character.Yuki.SkillEx -up-|> princess.connect.baseClass.Character.Skill
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -1,0 +1,270 @@
+@startuml
+
+title __BASECLASS's Class Diagram__\n
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.Area {
+          # _levels : List<AreaLevel>
+          # _mapX : int
+          # _mapY : int
+          + levels()
+          + mapX()
+          + mapY()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.Area.AreaLevel {
+          {static} + HEIGHT : int
+          {static} + WIDTH : int
+          # _chars : List<Character>
+          # _icon : int
+          # _map : int
+          # _x : int
+          # _y : int
+          + chars()
+          + icon()
+          + map()
+          + x()
+          + y()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.BasicStats {
+          # _accuracy : int
+          # _evasion : int
+          # _hitpoints : int
+          # _hpRecoveryRate : int
+          # _hpReduceRate : int
+          # _magicAttack : int
+          # _magicCritical : int
+          # _magicDefense : int
+          # _physicalAttack : int
+          # _physicalCritical : int
+          # _physicalDefense : int
+          # _tpRecoveryRate : int
+          # _tpReduceRate : int
+          # _waveHpRecovery : int
+          # _waveTpRecovery : int
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.BattleGround {
+          {static} + FRAME : int
+          {static} + HEIGHT : int
+          {static} + SPACING : int
+          {static} + WIDTH : int
+          - _characterLeft : List<Character>
+          - _characterRight : List<Character>
+          - _time : int
+          + BattleGround()
+          + characters()
+          + initialize()
+          + isEnd()
+          + main()
+          + release()
+          + time()
+          - initCharacter()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.Character {
+          # _allies : List<Character>
+          # _attackRange : int
+          # _attackSpeed : double
+          # _enemies : List<Character>
+          # _equipments : List<Integer>
+          # _hp : int
+          # _id : int
+          # _initialPattern : List<SkillType>
+          # _level : int
+          # _loopPattern : List<SkillType>
+          # _moveSpeed : int
+          # _name : String
+          # _rank : int
+          # _skills : List<Skill>
+          # _star : int
+          # _tp : int
+          # _x : double
+          # _y : double
+          - _actionFrame : int
+          - _idleFrame : int
+          - _isChangeAction : Boolean
+          - _skillIndex : int
+          - _valueDisplays : List<ValueDisplay>
+          + Character()
+          + action()
+          + attackRange()
+          + direction()
+          + hitpoints()
+          + hp()
+          + id()
+          + isAlive()
+          + isChangeAction()
+          + name()
+          + preAction()
+          + rank()
+          + release()
+          + tp()
+          + valueDisplays()
+          + x()
+          + y()
+          # act()
+          # defaultOrder()
+          # frontmost()
+          # grantsRecoverHP()
+          # grantsRecoverTP()
+          # highestAttack()
+          # inflictDamage()
+          - aliveChars()
+          - castSkill()
+          - changeAction()
+          - distance()
+          - isInAttackRange()
+          - move()
+          - setTargets()
+          - skillType()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      enum Action {
+        ATTACK
+        DIE
+        IDLE
+        RUN
+        SKILL0
+        SKILL1
+        SKILL2
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.Character.Attack {
+          + Attack()
+          + Attack()
+          # cast()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      enum DamageType {
+        MAGIC
+        PHYSICAL
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      enum Direction {
+        LEFT
+        RIGHT
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      abstract class princess.connect.baseClass.Character.Skill {
+          # _castTime : double
+          # _level : int
+          # _skillTime : double
+          {abstract} # cast()
+          # isCastTime()
+          # isCastTime()
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      enum SkillType {
+        ATTACK
+        SKILL1
+        SKILL2
+        Skill0
+        SkillEX
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      class princess.connect.baseClass.Character.ValueDisplay {
+          + isCritical : boolean
+          + isMiss : boolean
+          + value : int
+      }
+    }
+  }
+  
+
+  namespace princess.connect {
+    namespace baseClass {
+      enum ValueType {
+        HP
+        MAGIC
+        PHYSICAL
+        TP
+      }
+    }
+  }
+  
+
+  princess.connect.baseClass.Area +-down- princess.connect.baseClass.Area.AreaLevel
+  princess.connect.baseClass.Character -up-|> princess.connect.baseClass.BasicStats
+  princess.connect.baseClass.Character o-- princess.connect.baseClass.Character.DamageType : _damageType
+  princess.connect.baseClass.Character o-- princess.connect.baseClass.Character.Direction : _direction
+  princess.connect.baseClass.Character o-- princess.connect.baseClass.Character.Action : _action
+  princess.connect.baseClass.Character o-- princess.connect.baseClass.Character.Action : _preAction
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.Action
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.Attack
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.DamageType
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.Direction
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.Skill
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.SkillType
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.ValueDisplay
+  princess.connect.baseClass.Character +-down- princess.connect.baseClass.Character.ValueType
+  princess.connect.baseClass.Character.Attack -up-|> princess.connect.baseClass.Character.Skill
+  princess.connect.baseClass.Character.Attack o-- princess.connect.baseClass.Character : chara
+  princess.connect.baseClass.Character.ValueDisplay o-- princess.connect.baseClass.Character.ValueType : valueType
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
