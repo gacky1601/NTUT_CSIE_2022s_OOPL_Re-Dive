@@ -65,6 +65,7 @@ public class InitPage extends AbstractGameState{
     public static final String ALL_CHARACTER_LIST = "ALL_CHARACTER_LIST";
     public static final String ALL_AREA_LIST = "ALL_AREA_LIST";
     public static final String PLAYER_CHARACTER_LIST = "PLAYER_CHARACTER_LIST";
+    public static final String LEVEL_PROGRESS = "LEVEL_PROGRESS";
 
     public InitPage(GameEngine engine) {
         super(engine);
@@ -88,9 +89,11 @@ public class InitPage extends AbstractGameState{
         List<Character> allCharsList = Arrays.asList(new Hiyori(), new Rei(), new Yui(), new Misogi(), new Akari(), new Miyako(), new Yuki(), new Anna(), new Maho(), new Rino(), new Hatsune(), new Suzuna(), new Kaori(), new Io(), new Mimi(), new Kurumi(), new Yori(), new Suzume(), new Eriko(), new Saren(), new Nozomi(), new Ninon(), new Shinobu(), new Akino(), new Mahiru(), new Yukari(), new Shiori(), new Aoi(), new Chika(), new Makoto(), new Kuuka(), new Tamaki(), new Mifuyu(), new Shizuru(), new Misaki(), new Mitsuki(), new Rima(), new Monika(), new Djeeta(), new Pecorine(), new Kokoro(), new Kyaru(), new Arisa());
         List<Area> allAreasList = Arrays.asList(new Area1());
         List<Character> playerCharsList = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru(), new Yui());
+        int[] levelProgress = {1, 1};
         data.put(ALL_CHARACTER_LIST, allCharsList);
         data.put(ALL_AREA_LIST, allAreasList);
         data.put(PLAYER_CHARACTER_LIST, playerCharsList);
+        data.put(LEVEL_PROGRESS, levelProgress);
         Map<String, Object> finalData = data;
 
         _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU, finalData));

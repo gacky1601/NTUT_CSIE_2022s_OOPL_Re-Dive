@@ -99,7 +99,17 @@ public class BattleState extends AbstractGameState {
         _menuBtn.addButtonEventHandler(button -> changeState(Game.ADV_PAGE, _data));
         _confirmBtn = new BitmapButton("interface/button/blue.png").resize(1.5);
         _confirmBtn.setLocation(Game.GAME_FRAME_WIDTH - _confirmBtn.getWidth() - 60, Game.GAME_FRAME_HEIGHT - _confirmBtn.getHeight() - 30);
-        _confirmBtn.addButtonEventHandler(button -> changeState(Game.ADV_PAGE, _data));
+        _confirmBtn.addButtonEventHandler(button -> {
+            if (_ground.isWin()) {
+                int[] levelProgress = (int[]) _data.get(InitPage.LEVEL_PROGRESS), selectedLevel = (int[]) _data.get(AdventurePage.SELECTED_LEVEL_ID), levelID = new int[2];
+                if (levelProgress[0] == selectedLevel[0] && levelProgress[1] == selectedLevel[1]) {
+                    levelID[0] = selectedLevel[0];
+                    levelID[1] = selectedLevel[1] + 1;
+                    _data.put(InitPage.LEVEL_PROGRESS, levelID);
+                }
+            }
+            changeState(Game.ADV_PAGE, _data);
+        });
         _confirmBtn.setVisible(false);
         addPointerEventHandler(_menuBtn);
         addPointerEventHandler(_confirmBtn);

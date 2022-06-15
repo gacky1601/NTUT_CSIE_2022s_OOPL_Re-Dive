@@ -26,6 +26,7 @@ public class AdventurePage extends PlayerMenu {
 
     public static final String SELECTED_CHARACTER = "SELECTED_CHARACTER";
     public static final String SELECTED_LEVEL = "SELECTED_LEVEL";
+    public static final String SELECTED_LEVEL_ID = "SELECTED_LEVEL_ID";
 
     private Map<String, Object> _data;
     private CharacterSelector _selector;
@@ -60,13 +61,16 @@ public class AdventurePage extends PlayerMenu {
     }
     
     private void initArea() {
-        Area area = _areaList.get(0);
-        Area.AreaLevel preLevel = null;
+        Area area = _areaList.get(((int[]) _data.get(InitPage.LEVEL_PROGRESS))[0] - 1);
+        Area.AreaLevel level, preLevel = null;
         MovingBitmap worldmap = new MovingBitmap("map/worldmap.png");
         MovingBitmap road = new MovingBitmap("map/road.png");
         _background.loadBitmap(worldmap.crop(area.mapX() - 1024 / 2, area.mapY() - 1024 / 2, 1024, 1024));
         _background.resize(1920, 1080).setLocation(-200,-200);
-        for (Area.AreaLevel level : area.levels()) {
+        for (int i = 0; i < area.levels().size(); i++) {
+            if (i > ((int[]) _data.get(InitPage.LEVEL_PROGRESS))[1] - 1)
+                break;
+            level = area.levels().get(i);
             if (preLevel != null) {
                 int length = (int) distance(level, preLevel);
                 double radians = Math.atan(slope(level, preLevel));
@@ -77,10 +81,14 @@ public class AdventurePage extends PlayerMenu {
             }
             preLevel = level;
         }
-        for (Area.AreaLevel level : area.levels()) {
+        for (int i = 0; i < area.levels().size(); i++) {
+            if (i > ((int[]) _data.get(InitPage.LEVEL_PROGRESS))[1] - 1)
+                break;
+            level = area.levels().get(i);
             LevelButton btn = new LevelButton(level);
-            addGameObject(btn);
+            btn.setID(((int[]) _data.get(InitPage.LEVEL_PROGRESS))[0], i + 1);
             addPointerEventHandler(btn);
+            addGameObject(btn);
         }
     }
 
@@ -94,14 +102,21 @@ public class AdventurePage extends PlayerMenu {
 
     private class LevelButton implements GameObject, PointerEventHandler {
         private final Area.AreaLevel _level;
+        private int[] _id;
         private MovingBitmap _icon, _base;
         private Pointer _pointer;
 
         public LevelButton(Area.AreaLevel level) {
             _level = level;
+            _id = new int[2];
             _base = new MovingBitmap("map/base.png");
             _icon = new MovingBitmap("map/icon_map_" + level.icon() + ".png");
             setLocation(level.x(), level.y());
+        }
+
+        public void setID(int a, int b) {
+            _id[0] = a;
+            _id[1] = b;
         }
 
         public void setLocation(int x, int y) {
@@ -143,8 +158,9 @@ public class AdventurePage extends PlayerMenu {
 
         @Override
         public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
-            if (pointers.size() == 1 && !_isSelect && contain(_pointer) && contain(actionPointer)) {
+            if (pointers.size() == 1 && !_isSelect && _pointer != null && contain(_pointer) && contain(actionPointer)) {
                 _data.put(SELECTED_LEVEL, _level);
+                _data.put(SELECTED_LEVEL_ID, _id);
                 _selector.setVisible(true);
                 return true;
             }

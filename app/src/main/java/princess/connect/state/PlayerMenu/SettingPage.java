@@ -23,6 +23,7 @@ public class SettingPage extends PlayerMenu{
         confirm.addButtonEventHandler(button -> {
             List<Character> newPlayerCharsList = new ArrayList<>();
             List<Character> allCharsList = (List<Character>) data.get(InitPage.ALL_CHARACTER_LIST);
+            int[] levelProgress = {1, 10};
             for (Character chara : allCharsList) {
                 try {
                     Character newChara = chara.getClass().newInstance();
@@ -31,6 +32,7 @@ public class SettingPage extends PlayerMenu{
                 } catch (Exception ignore) {}
             }
             data.put(InitPage.PLAYER_CHARACTER_LIST, newPlayerCharsList);
+            data.put(InitPage.LEVEL_PROGRESS, levelProgress);
         });
         addPointerEventHandler(confirm);
         addGameObject(confirm);
