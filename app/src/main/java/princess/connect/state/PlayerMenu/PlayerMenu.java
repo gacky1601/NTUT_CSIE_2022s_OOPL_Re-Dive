@@ -5,11 +5,13 @@ import java.util.Map;
 
 import princess.connect.Game;
 import princeconnect.game.R;
+import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.extend.BitmapButton;
 import princess.connect.extend.ButtonEventHandler;
 import princess.connect.state.AbstractGameState;
+import princess.connect.state.InitPage;
 
 public class PlayerMenu extends AbstractGameState {
 
@@ -48,10 +50,14 @@ public class PlayerMenu extends AbstractGameState {
     }
 
     @Override
-    public void pause() {}
+    public void pause() {
+        ((Audio) _data.get(InitPage.BGM)).pause();
+    }
 
     @Override
-    public void resume() {}
+    public void resume() {
+        ((Audio) _data.get(InitPage.BGM)).resume();
+    }
 
     private void initializeButton(BitmapButton Button,int image_a,int image_b,int x,int y,int state, Map<String, Object> data) {
         Button= new BitmapButton(image_a, image_b, x, y);

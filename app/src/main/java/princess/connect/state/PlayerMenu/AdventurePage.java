@@ -6,12 +6,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import princeconnect.game.R;
 import princess.connect.Game;
 import princess.connect.GameObject;
 import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
 import princess.connect.baseClass.Area;
 import princess.connect.baseClass.Character;
+import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.extend.Animation;
@@ -105,6 +107,7 @@ public class AdventurePage extends PlayerMenu {
         private int[] _id;
         private MovingBitmap _icon, _base;
         private Pointer _pointer;
+        private Audio _sound = new Audio(R.raw.button);
 
         public LevelButton(Area.AreaLevel level) {
             _level = level;
@@ -159,6 +162,7 @@ public class AdventurePage extends PlayerMenu {
         @Override
         public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
             if (pointers.size() == 1 && !_isSelect && _pointer != null && contain(_pointer) && contain(actionPointer)) {
+                _sound.play();
                 _data.put(SELECTED_LEVEL, _level);
                 _data.put(SELECTED_LEVEL_ID, _id);
                 _selector.setVisible(true);
@@ -171,8 +175,10 @@ public class AdventurePage extends PlayerMenu {
         public void release() {
             _base.release();
             _icon.release();
+            _sound.release();
             _base = null;
             _icon = null;
+            _sound = null;
         }
     }
 
@@ -415,7 +421,7 @@ public class AdventurePage extends PlayerMenu {
                 } else {
                     for (CharacterButton btn : _selectedBtns)
                         if (btn.contains(_pointer) && btn.contains(actionPointer))
-                            btn.notifyButtonEventHandlers();
+                            btn.notifyButtonEventHandlersWithoutSound();
                     if (_confirm.contains(_pointer) && _confirm.contains(actionPointer) && _selectChars.size() != 0)
                         _confirm.notifyButtonEventHandlers();
                     else if (_cancle.contains(_pointer) && _cancle.contains(actionPointer))

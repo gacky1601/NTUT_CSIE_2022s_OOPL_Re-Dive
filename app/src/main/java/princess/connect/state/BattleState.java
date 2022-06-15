@@ -14,9 +14,11 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import princeconnect.game.R;
 import princess.connect.Game;
 import princess.connect.GameObject;
 import princess.connect.baseClass.Area;
+import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.baseClass.BattleGround;
@@ -43,11 +45,16 @@ public class BattleState extends AbstractGameState {
     private List<BarAnimation> _barAnimations;
     private BitmapButton _menuBtn, _confirmBtn;
     private boolean _isFinish;
+    private Audio _bgm;
 
     @Override
     public void initialize(Map<String, Object> data) {
         _data = data;
         _isFinish = false;
+        ((Audio) _data.get(InitPage.BGM)).stop();
+        _bgm = new Audio(R.raw.bgm_battle);
+        _bgm.setRepeating(true);
+        _bgm.play();
         Area.AreaLevel level = (Area.AreaLevel) _data.get(AdventurePage.SELECTED_LEVEL);
         addGameObject(new MovingBitmap("map/bg_" + level.map() + ".png", -200, -200).resize(1920, 1080));
         _ground = new BattleGround((List<Character>) _data.get(AdventurePage.SELECTED_CHARACTER), level.chars());
@@ -710,6 +717,7 @@ public class BattleState extends AbstractGameState {
         _timeTask.cancel();
         super.release();
         _ground.release();
+        _bgm.release();
         _charAnimations.clear();
         _valueAnimationNums.clear();
         _ground = null;
@@ -717,13 +725,17 @@ public class BattleState extends AbstractGameState {
         _timeTask = null;
         _charAnimations = null;
         _valueAnimationNums = null;
+        _bgm = null;
+        ((Audio) _data.get(InitPage.BGM)).play();
     }
 
     @Override
     public void pause() {
+        _bgm.pause();
     }
 
     @Override
     public void resume() {
+        _bgm.resume();
     }
 }

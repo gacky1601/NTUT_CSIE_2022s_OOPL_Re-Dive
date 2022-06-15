@@ -3,9 +3,11 @@ package princess.connect.extend;
 import java.util.ArrayList;
 import java.util.List;
 
+import princeconnect.game.R;
 import princess.connect.GameObject;
 import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
+import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 
 /**
@@ -47,6 +49,8 @@ public class BitmapButton implements GameObject, PointerEventHandler {
     private List<ButtonEventHandler> _handlers;
 
     private Pointer _pointer;
+
+    private final Audio _sound = new Audio(R.raw.button);
 
     /**
      * 用指定的圖片資源ID，建立一個<code>BitmapButton</code>實體。
@@ -399,6 +403,14 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      * 通知所有已註冊的按鈕事件處理者。
      */
     public void notifyButtonEventHandlers() {
+        if (_handlers.size() != 0)
+            _sound.play();
+        for (ButtonEventHandler handler : _handlers) {
+            handler.perform(this);
+        }
+    }
+
+    public void notifyButtonEventHandlersWithoutSound() {
         for (ButtonEventHandler handler : _handlers) {
             handler.perform(this);
         }

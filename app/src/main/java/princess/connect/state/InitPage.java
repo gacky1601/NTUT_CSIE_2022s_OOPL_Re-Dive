@@ -56,6 +56,7 @@ import princess.connect.character.Yori;
 import princess.connect.character.Yui;
 import princess.connect.character.Yukari;
 import princess.connect.character.Yuki;
+import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.extend.BitmapButton;
@@ -66,13 +67,14 @@ public class InitPage extends AbstractGameState{
     public static final String ALL_AREA_LIST = "ALL_AREA_LIST";
     public static final String PLAYER_CHARACTER_LIST = "PLAYER_CHARACTER_LIST";
     public static final String LEVEL_PROGRESS = "LEVEL_PROGRESS";
+    public static final String BGM = "BGM";
 
     public InitPage(GameEngine engine) {
         super(engine);
     }
     private MovingBitmap _background,_icon;
     private BitmapButton _startButton;
-
+    private final Audio _bgm = new Audio(R.raw.bgm_main);
 
     @Override
     public void initialize(Map<String, Object> data) {
@@ -90,10 +92,13 @@ public class InitPage extends AbstractGameState{
         List<Area> allAreasList = Arrays.asList(new Area1());
         List<Character> playerCharsList = Arrays.asList(new Pecorine(), new Kokoro(), new Kyaru(), new Yui());
         int[] levelProgress = {1, 1};
+        _bgm.setRepeating(true);
+        _bgm.play();
         data.put(ALL_CHARACTER_LIST, allCharsList);
         data.put(ALL_AREA_LIST, allAreasList);
         data.put(PLAYER_CHARACTER_LIST, playerCharsList);
         data.put(LEVEL_PROGRESS, levelProgress);
+        data.put(BGM, _bgm);
         Map<String, Object> finalData = data;
 
         _startButton.addButtonEventHandler(button -> changeState(Game.PLAYER_MENU, finalData));
@@ -101,9 +106,13 @@ public class InitPage extends AbstractGameState{
     }
 
     @Override
-    public void pause() { }
+    public void pause() {
+        _bgm.pause();
+    }
 
     @Override
-    public void resume() { }
+    public void resume() {
+        _bgm.resume();
+    }
 }
 
