@@ -17,6 +17,7 @@ public class PlayerMenu extends AbstractGameState {
 
     protected MovingBitmap _background;
     private Map<String, Object> _data;
+    public MovingBitmap main,cha,adv,draw,setting;
 
     @Override
     public void initialize(Map<String, Object> data) {
@@ -30,6 +31,11 @@ public class PlayerMenu extends AbstractGameState {
 
     public void initButton() {
         int _buttondx = 270,_buttondy=660;
+        main=new MovingBitmap("interface/button/main_press.png",340,695);
+        cha=new MovingBitmap("interface/button/charater_press.png",340+178,695);
+        adv=new MovingBitmap("interface/button/adventure.png",340+178+170,695);
+        draw=new MovingBitmap("interface/button/drawegg.png",340+178+170+170,695);
+        setting=new MovingBitmap("interface/button/secret_skill.png",340+178+170+170+160,695);
         initializeButton(R.drawable.bg_main,R.drawable.bg_main_press, _buttondx,_buttondy+1,Game.PLAYER_MENU, _data);
         initializeButton(R.drawable.bg_other,R.drawable.bg_charater_pressed, _buttondx +178,_buttondy,Game.CHA_PAGE, _data);
         initializeButton(R.drawable.bg_other,R.drawable.bg_adventure_press, _buttondx +178+170,_buttondy,Game.ADV_PAGE, _data);
@@ -40,6 +46,11 @@ public class PlayerMenu extends AbstractGameState {
         addGameObject(new MovingBitmap(R.drawable.ic_adventure,_buttondx + 50 + 178 + 170,630));
         addGameObject(new MovingBitmap(R.drawable.ic_draw,_buttondx + 50 + 178 + 170 + 170,630));
         addGameObject(new MovingBitmap(R.drawable.ic_setting,_buttondx + 50 + 178 + 170 + 170 + 170,630));
+        addGameObject(main);
+        addGameObject(cha);
+        addGameObject(adv);
+        addGameObject(draw);
+        addGameObject(setting);
     }
 
     @Override

@@ -171,6 +171,7 @@ public class AdventurePage extends PlayerMenu {
         private Pointer _pointer;
         private boolean _isInGarySquare, _isMoved, _isPress, _isVisible;
         private BitmapButton _confirm, _cancle;
+        private MovingBitmap _confirmtext,_canceltext;
 
         private CharacterSelector(List<Character> chars) {
             _charBtns = new ArrayList<>();
@@ -212,8 +213,10 @@ public class AdventurePage extends PlayerMenu {
                 _selectedBtns.add(btn);
             }
             _confirm = new BitmapButton("interface/button/blue.png").resize(1.5);
+            _confirmtext=new MovingBitmap("interface/button/challenge.png").resize(1.5);
             _confirm.addButtonEventHandler(button -> _loading.loading());
             _cancle = new BitmapButton("interface/button/white.png").resize(1.5);
+            _canceltext=new MovingBitmap("interface/button/cancel.png").resize(1.5);
             _cancle.addButtonEventHandler(button -> setVisible(false));
             initLoaction();
             MovingBitmap tmp = AdventurePage.this._background;
@@ -255,7 +258,10 @@ public class AdventurePage extends PlayerMenu {
                         y + _background.get(0).getHeight() + spacing);
             _confirm.setLocation(getY() + getWidth() - _frames.get(2).getWidth() - _confirm.getWidth() - spacing,
                     _background.get(5).getY() + (_background.get(5).getWidth() - _cancle.getHeight()) / 2);
+            _confirmtext.setLocation(getY() + getWidth() - _frames.get(2).getWidth() - _confirm.getWidth() - spacing,
+                    _background.get(5).getY() + (_background.get(5).getWidth() - _cancle.getHeight()) / 2);
             _cancle.setLocation(_confirm.getX() - _confirm.getWidth() - spacing, _confirm.getY());
+            _canceltext.setLocation(_confirm.getX() - _confirm.getWidth() - spacing, _confirm.getY());
             x += spacing + 30;
             y += spacing;
             for (int i = 0; i < _charBtns.size(); i++) {
@@ -280,7 +286,9 @@ public class AdventurePage extends PlayerMenu {
                 for (CharacterButton btn : _charBtns)
                     btn.setGray(false);
             _confirm.setVisible(isVisible);
+            _confirmtext.setVisible(isVisible);
             _cancle.setVisible(isVisible);
+            _canceltext.setVisible(isVisible);
             _selectChars.clear();
             _isSelect = isVisible;
         }
@@ -345,6 +353,8 @@ public class AdventurePage extends PlayerMenu {
                 btn.show();
             _confirm.show();
             _cancle.show();
+            _confirmtext.show();
+            _canceltext.show();
         }
 
         @Override
@@ -422,7 +432,9 @@ public class AdventurePage extends PlayerMenu {
             for (CharacterButton btn : _selectedBtns)
                 btn.release();
             _confirm.release();
+            _confirmtext.release();
             _cancle.release();
+            _canceltext.release();
             _frames.clear();
             _background.clear();
             _charBtns.clear();
@@ -433,6 +445,8 @@ public class AdventurePage extends PlayerMenu {
             _selectedBtns = null;
             _confirm = null;
             _cancle = null;
+            _confirmtext=null;
+            _canceltext=null;
         }
     }
 

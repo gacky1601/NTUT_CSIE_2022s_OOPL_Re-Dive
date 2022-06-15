@@ -18,6 +18,8 @@ public class SettingPage extends PlayerMenu{
         super.initialize(data);
         _background.loadBitmap(new MovingBitmap(R.drawable.bg_500367));
         _background.resize(1920, 1080).setLocation((Game.GAME_FRAME_WIDTH - _background.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - _background.getHeight()) / 2);
+        MovingBitmap text=new MovingBitmap("interface/button/secret_skill.png").resize(1.5);
+        text.setLocation((Game.GAME_FRAME_WIDTH - text.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - text.getHeight()) / 2);
         BitmapButton confirm = new BitmapButton("interface/button/white.png").resize(1.5);
         confirm.setLocation((Game.GAME_FRAME_WIDTH - confirm.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - confirm.getHeight()) / 2);
         confirm.addButtonEventHandler(button -> {
@@ -36,6 +38,7 @@ public class SettingPage extends PlayerMenu{
         });
         addPointerEventHandler(confirm);
         addGameObject(confirm);
+        addGameObject(text);
         super.initButton();
     }
 }
