@@ -50,7 +50,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
 
     private Pointer _pointer;
 
-    private final Audio _sound = new Audio(R.raw.button);
+    private static final Audio _sound = new Audio(R.raw.button);
 
     /**
      * 用指定的圖片資源ID，建立一個<code>BitmapButton</code>實體。
@@ -403,8 +403,7 @@ public class BitmapButton implements GameObject, PointerEventHandler {
      * 通知所有已註冊的按鈕事件處理者。
      */
     public void notifyButtonEventHandlers() {
-        if (_handlers.size() != 0)
-            _sound.play();
+        _sound.play();
         for (ButtonEventHandler handler : _handlers) {
             handler.perform(this);
         }

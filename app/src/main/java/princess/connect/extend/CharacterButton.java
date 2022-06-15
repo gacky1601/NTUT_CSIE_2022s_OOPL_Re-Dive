@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import princeconnect.game.R;
+import princess.connect.Pointer;
 import princess.connect.baseClass.Character;
 import princess.connect.core.MovingBitmap;
 
@@ -132,6 +133,7 @@ public class CharacterButton extends BitmapButton{
 
     @Override
     public void release() {
+        super.release();
         _icon.release();
         for (MovingBitmap bitmap : _stars)
             bitmap.release();

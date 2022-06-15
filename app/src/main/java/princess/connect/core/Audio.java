@@ -120,4 +120,8 @@ public class Audio implements ReleasableResource {
     public void setRepeating(boolean repeating) {
         _player.setLooping(repeating);
     }
+
+    public boolean isPlauing() {
+        return _player.isPlaying();
+    }
 }

@@ -13,7 +13,6 @@ import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
 import princess.connect.baseClass.Area;
 import princess.connect.baseClass.Character;
-import princess.connect.core.Audio;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
 import princess.connect.extend.Animation;
@@ -89,6 +88,11 @@ public class AdventurePage extends PlayerMenu {
             level = area.levels().get(i);
             LevelButton btn = new LevelButton(level);
             btn.setID(((int[]) _data.get(InitPage.LEVEL_PROGRESS))[0], i + 1);
+            btn.addButtonEventHandler(button -> {
+                _data.put(SELECTED_LEVEL, btn._level);
+                _data.put(SELECTED_LEVEL_ID, btn._id);
+                _selector.setVisible(true);
+            });
             addPointerEventHandler(btn);
             addGameObject(btn);
         }
@@ -102,14 +106,13 @@ public class AdventurePage extends PlayerMenu {
         return (int) (Game.GAME_FRAME_HEIGHT * 0.7 * y / Area.AreaLevel.HEIGHT + Game.GAME_FRAME_HEIGHT * 0.05);
     }
 
-    private class LevelButton implements GameObject, PointerEventHandler {
+    private class LevelButton extends BitmapButton {
         private final Area.AreaLevel _level;
         private int[] _id;
         private MovingBitmap _icon, _base;
-        private Pointer _pointer;
-        private Audio _sound = new Audio(R.raw.button);
 
         public LevelButton(Area.AreaLevel level) {
+            super(R.drawable.none);
             _level = level;
             _id = new int[2];
             _base = new MovingBitmap("map/base.png");
@@ -122,6 +125,7 @@ public class AdventurePage extends PlayerMenu {
             _id[1] = b;
         }
 
+        @Override
         public void setLocation(int x, int y) {
             x = convertX(x);
             y = convertY(y);
@@ -129,17 +133,16 @@ public class AdventurePage extends PlayerMenu {
             _icon.setLocation(x - _icon.getWidth() / 2, y - _icon.getHeight() / 2 - 40);
         }
 
-        public boolean contain(Pointer pointer, MovingBitmap bitmap) {
+        public boolean contains(Pointer pointer, MovingBitmap bitmap) {
             return pointer.getX() >= bitmap.getX() && pointer.getX() < bitmap.getX() + bitmap.getWidth()
                     && pointer.getY() >= bitmap.getY() && pointer.getY() < bitmap.getY() + bitmap.getHeight();
         }
 
-        public boolean contain(Pointer pointer) {
-            return contain(pointer, _base) || contain(pointer, _icon);
-        }
-
         @Override
-        public void move() {
+        public boolean contains(Pointer pointer) {
+            if (_isSelect)
+                return false;
+            return contains(pointer, _base) || contains(pointer, _icon);
         }
 
         @Override
@@ -149,36 +152,12 @@ public class AdventurePage extends PlayerMenu {
         }
 
         @Override
-        public boolean pointerPressed(Pointer actionPointer, List<Pointer> pointers) {
-            _pointer = actionPointer;
-            return pointers.size() == 1 && !_isSelect && contain(actionPointer);
-        }
-
-        @Override
-        public boolean pointerMoved(Pointer actionPointer, List<Pointer> pointers) {
-            return false;
-        }
-
-        @Override
-        public boolean pointerReleased(Pointer actionPointer, List<Pointer> pointers) {
-            if (pointers.size() == 1 && !_isSelect && _pointer != null && contain(_pointer) && contain(actionPointer)) {
-                _sound.play();
-                _data.put(SELECTED_LEVEL, _level);
-                _data.put(SELECTED_LEVEL_ID, _id);
-                _selector.setVisible(true);
-                return true;
-            }
-            return false;
-        }
-
-        @Override
         public void release() {
+            super.release();
             _base.release();
             _icon.release();
-            _sound.release();
             _base = null;
             _icon = null;
-            _sound = null;
         }
     }
 
