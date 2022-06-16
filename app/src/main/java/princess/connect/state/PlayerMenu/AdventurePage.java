@@ -47,7 +47,7 @@ public class AdventurePage extends PlayerMenu {
         _selector.setVisible(false);
         addGameObject(_selector);
         addPointerEventHandler(_selector);
-        super.initButton();
+        addBtnsToGameObject();
         _loading = new Loading();
         _loading.setVisible(false);
         addGameObject(_loading);

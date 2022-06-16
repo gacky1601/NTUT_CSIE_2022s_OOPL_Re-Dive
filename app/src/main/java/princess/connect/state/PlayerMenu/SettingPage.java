@@ -39,6 +39,6 @@ public class SettingPage extends PlayerMenu{
         addPointerEventHandler(confirm);
         addGameObject(confirm);
         addGameObject(text);
-        super.initButton();
+        addBtnsToGameObject();
     }
 }

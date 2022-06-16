@@ -523,6 +523,7 @@ public class BattleState extends AbstractGameState {
                 case GREEN:
                 case RED:
                     _background = new Bar(BarType.YELLOW);
+                    _background._value = 1;
                     setValue(1);
                     break;
                 case BLUE:

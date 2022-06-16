@@ -11,10 +11,8 @@ import princess.connect.GameObject;
 import princess.connect.Pointer;
 import princess.connect.PointerEventHandler;
 import princess.connect.baseClass.Character;
-import princess.connect.character.Pecorine;
 import princess.connect.core.MovingBitmap;
 import princess.connect.engine.GameEngine;
-import princess.connect.extend.CharacterButton;
 import princess.connect.state.InitPage;
 
 public class CharaterPage extends PlayerMenu {
@@ -27,7 +25,7 @@ public class CharaterPage extends PlayerMenu {
         CharacterViewer viewer = new CharacterViewer((List<Character>) data.get(InitPage.ALL_CHARACTER_LIST),(List<Character>) data.get(InitPage.PLAYER_CHARACTER_LIST));
         addGameObject(viewer);
         addPointerEventHandler(viewer);
-        super.initButton();
+        addBtnsToGameObject();
     }
 
     private class CharacterViewer implements GameObject, PointerEventHandler {

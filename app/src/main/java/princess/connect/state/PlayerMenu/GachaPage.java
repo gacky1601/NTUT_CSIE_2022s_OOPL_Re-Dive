@@ -1,8 +1,6 @@
 package princess.connect.state.PlayerMenu;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +55,7 @@ public class GachaPage extends PlayerMenu{
         addGameObject(confirmText);
         addGameObject(cancle);
         addGameObject(cancleText);
-        super.initButton();
+        addBtnsToGameObject();
     }
 
     @Override
