@@ -23,6 +23,8 @@ public class PlayerMenu extends AbstractGameState {
     protected MovingBitmap _background;
     private Map<String, Object> _data;
     private List<GameObject> _btns;
+    List<MovingBitmap> _frames;
+    private boolean _visable;
 
     @Override
     public void initialize(Map<String, Object> data) {
@@ -34,6 +36,26 @@ public class PlayerMenu extends AbstractGameState {
         addGameObject(_background);
         initButton();
         if (this.getClass() == PlayerMenu.class) {
+            _visable = false;
+            initFrame();
+            MovingBitmap about = new MovingBitmap(R.drawable.about).resize(0.8);
+            about.setLocation((Game.GAME_FRAME_WIDTH - about.getWidth()) / 2, (Game.GAME_FRAME_HEIGHT - about.getHeight()) / 2 - 50);
+            about.setVisible(_visable);
+            BitmapButton btn = new BitmapButton("interface/button/white.png").resize(1.25);
+            btn.setLocation(Game.GAME_FRAME_WIDTH - btn.getWidth() - 150, 50);
+            btn.addButtonEventHandler(button -> {
+                _visable = !_visable;
+                about.setVisible(_visable);
+                for (MovingBitmap bitmap : _frames)
+                    bitmap.setVisible(_visable);
+            });
+            MovingBitmap aboutText = new MovingBitmap(R.drawable.text_about).resize(0.2);
+            aboutText.setLocation(btn.getX() + btn.getWidth() / 2 - aboutText.getWidth() / 2,
+                    btn.getY() + btn.getHeight() / 2 - aboutText.getHeight() / 2 - 5);
+            addPointerEventHandler(btn);
+            addGameObject(btn);
+            addGameObject(aboutText);
+            addGameObject(about);
             addGameObject(new MovingBitmap(R.drawable.banner_10003).resize(300, 150).setLocation(50, 450));
             addBtnsToGameObject();
         }
@@ -42,6 +64,34 @@ public class PlayerMenu extends AbstractGameState {
     protected void addBtnsToGameObject() {
         for (GameObject obj : _btns)
             addGameObject(obj);
+    }
+
+    private void initFrame() {
+        _frames = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            _frames.add(new MovingBitmap("interface/white/" + i + ".png"));
+            _frames.get(_frames.size() - 1).setVisible(_visable);
+            addGameObject(_frames.get(_frames.size() - 1));
+        }
+        _frames.get(1).resize(_frames.get(1).getWidth() * 10, _frames.get(1).getHeight());
+        _frames.get(7).resize(_frames.get(1).getWidth(), _frames.get(1).getHeight());
+        _frames.get(3).resize(_frames.get(3).getWidth(), _frames.get(3).getHeight() * 10);
+        _frames.get(5).resize(_frames.get(3).getWidth(), _frames.get(3).getHeight());
+        _frames.get(4).resize(_frames.get(1).getWidth(), _frames.get(3).getHeight());
+        int x = (Game.GAME_FRAME_WIDTH
+                - (_frames.get(0).getWidth() + _frames.get(1).getWidth() + _frames.get(2).getWidth())) / 2;
+        int y = (int) (Game.GAME_FRAME_HEIGHT * 0.25 - 15);
+        int spacing = 25;
+        MovingBitmap bitmap;
+        for (int i = 0; i < 9; i++) {
+            bitmap = _frames.get(i);
+            bitmap.setLocation(x, y);
+            if (i % 3 == 2) {
+                x = _frames.get(0).getX();
+                y += bitmap.getHeight();
+            } else
+                x += bitmap.getWidth();
+        }
     }
 
     private void initButton() {
