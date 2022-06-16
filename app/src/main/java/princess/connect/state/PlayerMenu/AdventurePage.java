@@ -213,10 +213,10 @@ public class AdventurePage extends PlayerMenu {
                 _selectedBtns.add(btn);
             }
             _confirm = new BitmapButton("interface/button/blue.png").resize(1.5);
-            _confirmtext=new MovingBitmap("interface/button/challenge.png").resize(1.5);
+            _confirmtext=new MovingBitmap(R.drawable.text_battlestart).resize(0.25);
             _confirm.addButtonEventHandler(button -> _loading.loading());
             _cancle = new BitmapButton("interface/button/white.png").resize(1.5);
-            _canceltext=new MovingBitmap("interface/button/cancel.png").resize(1.5);
+            _canceltext=new MovingBitmap(R.drawable.text_cancle).resize(0.25);
             _cancle.addButtonEventHandler(button -> setVisible(false));
             initLoaction();
             MovingBitmap tmp = AdventurePage.this._background;
@@ -258,10 +258,11 @@ public class AdventurePage extends PlayerMenu {
                         y + _background.get(0).getHeight() + spacing);
             _confirm.setLocation(getY() + getWidth() - _frames.get(2).getWidth() - _confirm.getWidth() - spacing,
                     _background.get(5).getY() + (_background.get(5).getWidth() - _cancle.getHeight()) / 2);
-            _confirmtext.setLocation(getY() + getWidth() - _frames.get(2).getWidth() - _confirm.getWidth() - spacing,
-                    _background.get(5).getY() + (_background.get(5).getWidth() - _cancle.getHeight()) / 2);
+            _confirmtext.setLocation(_confirm.getX() + _confirm.getWidth() / 2 - _confirmtext.getWidth() / 2,
+                    _confirm.getY() + _confirm.getHeight() / 2 - _confirmtext.getHeight() / 2);
             _cancle.setLocation(_confirm.getX() - _confirm.getWidth() - spacing, _confirm.getY());
-            _canceltext.setLocation(_confirm.getX() - _confirm.getWidth() - spacing, _confirm.getY());
+            _canceltext.setLocation(_cancle.getX() + _cancle.getWidth() / 2 - _canceltext.getWidth() / 2,
+                    _cancle.getY() + _cancle.getHeight() / 2 - _canceltext.getHeight() / 2);
             x += spacing + 30;
             y += spacing;
             for (int i = 0; i < _charBtns.size(); i++) {

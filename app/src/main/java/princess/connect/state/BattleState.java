@@ -44,6 +44,7 @@ public class BattleState extends AbstractGameState {
     private List<CharacterButton> _charBtns;
     private List<BarAnimation> _barAnimations;
     private BitmapButton _menuBtn, _confirmBtn;
+    private MovingBitmap _menuText, _confirmText;
     private boolean _isFinish;
     private Audio _bgm;
 
@@ -104,6 +105,9 @@ public class BattleState extends AbstractGameState {
         _menuBtn = new BitmapButton("interface/button/menu.png");
         _menuBtn.setLocation(Game.GAME_FRAME_WIDTH - _menuBtn.getWidth() - 30, 15);
         _menuBtn.addButtonEventHandler(button -> changeState(Game.ADV_PAGE, _data));
+        _menuText = new MovingBitmap(R.drawable.text_back).resize(0.2);
+        _menuText.setLocation(_menuBtn.getX() + _menuBtn.getWidth() / 2 - _menuText.getWidth() / 2,
+                _menuBtn.getY() + _menuBtn.getHeight() / 2 - _menuText.getHeight() / 2);
         _confirmBtn = new BitmapButton("interface/button/blue.png").resize(1.5);
         _confirmBtn.setLocation(Game.GAME_FRAME_WIDTH - _confirmBtn.getWidth() - 60, Game.GAME_FRAME_HEIGHT - _confirmBtn.getHeight() - 30);
         _confirmBtn.addButtonEventHandler(button -> {
@@ -118,10 +122,16 @@ public class BattleState extends AbstractGameState {
             changeState(Game.ADV_PAGE, _data);
         });
         _confirmBtn.setVisible(false);
+        _confirmText = new MovingBitmap(R.drawable.text_next).resize(0.25);
+        _confirmText.setLocation(_confirmBtn.getX() + _confirmBtn.getWidth() / 2 - _confirmText.getWidth() / 2,
+                _confirmBtn.getY() + _confirmBtn.getHeight() / 2 - _confirmText.getHeight() / 2);
+        _confirmText.setVisible(false);
         addPointerEventHandler(_menuBtn);
         addPointerEventHandler(_confirmBtn);
         addGameObject(_menuBtn);
+        addGameObject(_menuText);
         addGameObject(_confirmBtn);
+        addGameObject(_confirmText);
     }
 
     private void initValueAnimationNums() {
@@ -242,6 +252,7 @@ public class BattleState extends AbstractGameState {
         for (BarAnimation animation : _barAnimations)
             animation.setVisible(false);
         _menuBtn.setVisible(false);
+        _menuText.setVisible(false);
         if (!_isFinish) {
             _isFinish = true;
             addGameObject(new Result(_ground.isWin() ? "win" : "lose"));
@@ -705,8 +716,10 @@ public class BattleState extends AbstractGameState {
                                 * Math.cos(Math.PI / 2 * _count / MOVE_TIME * SPEED)));
                 _count += _count < 2 * MOVE_TIME / SPEED ? 1 : 2;
             }
-            else
+            else {
                 _confirmBtn.setVisible(true);
+                _confirmText.setVisible(true);
+            }
         }
     }
 

@@ -42,13 +42,21 @@ public class GachaPage extends PlayerMenu{
             displayResult(chars);
             updatePlayerCharacter(chars);
         });
-        addPointerEventHandler(confirm);
-        addGameObject(confirm);
+        MovingBitmap confirmText = new MovingBitmap(R.drawable.text_tryagain).resize(0.25);
+        confirmText.setLocation(confirm.getX() + confirm.getWidth() / 2 - confirmText.getWidth() / 2,
+                confirm.getY() + confirm.getHeight() / 2 - confirmText.getHeight() / 2);
         BitmapButton cancle = new BitmapButton("interface/button/white.png").resize(1.5);
         cancle.setLocation((Game.GAME_FRAME_WIDTH - cancle.getWidth()) / 2 - 150, (Game.GAME_FRAME_HEIGHT - cancle.getHeight()) / 2 + 175);
         cancle.addButtonEventHandler(button -> clearResult());
+        MovingBitmap cancleText = new MovingBitmap(R.drawable.text_cancle).resize(0.25);
+        cancleText.setLocation(cancle.getX() + cancle.getWidth() / 2 - cancleText.getWidth() / 2,
+                cancle.getY() + cancle.getHeight() / 2 - cancleText.getHeight() / 2);
+        addPointerEventHandler(confirm);
         addPointerEventHandler(cancle);
+        addGameObject(confirm);
+        addGameObject(confirmText);
         addGameObject(cancle);
+        addGameObject(cancleText);
         super.initButton();
     }
 
