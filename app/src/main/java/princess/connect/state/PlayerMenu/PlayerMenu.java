@@ -33,8 +33,10 @@ public class PlayerMenu extends AbstractGameState {
                 (Game.GAME_FRAME_HEIGHT - _background.getHeight()) / 2);
         addGameObject(_background);
         initButton();
-        if (this.getClass() == PlayerMenu.class)
+        if (this.getClass() == PlayerMenu.class) {
+            addGameObject(new MovingBitmap(R.drawable.banner_10003).resize(300, 150).setLocation(50, 450));
             addBtnsToGameObject();
+        }
     }
 
     protected void addBtnsToGameObject() {
@@ -64,6 +66,7 @@ public class PlayerMenu extends AbstractGameState {
         _btns.add(new MovingBitmap(R.drawable.text_character).resize(0.15).setLocation(335 + 178, 690));
         _btns.add(new MovingBitmap(R.drawable.text_adventure).resize(0.15).setLocation(330 + 178 + 170, 690));
         _btns.add(new MovingBitmap(R.drawable.text_gacha).resize(0.15).setLocation(330 + 178 + 170 + 170, 690));
+        _btns.add(new MovingBitmap(R.drawable.free).setLocation(280 + 178 + 170 + 170, 630));
         _btns.add(new MovingBitmap(R.drawable.text_menu).resize(0.15).setLocation(330 + 178 + 170 + 170 + 160, 690));
     }
 
