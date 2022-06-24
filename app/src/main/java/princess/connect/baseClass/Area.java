@@ -39,7 +39,6 @@ public class Area {
         public int y() {
             return _y;
         }
-
         public List<Character> chars() {
             return _chars;
         }

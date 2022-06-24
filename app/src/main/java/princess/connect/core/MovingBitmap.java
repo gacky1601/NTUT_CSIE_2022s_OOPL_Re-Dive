@@ -278,7 +278,10 @@ public class MovingBitmap implements GameObject {
 
     public MovingBitmap crop(int x, int y, int width, int height) {
         MovingBitmap result = new MovingBitmap();
-        result._bitmap = Bitmap.createBitmap(_bitmap, (int) ((double) _bitmap.getWidth() * x / _width), (int) ((double) _bitmap.getHeight() * y / _height), (int) ((double) _bitmap.getWidth() * width / _width), (int) ((double) _bitmap.getHeight() * height / _height));
+        result._bitmap = Bitmap.createBitmap(_bitmap, (int) ((double) _bitmap.getWidth() * x / _width),
+                (int) ((double) _bitmap.getHeight() * y / _height),
+                (int) ((double) _bitmap.getWidth() * width / _width),
+                (int) ((double) _bitmap.getHeight() * height / _height));
         result.resize(width, height);
         return result;
     }
